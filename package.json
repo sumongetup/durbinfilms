@@ -1,0 +1,35 @@
+{
+  "name": "durbin-films-site",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "preview": "serve out",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "placeholders": "node scripts/make-placeholders.mjs",
+    "sync": "node scripts/sync-youtube.mjs",
+    "sync:dry": "node scripts/sync-youtube.mjs --dry",
+    "og": "node scripts/make-og.mjs"
+  },
+  "dependencies": {
+    "framer-motion": "^12.23.0",
+    "next": "^15.5.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.0",
+    "@tailwindcss/postcss": "^4.1.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "eslint": "^9.30.0",
+    "eslint-config-next": "^15.5.0",
+    "serve": "^14.2.0",
+    "sharp": "^0.34.0",
+    "tailwindcss": "^4.1.0",
+    "typescript": "^5.8.0"
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "hero": {
+    "headline": "Stories Dhaka actually watches."
+  },
+  "marquee": [
+    { "label": "Television drama" },
+    { "label": "Web series", "highlight": true },
+    { "label": "Eid specials" },
+    { "label": "TVC and brand films" },
+    { "label": "Short films" },
+    { "label": "Documentary" },
+    { "label": "Post production" }
+  ],
+  "process": {
+    "kicker": "PROCESS",
+    "heading": "How a project runs",
+    "steps": [
+      {
+        "n": "01",
+        "title": "Story",
+        "text": "Concept, treatment and script drafts, with a budget you sign off before anything is booked."
+      },
+      {
+        "n": "02",
+        "title": "Prep",
+        "text": "Casting, locations, production design and a shooting schedule you get in writing, not over the phone."
+      },
+      {
+        "n": "03",
+        "title": "Shoot",
+        "text": "A small crew that has worked together for years, and daily rushes you can watch while we are still on the floor."
+      },
+      {
+        "n": "04",
+        "title": "Post",
+        "text": "A rough cut for your notes first, then colour, sound and delivery in every format the channel or platform asks for."
+      }
+    ]
+  },
+  "services": {
+    "kicker": "SERVICES",
+    "heading": "Script to final cut, one team",
+    "lead": "Everything a production needs happens under one roof in Dhaka, which is why a shoot can move from a note to a new setup in an afternoon.",
+    "tiles": [
+      {
+        "icon": "🎬",
+        "title": "Fiction production",
+        "text": "Original drama for television and the platforms, plus commissioned work made to somebody else's slate.",
+        "bullets": [
+          "Single episode drama and telefilm",
+          "Eid and festival specials",
+          "Multi episode serials and web series",
+          "Short films"
+        ]
+      },
+      {
+        "icon": "📣",
+        "title": "Brand and documentary",
+        "text": "Commercials, corporate documentary and branded film, made by the same crew that makes the drama and held to the same standard.",
+        "bullets": [
+          "Documentary and corporate film",
+          "TVC and digital ad films",
+          "Campaign and launch content",
+          "Event and coverage films"
+        ]
+      },
+      {
+        "icon": "🎞️",
+        "title": "Post production",
+        "text": "Finishing for our own productions, and for outside work that needs a post house rather than a laptop.",
+        "bullets": [
+          "Offline edit and colour grade",
+          "Sound design, mix and master",
+          "Delivery in every broadcast and platform spec"
+        ]
+      }
+    ]
+  },
+  "studio": {
+    "kicker": "THE STUDIO",
+    "quote": "Small crew, big story.",
+    "paragraphs": [
+      "Durbin Films was founded by Md Sumon Howlader on 10 October 2021 as a home for stories set in the world our audience actually lives in: family rooms, wedding houses, the roadside tea stall, places a Bengali audience recognises before anyone speaks a line. More than two thousand projects have been delivered since 2014, most of them short films and documentary.",
+      "We work with writers, directors and actors who want the same thing, on our own productions and on commissions for channels, platforms and brands. What a client gets is simple: one person to call, a budget agreed before the shoot, and a cut you see before anyone else does."
+    ],
+    "sign": "Md Sumon Howlader, Founder",
+    "cta": "Read the founder profile"
+  },
+  "faq": {
+    "kicker": "QUESTIONS",
+    "heading": "Before you write to us",
+    "items": [
+      {
+        "q": "What does Durbin Films produce?",
+        "a": "Short films and documentary, television drama and telefilms, multi episode serials and web series, music videos and brand work. More than two thousand projects have been delivered since 2014, and the studio's own productions run across three YouTube channels and have gone out on television as well."
+      },
+      {
+        "q": "Where is the studio?",
+        "a": "House 1361, Mirpur DOHS, Dhaka 1216. The Durbin News newsroom works out of the same building."
+      },
+      {
+        "q": "Can you make a TVC or a brand film?",
+        "a": "Yes. Commercials, campaign films, corporate video and launch content are made with the same crew and the same standard as the drama slate."
+      },
+      {
+        "q": "How does a project start?",
+        "a": "Send the script or the brief to the studio inbox, or message the studio on WhatsApp. You get back a plan, a schedule and a number, usually within two working days."
+      },
+      {
+        "q": "Do you take post production work on its own?",
+        "a": "Yes. Edit, colour grade, sound design, mix and delivery are available for productions shot by somebody else."
+      },
+      {
+        "q": "Where can I watch the productions?",
+        "a": "On the DURBIN FILMS, DURBIN DRAMA and DURBIN channels on YouTube. Every production on this site links straight to its video."
+      }
+    ]
+  },
+  "contact": {
+    "kicker": "GET IN TOUCH",
+    "heading": "Got a script, a slate or a brief?",
+    "lead": "Send it over. You get back a plan, a schedule and a number, usually within two working days."
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "seo": {
+    "title": "Md Sumon Howlader — Founder, Durbin Films",
+    "description": "Md Sumon Howlader founded Durbin Films in 2021 and is the Editor and Publisher of Durbin News, the PID registered portal. A Dhaka producer building for a Bengali audience online since 2014."
+  },
+  "name": "Md Sumon Howlader",
+  "kicker": "FOUNDER",
+  "roles": [
+    "Founder, Durbin Films",
+    "Editor & Publisher, Durbin News"
+  ],
+  "intro": "A producer who has worked online full time since 2014. He founded Durbin Films in October 2021 and Durbin News four months later, and runs both from Dhaka, Bangladesh.",
+  "portrait": "/images/founder/portrait.jpg",
+  "backdrop": "/images/founder/backdrop.jpg",
+  "profile": {
+    "kicker": "PROFILE",
+    "heading": "Ten years of one audience",
+    "paragraphs": [
+      "Md Sumon Howlader has worked on the internet full time since 2014, well before a Bengali audience moved to YouTube in the numbers it has now. More than two thousand projects have gone out of his hands since then, most of them short films and documentaries, and that volume taught him the thing a producer cannot be told and has to learn for himself: what people give their attention to, and what they scroll past.",
+      "He founded Durbin Films in October 2021. The studio's work now runs across three YouTube channels with more than two and a half million subscribers between them, and its drama has gone out on television as well as online. He produces across the slate, from picking the story and setting the budget through to final delivery.",
+      "Four months after the studio, he launched Durbin News, which the Press Information Department registered as an online news portal in July 2022. He is its Editor and Publisher. The newsroom and the studio share one office in Dhaka, Bangladesh."
+    ]
+  },
+  "facts": [
+    {
+      "value": "2014",
+      "label": "Working online since"
+    },
+    {
+      "value": "2000+",
+      "label": "Projects delivered"
+    },
+    {
+      "value": "2.5M",
+      "label": "YouTube subscribers"
+    },
+    {
+      "value": "630+",
+      "label": "Videos on the channels"
+    }
+  ],
+  "timeline": {
+    "kicker": "TIMELINE",
+    "heading": "The road so far",
+    "items": [
+      {
+        "year": "2014",
+        "title": "Started working online full time",
+        "text": "Began as a freelancer building digital projects, which became the base for everything after."
+      },
+      {
+        "year": "10 October 2021",
+        "title": "Durbin Films founded",
+        "text": "Started the studio and moved into production: television drama, web series, commercials and brand films, produced end to end."
+      },
+      {
+        "year": "16 February 2022",
+        "title": "Durbin News founded",
+        "text": "Launched the portal and built it into a government registered online news outlet with a national readership and a set of Durbin branded pages."
+      },
+      {
+        "year": "July 2022",
+        "title": "Both ventures registered",
+        "text": "Durbin Films became a registered company on 1 July 2022. On 31 July 2022 Durbin News received its Press Information Department registration as online news portal no. 147."
+      }
+    ]
+  },
+  "ventures": {
+    "kicker": "VENTURES",
+    "heading": "What he runs",
+    "items": [
+      {
+        "tag": "PRODUCTION",
+        "name": "Durbin Films",
+        "text": "A Dhaka production house making television drama, web series, short films and brand work end to end. Founded October 2021.",
+        "role": "Founder",
+        "href": "/"
+      },
+      {
+        "tag": "NEWS",
+        "name": "Durbin News",
+        "text": "Government registered online news portal (PID no. 147), launched February 2022, with a national readership and daily coverage.",
+        "role": "Editor & Publisher",
+        "href": "https://durbinnews.com/"
+      }
+    ]
+  },
+  "credentials": {
+    "kicker": "CREDENTIALS",
+    "heading": "On record",
+    "items": [
+      {
+        "label": "Press accreditation",
+        "value": "PID accredited journalist, Government of the People's Republic of Bangladesh"
+      },
+      {
+        "label": "Portal registration",
+        "value": "Durbin News is registered with the Press Information Department as online news portal no. 147, granted 31 July 2022"
+      },
+      {
+        "label": "Studio",
+        "value": "Durbin Films, founded 10 October 2021 and registered on 1 July 2022"
+      },
+      {
+        "label": "Based in",
+        "value": "Dhaka, Bangladesh"
+      }
+    ]
+  },
+  "quote": {
+    "kicker": "IN HIS WORDS",
+    "text": "A newsroom taught me what people skip. Production is just doing the opposite.",
+    "who": "Md Sumon Howlader, Founder of Durbin Films"
+  },
+  "contact": {
+    "kicker": "CONTACT",
+    "heading": "Work, press and speaking",
+    "lead": "For production enquiries, press requests, interviews or collaborations, the studio inbox is the fastest route. WhatsApp is quicker still if it is urgent.",
+    "links": [
+      {
+        "label": "LinkedIn",
+        "href": "https://www.linkedin.com/in/sumon-mdh/"
+      },
+      {
+        "label": "Facebook",
+        "href": "https://www.facebook.com/sumongetup/"
+      },
+      {
+        "label": "Instagram",
+        "href": "https://www.instagram.com/sumon_mdh"
+      },
+      {
+        "label": "X",
+        "href": "https://x.com/sumon_mdh"
+      },
+      {
+        "label": "Threads",
+        "href": "https://www.threads.com/@sumon_mdh"
+      }
+    ]
+  }
+}

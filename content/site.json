@@ -1,0 +1,69 @@
+{
+  "name": "Durbin Films",
+  "title": "Durbin Films — Bangla natok, web series and brand films from Dhaka",
+  "description": "Durbin Films is a Dhaka production house making Bangla natok, web series, short films, documentary and brand films. Script to final cut in house, since 2021.",
+  "url": "https://durbinfilms.com",
+  "email": "contact@durbinfilms.com",
+  "phone": "+8801916161609",
+  "phoneDisplay": "+880 1916 161609",
+  "whatsapp": "+8801916161609",
+  "address": {
+    "street": "House 1361, Mirpur DOHS",
+    "city": "Dhaka",
+    "postalCode": "1216",
+    "country": "Bangladesh"
+  },
+  "social": [
+    {
+      "label": "Facebook",
+      "href": "https://www.facebook.com/DurbinFilm"
+    },
+    {
+      "label": "YouTube (Durbin Films)",
+      "href": "https://www.youtube.com/@durbinfilmsofficial"
+    },
+    {
+      "label": "YouTube (Durbin Drama)",
+      "href": "https://www.youtube.com/@DURBINDRAMAOFFICIAL"
+    },
+    {
+      "label": "YouTube (DURBIN)",
+      "href": "https://www.youtube.com/@DURBINOfficial"
+    }
+  ],
+  "ogImage": "/images/og/default.jpg",
+  "studioImage": "/images/studio/portrait.jpg",
+  "googleSiteVerification": "",
+  "youtubeChannels": [
+    {
+      "handle": "@durbinfilmsofficial",
+      "label": "DURBIN FILMS"
+    },
+    {
+      "handle": "@DURBINDRAMAOFFICIAL",
+      "label": "DURBIN DRAMA"
+    },
+    {
+      "handle": "@DURBINOfficial",
+      "label": "DURBIN"
+    }
+  ],
+  "founded": "2021-10-10",
+  "registered": "2022-07-01",
+  "newsFounded": "2022-02-16",
+  "newsRegistered": "2022-07-31",
+  "newsRegistrationNo": "147",
+  "network": [
+    {
+      "label": "Durbin News",
+      "href": "https://durbinnews.com/",
+      "note": "Bangla news portal",
+      "links": [
+        {
+          "label": "Facebook",
+          "href": "https://www.facebook.com/News.durbin"
+        }
+      ]
+    }
+  ]
+}
