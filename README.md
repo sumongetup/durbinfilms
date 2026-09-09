@@ -154,6 +154,26 @@ dialable number used in `tel:` links; `phoneDisplay` is what visitors see. Every
 with a link is shown in the home page FOLLOW list; the founder page lists the labels named in
 `founder.json` under `contact.social`, so add a label to both places to show it on both pages.
 
+## Deploying
+
+`.github/workflows/deploy.yml` builds the site and publishes it to GitHub Pages on every push to
+`main`. To turn it on once: repository **Settings → Pages → Source → GitHub Actions**.
+
+The workflow writes `out/CNAME` with `durbinfilms.com`. For that domain to work, point DNS at
+GitHub:
+
+| Type  | Name | Value |
+| ----- | ---- | ----- |
+| A     | @    | 185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153 |
+| CNAME | www  | sumongetup.github.io |
+
+To serve from `sumongetup.github.io/durbinfilms` instead, delete the CNAME step, set `url` in
+`content/site.json` to that address, and add `basePath: "/durbinfilms"` to `next.config.ts`.
+
+Any static host works just as well: build with `npm run build` and upload `out/`. On Vercel or
+Cloudflare Pages, point the project at this repo, build command `npm run build`, output
+directory `out`.
+
 ## Before going live
 
 - Confirm `url` in `content/site.json` is the live domain. It drives canonical URLs, Open Graph
