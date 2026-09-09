@@ -156,23 +156,22 @@ with a link is shown in the home page FOLLOW list; the founder page lists the la
 
 ## Deploying
 
-`.github/workflows/deploy.yml` builds the site and publishes it to GitHub Pages on every push to
-`main`. To turn it on once: repository **Settings → Pages → Source → GitHub Actions**.
+The site is hosted on Vercel, connected to this repository. Every push to `main` triggers a build
+and deploy; pull requests get their own preview URL.
 
-The workflow writes `out/CNAME` with `durbinfilms.com`. For that domain to work, point DNS at
-GitHub:
+Vercel settings (its Next.js preset detects these automatically):
 
-| Type  | Name | Value |
-| ----- | ---- | ----- |
-| A     | @    | 185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153 |
-| CNAME | www  | sumongetup.github.io |
+| Setting          | Value           |
+| ---------------- | --------------- |
+| Framework        | Next.js         |
+| Build command    | `npm run build` |
+| Output directory | `out`           |
 
-To serve from `sumongetup.github.io/durbinfilms` instead, delete the CNAME step, set `url` in
-`content/site.json` to that address, and add `basePath: "/durbinfilms"` to `next.config.ts`.
+`next.config.ts` sets `output: "export"`, so the build produces a fully static site with no server
+behind it. Any other static host works the same way: run `npm run build` and upload `out/`.
 
-Any static host works just as well: build with `npm run build` and upload `out/`. On Vercel or
-Cloudflare Pages, point the project at this repo, build command `npm run build`, output
-directory `out`.
+For the durbinfilms.com domain, add it in the Vercel project under Settings, then Domains, and
+point DNS at the records Vercel shows you.
 
 ## Before going live
 
