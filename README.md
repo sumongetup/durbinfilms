@@ -30,8 +30,8 @@ npm run preview    # serves out/ locally
 - `content/founder.json`: everything on the founder page.
 - `content/site.json`: studio name, contact details, social links, default Open Graph image.
 
-Anything still in square brackets, like `[Year]`, `[Channel]` or `[email]`, is a placeholder. Search the
-three files for `[` to find what is left to fill in.
+There are four content files: the three above plus `content/home.json` for the home page copy.
+Anything still in square brackets is a placeholder; search the files for `[` to find what is left.
 
 ### Adding a production
 
@@ -82,10 +82,8 @@ Rules the pages follow:
 - `youtubeId` is the trailer. When it is empty but `watchUrl` is a YouTube link, the play button
   says "Watch now" and plays the full video instead. `trailerStart` (seconds) offsets the trailer.
 - The line under a poster is the first non-empty of `channel`, `platform`, `client`, then the year.
-- `featured: true` puts the production in the home hero slider. The optional `hero` object overrides
-  the kicker, chip, meta line and blurb; leave it out and sensible text is derived from `type`.
-- `youtubeId` is the 11-character ID from the YouTube URL. Leave it empty and the site says
-  "Trailer coming soon" instead of embedding.
+- The optional `hero` object overrides the kicker, chip, meta line and blurb on the home hero;
+  leave it out and sensible text is derived from `type`.
 - `credits` and `gallery` are optional and only show on the detail page.
 
 ## Images
@@ -149,10 +147,10 @@ with a designed one whenever you like.
 ## Contact details
 
 `content/site.json` holds the studio address, email, phone, social links, and the founding
-(`founded`, 10 October 2019) and registration (`registered`, 1 July 2022) dates. `phone` is the
+(`founded`, 10 October 2021) and registration (`registered`, 1 July 2022) dates. `phone` is the
 dialable number used in `tel:` links; `phoneDisplay` is what visitors see. Every entry in `social`
-with a link is shown in the home page FOLLOW list; the founder page lists the labels named in
-`founder.json` under `contact.social`, so add a label to both places to show it on both pages.
+with a link is shown in the home page FOLLOW list; the founder page shows his own
+profiles from `founder.json` under `contact.links`.
 
 ## Deploying
 
