@@ -11,7 +11,9 @@
     "placeholders": "node scripts/make-placeholders.mjs",
     "sync": "node scripts/sync-youtube.mjs",
     "sync:dry": "node scripts/sync-youtube.mjs --dry",
-    "og": "node scripts/make-og.mjs"
+    "og": "node scripts/make-og.mjs",
+    "logo": "node scripts/make-logo.mjs",
+    "seo": "node scripts/seo-audit.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.23.0",

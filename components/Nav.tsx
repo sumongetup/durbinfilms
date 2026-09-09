@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { Logo } from "./ui/Logo";
 import { useEffect, useState } from "react";
 import { useMotionValueEvent, useScroll } from "framer-motion";
 import { MobileSheet } from "./MobileSheet";
@@ -41,7 +42,7 @@ export function Nav({ links, cta }: { links: NavLink[]; cta: NavLink }) {
       <header className={`nav${solid ? " solid" : ""}`}>
         <div className="wrap nav-in">
           <Link className="logo" href="/" aria-label="Durbin Films, home">
-            Durbin<span className="grad">Films</span>
+            <Logo height={46} priority />
           </Link>
           <nav className="links" aria-label="Primary">
             {links.map((l) => (

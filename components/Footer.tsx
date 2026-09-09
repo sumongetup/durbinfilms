@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Logo } from "./ui/Logo";
 import { whatsappUrl } from "@/lib/contact";
 import { FOOTER_EXTRA_LINKS, PAGE_LINKS } from "@/lib/nav";
 import type { Site } from "@/lib/types";
@@ -33,7 +34,7 @@ export function Footer({ site }: { site: Site }) {
       <div className="foot-grid">
         <div className="foot-brand">
           <Link className="logo" href="/" aria-label="Durbin Films, home">
-            Durbin<span className="grad">Films</span>
+            <Logo height={46} />
           </Link>
           <p>Television drama, web series and brand films. Script to final cut, in house.</p>
           <p className="foot-addr">

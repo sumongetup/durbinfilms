@@ -61,24 +61,41 @@ export function defaultMetadata(): Metadata {
 
 export function founderMetadata(): Metadata {
   const founder = getFounder();
+  const description = clampDescription(founder.seo.description);
   return {
     title: { absolute: founder.seo.title },
-    description: founder.seo.description,
+    description,
     alternates: { canonical: "/founder/" },
     openGraph: {
       type: "profile",
       title: founder.seo.title,
-      description: founder.seo.description,
+      description,
       url: "/founder/",
       images: [{ url: founder.portrait, width: 1200, height: 1500, alt: founder.name }],
     },
     twitter: {
       card: "summary_large_image",
       title: founder.seo.title,
-      description: founder.seo.description,
+      description,
       images: [founder.portrait],
     },
   };
+}
+
+/**
+ * Trims a description to what a search result actually shows. Cuts at the
+ * last sentence that fits, or failing that at a word boundary.
+ */
+export function clampDescription(text: string, max = 158): string {
+  const clean = text.replace(/\s+/g, " ").trim();
+  if (clean.length <= max) return clean;
+
+  const window = clean.slice(0, max + 1);
+  const sentenceEnd = Math.max(window.lastIndexOf(". "), window.lastIndexOf("? "), window.lastIndexOf("! "));
+  if (sentenceEnd > max * 0.55) return clean.slice(0, sentenceEnd + 1);
+
+  const wordEnd = window.lastIndexOf(" ");
+  return `${clean.slice(0, wordEnd > 0 ? wordEnd : max).replace(/[,;:.\s]+$/, "")}…`;
 }
 
 /** One factual sentence for search snippets when no synopsis has been written. */
@@ -103,10 +120,13 @@ export function workDescription(work: Work): string {
 
 export function workMetadata(work: Work): Metadata {
   const site = getSite();
-  const description = workDescription(work);
+  const description = clampDescription(workDescription(work));
   const year = /^\d{4}$/.test(work.year) ? ` (${work.year})` : "";
   const kind = formatLabel(work);
-  const title = `${work.title}${year} | ${kind}`;
+  // The layout appends " — Durbin Films" (15 chars), and a search result shows
+  // about 60 before truncating, so drop the format, then the year, to fit.
+  const budget = 60 - (site.name.length + 3);
+  const title = [`${work.title}${year} | ${kind}`, `${work.title}${year}`, work.title].find((t) => t.length <= budget) ?? work.title;
   return {
     title,
     description,

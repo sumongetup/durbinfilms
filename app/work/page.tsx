@@ -12,12 +12,27 @@ import { getSite, getWorks } from "@/lib/content";
 import { CTA, PAGE_LINKS } from "@/lib/nav";
 import { allWorkJsonLd } from "@/lib/seo";
 
+const TITLE = "All work: dramas, serials, short films and songs";
+const DESCRIPTION =
+  "Every Durbin Films production in one place. Bangla natoks, Eid specials, serials, short films and songs, with cast, year and where to watch.";
+
 export const metadata: Metadata = {
-  title: "All work: dramas, serials, short films and songs",
-  description:
-    "Every Durbin Films production in one place. Bangla natoks, Eid specials, serials, short films and songs from the DURBIN FILMS, DURBIN DRAMA and DURBIN channels, with cast, year and where to watch.",
+  title: TITLE,
+  description: DESCRIPTION,
   alternates: { canonical: "/work/" },
-  openGraph: { title: "All work — Durbin Films", url: "/work/" },
+  openGraph: {
+    type: "website",
+    title: `${TITLE} — Durbin Films`,
+    description: DESCRIPTION,
+    url: "/work/",
+    images: [{ url: "/images/og/default.jpg", width: 1200, height: 630, alt: "Durbin Films" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${TITLE} — Durbin Films`,
+    description: DESCRIPTION,
+    images: ["/images/og/default.jpg"],
+  },
 };
 
 /** One section per channel, the studio's own channel first, then all songs. */

@@ -1,60 +1,60 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { animate, motion, useMotionValue, useTransform } from "framer-motion";
 import { useReady } from "./providers/ReadyProvider";
 import { useReducedMotion } from "@/hooks/useMediaQuery";
 import { LOADER_MS, easeCurtain, easeSoft } from "@/lib/motion";
 
-const WORDS: { text: string; gradient: boolean }[] = [
-  { text: "DURBIN", gradient: false },
-  { text: "FILMS", gradient: true },
-];
-
 const SEEN_KEY = "durbin-loader-seen";
-const LETTER_LEAD = 0.08;
-const LETTER_STEP = 0.045;
 const BAR_DELAY = 0.15;
 const BAR_DURATION = 1.45;
 const BAR_EASE: [number, number, number, number] = [0.4, 0, 0.2, 1];
+
+const HIDDEN = "inset(0 100% 0 0)";
+const SHOWN = "inset(0 0% 0 0)";
 
 /**
  * Opening sequence, about 1.75s plus the wipe:
  *
  *  0.00s  soft glow breathes in behind the centre
- *  0.08s  the eleven letters of DURBIN FILMS rise one by one, 45ms apart
+ *  0.15s  the logo wipes in from the left over 1.1s
  *  0.15s  the progress bar fills over 1.45s while a counter runs 00 to 100
- *  1.75s  mark lifts and fades, glow blooms out, curtain sweeps up with a
- *         lit edge, and the hero headline starts its own word reveal
+ *  1.75s  the mark lifts and fades, the glow blooms out, and the curtain
+ *         sweeps up with a lit edge
  *
- * Under prefers-reduced-motion nothing is shown and the page is ready at once.
- * FILMS keeps one continuous gradient because each letter paints its own
- * slice of a five-letter-wide background.
+ * Skipped entirely under prefers-reduced-motion, and on any visit after the
+ * first in a session so moving between pages is not gated by it.
  */
 export function Loader() {
   const { ready, setReady } = useReady();
   const reduce = useReducedMotion();
+  const [skip, setSkip] = useState<boolean | null>(null);
   const [gone, setGone] = useState(false);
 
   const progress = useMotionValue(0);
   const count = useTransform(progress, (v) => String(Math.round(v)).padStart(2, "0"));
   const barWidth = useTransform(progress, (v) => `${v}%`);
 
+  // Decide on the client only, so the server markup never disagrees.
   useEffect(() => {
-    if (reduce) {
-      setReady();
-      return;
-    }
-    // Play once per browser session; coming back from a detail page skips it.
+    let seen = false;
     try {
-      if (sessionStorage.getItem(SEEN_KEY)) {
-        setReady();
-        setGone(true);
-        return;
-      }
+      seen = sessionStorage.getItem(SEEN_KEY) === "1";
       sessionStorage.setItem(SEEN_KEY, "1");
     } catch {
-      /* storage blocked: play normally */
+      /* private mode: just play it */
+    }
+    setSkip(seen);
+  }, []);
+
+  useEffect(() => {
+    if (skip === null) return;
+    if (skip || reduce) {
+      setReady();
+      setGone(true);
+      return;
     }
     const controls = animate(progress, 100, { duration: BAR_DURATION, delay: BAR_DELAY, ease: BAR_EASE });
     const t = window.setTimeout(setReady, LOADER_MS);
@@ -62,11 +62,9 @@ export function Loader() {
       controls.stop();
       window.clearTimeout(t);
     };
-  }, [reduce, setReady, progress]);
+  }, [skip, reduce, setReady, progress]);
 
-  if (reduce || gone) return null;
-
-  let letter = 0;
+  if (skip === null || skip || reduce || gone) return null;
 
   return (
     <>
@@ -90,33 +88,14 @@ export function Loader() {
           animate={ready ? { y: -16, scale: 0.96, opacity: 0 } : { y: 0, scale: 1, opacity: 1 }}
           transition={{ duration: 0.5, ease: easeSoft }}
         >
-          <div className="mark">
-            {WORDS.map((word) => (
-              <span key={word.text} className="mark-word">
-                {word.text.split("").map((ch, i) => {
-                  const n = letter++;
-                  const style = word.gradient
-                    ? ({
-                        "--slices": `${word.text.length * 100}%`,
-                        "--pos": `${(i / (word.text.length - 1)) * 100}%`,
-                      } as React.CSSProperties)
-                    : undefined;
-                  return (
-                    <motion.span
-                      key={`${word.text}-${i}`}
-                      className={`mark-letter${word.gradient ? " grad-slice" : ""}`}
-                      style={style}
-                      initial={{ y: "112%", rotate: 3 }}
-                      animate={{ y: "0%", rotate: 0 }}
-                      transition={{ duration: 0.75, ease: easeSoft, delay: LETTER_LEAD + n * LETTER_STEP }}
-                    >
-                      {ch}
-                    </motion.span>
-                  );
-                })}
-              </span>
-            ))}
-          </div>
+          <motion.div
+            className="loader-mark"
+            initial={{ clipPath: HIDDEN, opacity: 0 }}
+            animate={{ clipPath: SHOWN, opacity: 1 }}
+            transition={{ clipPath: { duration: 1.1, ease: easeSoft, delay: 0.15 }, opacity: { duration: 0.3, delay: 0.15 } }}
+          >
+            <Image src="/images/brand/logo.png" alt="" width={1400} height={568} priority className="loader-logo" />
+          </motion.div>
 
           <div className="bar-row">
             <div className="bar">

@@ -140,16 +140,8 @@
     filter: blur(12px);
   }
   .loader-stack { position: relative; display: grid; justify-items: center; gap: 26px; }
-  .loader .mark {
-    font-family: var(--font-display); font-weight: 800; font-size: clamp(30px, 5.6vw, 60px); letter-spacing: -0.03em;
-    line-height: 1; display: flex; gap: 0.28em;
-  }
-  .mark-word { display: inline-flex; overflow: hidden; }
-  .mark-letter { display: inline-block; will-change: transform; }
-  .mark-letter.grad-slice {
-    background: var(--grad); background-size: var(--slices, 100%) 100%; background-position: var(--pos, 0%) 0;
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-  }
+  .loader-mark { will-change: clip-path; }
+  .loader-logo { display: block; width: min(58vw, 340px); height: auto; }
   .bar-row { display: flex; align-items: center; gap: 14px; width: min(320px, 64vw); }
   .loader .bar { flex: 1; height: 2px; background: rgba(255, 255, 255, 0.14); overflow: hidden; border-radius: 2px; }
   .loader .bar i { display: block; height: 100%; width: 0; background: var(--grad); border-radius: 2px; }
@@ -168,7 +160,9 @@
   .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; border-bottom: 1px solid transparent; transition: 0.4s; }
   .nav.solid { background: rgba(7, 6, 11, 0.8); backdrop-filter: blur(16px); border-bottom-color: var(--color-line); }
   .nav-in { display: flex; align-items: center; height: 74px; gap: 30px; }
-  .logo { font-family: var(--font-display); font-weight: 800; font-size: 19px; letter-spacing: -0.02em; }
+  .logo { display: inline-flex; align-items: center; font-family: var(--font-display); font-weight: 800; font-size: 19px; letter-spacing: -0.02em; }
+  .logo-img { display: block; }
+  @media (max-width: 520px) { .nav .logo-img { height: 38px !important; } }
   .links { display: flex; gap: 28px; font-size: 15px; color: var(--color-dim); }
   .links a { position: relative; }
   .links a::after {
@@ -317,6 +311,11 @@
   .rail-head { display: flex; align-items: flex-end; gap: 16px; margin-bottom: 24px; }
   .rail-head h2, .page[data-page="work"] .sec h2 { font-size: clamp(24px, 3vw, 40px); margin-top: 10px; }
   .arrows { margin-left: auto; display: flex; gap: 8px; flex: none; }
+  /* Narrow screens swipe the rail, so the arrows only cost width there. */
+  @media (max-width: 520px) {
+    .rail-head { flex-wrap: wrap; }
+    .arrows { display: none; }
+  }
   .arrow {
     width: 44px; height: 44px; border-radius: 50%; background: rgba(255, 255, 255, 0.07); border: 1px solid var(--color-line);
     color: var(--color-text); cursor: pointer; display: grid; place-items: center; font-size: 20px; transition: 0.3s;
