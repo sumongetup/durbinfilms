@@ -931,6 +931,62 @@
     ]
   },
   {
+    "slug": "khaiya-gechi-dhora",
+    "title": "Khaiya Gechi Dhora",
+    "titleBn": "খাইয়া গেছি ধরা",
+    "type": "song",
+    "year": "2022",
+    "channel": "",
+    "platform": "DURBIN DRAMA",
+    "client": "",
+    "episodes": 1,
+    "badge": "RAP SONG",
+    "synopsis": "Khaiya Gechi Dhora, the rap song from the drama Bhalobasia Gelam Fashia, sung by Rasel Rahman with words and tune by Imran Mallik. Shagor Mirza and Riya Chowdhury star, directed by Mannat Munna, and the 2022 video has passed 155 thousand views.",
+    "poster": "/images/posters/khaiya-gechi-dhora.webp",
+    "posterFit": "thumb",
+    "backdrop": "/images/backdrops/khaiya-gechi-dhora.webp",
+    "youtubeId": "",
+    "watchUrl": "https://youtu.be/dLL13jVsyfw",
+    "views": "155K",
+    "released": "2022-10-20",
+    "durationSeconds": 148,
+    "featured": false,
+    "credits": [
+      {
+        "role": "From",
+        "name": "Bhalobasia Gelam Fashia"
+      },
+      {
+        "role": "Singer",
+        "name": "Rasel Rahman"
+      },
+      {
+        "role": "Tune and lyrics",
+        "name": "Imran Mallik"
+      },
+      {
+        "role": "Music",
+        "name": "BH Parvez"
+      },
+      {
+        "role": "Featuring",
+        "name": "Shagor Mirza, Riya Chowdhury, Abdullah Rana, Shaikh Shopna"
+      },
+      {
+        "role": "Director",
+        "name": "Mannat Munna"
+      },
+      {
+        "role": "Cinematography",
+        "name": "Amir Hamza"
+      },
+      {
+        "role": "Producer",
+        "name": "Md Sumon Howlader"
+      }
+    ]
+  },
+  {
     "slug": "taka-title-song",
     "title": "Taka Title Song",
     "type": "song",
