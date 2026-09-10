@@ -19,7 +19,6 @@ const CHANNELS = [
   { handle: "@durbinfilmsofficial", label: "DURBIN FILMS", kind: "Drama and telefilm", primary: true },
   { handle: "@DURBINDRAMAOFFICIAL", label: "DURBIN DRAMA", kind: "Natok and serials" },
   { handle: "@DURBINOfficial", label: "DURBIN", kind: "Natok and short films" },
-  { handle: "@RMSMotivation", label: "RMS Motivation", kind: "Motivational stories" },
   { handle: "@DurbinMotivation", label: "DURBIN Motivation", kind: "Motivational stories" },
   { handle: "@DurbinShortFilm", label: "DURBIN Shortfilm", kind: "Short films" },
 ];

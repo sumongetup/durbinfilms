@@ -5,6 +5,14 @@ import { Reveal } from "./ui/Reveal";
 import { usePointerGlow } from "@/hooks/usePointerGlow";
 import type { ChannelData } from "@/lib/types";
 
+const WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"];
+
+/** "Five channels" reads better in a headline than "5 channels". */
+function spell(n: number): string {
+  const word = WORDS[n];
+  return word ? word[0].toUpperCase() + word.slice(1) : String(n);
+}
+
 /**
  * The whole Durbin network, one card per YouTube channel, with the counts
  * each channel publishes. Refresh them with `npm run channels`.
@@ -18,7 +26,7 @@ export function ChannelGrid({ kicker, heading, lead, data }: { kicker: string; h
       <h2 className="svc-h2" id="channels-heading">
         {/* {channels} is filled from the live count, so the wording cannot
             drift when a channel is added or dropped. */}
-        {heading.replace(/\{channels\}/g, String(data.totals.channels))}
+        {heading.replace(/\{channels\}/g, spell(data.totals.channels))}
       </h2>
       <p className="body mt-4">{lead}</p>
 

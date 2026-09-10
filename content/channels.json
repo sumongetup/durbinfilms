@@ -1,11 +1,11 @@
 {
   "updated": "2026-09-10",
   "totals": {
-    "channels": 6,
-    "subscribers": 5516000,
-    "videos": 6235,
-    "subscribersLabel": "5.5M",
-    "videosLabel": "6,235"
+    "channels": 5,
+    "subscribers": 4186000,
+    "videos": 3335,
+    "subscribersLabel": "4.1M",
+    "videosLabel": "3,335"
   },
   "channels": [
     {
@@ -17,16 +17,6 @@
       "subscribersLabel": "1.38M",
       "videos": 476,
       "videosLabel": "476"
-    },
-    {
-      "handle": "@RMSMotivation",
-      "label": "RMS Motivation",
-      "kind": "Motivational stories",
-      "url": "https://www.youtube.com/@RMSMotivation",
-      "subscribers": 1330000,
-      "subscribersLabel": "1.33M",
-      "videos": 2900,
-      "videosLabel": "2.9K"
     },
     {
       "handle": "@DurbinMotivation",
