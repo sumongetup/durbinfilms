@@ -69,4 +69,6 @@ console.log(`\nem dashes in title or description tags: ${dashed.length}`);
 if (dashed.length) failures++;
 
 console.log(failures ? `\n${failures} problem(s)` : "\nall share tags correct");
-process.exit(failures ? 1 : 0);
+// exitCode rather than process.exit(): exiting while fetch's socket is still
+// closing trips a libuv assertion on Windows and crashes a passing run.
+process.exitCode = failures ? 1 : 0;
