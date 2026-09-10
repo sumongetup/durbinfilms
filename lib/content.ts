@@ -2,7 +2,8 @@ import worksJson from "@/content/works.json";
 import founderJson from "@/content/founder.json";
 import siteJson from "@/content/site.json";
 import homeJson from "@/content/home.json";
-import type { FeaturedSlide, Founder, Home, Site, Work, WorkType } from "./types";
+import channelsJson from "@/content/channels.json";
+import type { ChannelData, Fact, FeaturedSlide, Founder, Home, Site, Work, WorkType } from "./types";
 import { toSlide } from "./work";
 
 export {
@@ -24,6 +25,7 @@ const works = worksJson as Work[];
 const founder = founderJson as Founder;
 const site = siteJson as Site;
 const home = homeJson as Home;
+const channelData = channelsJson as ChannelData;
 
 export function getSite(): Site {
   return site;
@@ -33,8 +35,32 @@ export function getHome(): Home {
   return home;
 }
 
+/** The studio's own channel first, then the rest of the network by size. */
+export function getChannels(): ChannelData {
+  const channels = [...channelData.channels].sort((a, b) => {
+    if (a.primary !== b.primary) return a.primary ? -1 : 1;
+    return b.subscribers - a.subscribers;
+  });
+  return { ...channelData, channels };
+}
+
 export function getFounder(): Founder {
   return founder;
+}
+
+/**
+ * Fills {subscribers}, {videos} and {channels} in the founder facts from the
+ * live channel totals, so `npm run channels` is the only place those numbers
+ * are ever edited.
+ */
+export function resolveFacts(facts: Fact[]): Fact[] {
+  const t = channelData.totals;
+  const swap = (text: string) =>
+    text
+      .replace(/\{subscribers\}/g, t.subscribersLabel)
+      .replace(/\{videos\}/g, t.videosLabel)
+      .replace(/\{channels\}/g, String(t.channels));
+  return facts.map((f) => ({ value: swap(f.value), label: swap(f.label) }));
 }
 
 export function getWorks(): Work[] {

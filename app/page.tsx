@@ -1,3 +1,4 @@
+import { ChannelGrid } from "@/components/ChannelGrid";
 import { ContactBlock } from "@/components/ContactBlock";
 import { FaqSection } from "@/components/FaqSection";
 import { Footer } from "@/components/Footer";
@@ -13,7 +14,7 @@ import { TrailerProvider } from "@/components/TrailerModal";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { ReadyProvider } from "@/components/providers/ReadyProvider";
 import { JsonLd } from "@/components/ui/JsonLd";
-import { getByPlatform, getByType, getFeaturedSlides, getHome, getSite, getWorks } from "@/lib/content";
+import { getByPlatform, getByType, getChannels, getFeaturedSlides, getHome, getSite, getWorks } from "@/lib/content";
 import { CTA, HOME_LINKS } from "@/lib/nav";
 import { faqJsonLd, homeJsonLd } from "@/lib/seo";
 
@@ -28,6 +29,7 @@ export default function HomePage() {
   const otherDramas = getWorks().filter((w) => (w.type === "drama" && w.platform !== HOME_PLATFORM) || w.type === "series");
   const shorts = getByType("short", "documentary");
   const songs = getByType("song");
+  const channels = getChannels();
 
   return (
     <ReadyProvider withLoader>
@@ -46,6 +48,12 @@ export default function HomePage() {
             )}
             {shorts.length > 0 && <PosterRail id="shorts" kicker="DIGITAL" heading="Short films" works={shorts} more={MORE} />}
             {songs.length > 0 && <PosterRail id="songs" kicker="MUSIC" heading="Songs and title tracks" works={songs} more={MORE} />}
+            <ChannelGrid
+              kicker={home.channels.kicker}
+              heading={home.channels.heading}
+              lead={home.channels.lead}
+              data={channels}
+            />
             <HorizontalProcess kicker={home.process.kicker} heading={home.process.heading} steps={home.process.steps} />
             <ServiceTiles
               kicker={home.services.kicker}

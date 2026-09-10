@@ -17,6 +17,7 @@ export const PAGE_LINKS: NavLink[] = HOME_LINKS.map((l) => (l.href.startsWith("#
 export const FOOTER_EXTRA_LINKS: NavLink[] = [
   { label: "All work", href: "/work/" },
   { label: "Process", href: "/#process" },
+  { label: "Network", href: "/#channels" },
   { label: "Questions", href: "/#faq" },
   { label: "Contact", href: "/#contact" },
 ];

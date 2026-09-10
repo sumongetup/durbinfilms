@@ -154,6 +154,34 @@ export interface NavLink {
   href: string;
 }
 
+export interface Channel {
+  handle: string;
+  label: string;
+  /** What the channel publishes, e.g. "Natok and serials". */
+  kind: string;
+  url: string;
+  subscribers: number;
+  /** Exactly as YouTube prints it, e.g. "1.38M". */
+  subscribersLabel: string;
+  videos: number;
+  videosLabel: string;
+  /** The studio's own channel, shown first. */
+  primary?: boolean;
+}
+
+export interface ChannelData {
+  /** ISO date of the last `npm run channels`. */
+  updated: string;
+  totals: {
+    channels: number;
+    subscribers: number;
+    videos: number;
+    subscribersLabel: string;
+    videosLabel: string;
+  };
+  channels: Channel[];
+}
+
 export interface MarqueeItem {
   label: string;
   highlight?: boolean;
@@ -184,6 +212,7 @@ export interface Home {
   process: { kicker: string; heading: string; steps: ProcessStep[] };
   services: { kicker: string; heading: string; lead?: string; tiles: ServiceTile[] };
   studio: { kicker: string; quote: string; paragraphs: string[]; sign: string; cta: string };
+  channels: { kicker: string; heading: string; lead: string };
   faq: { kicker: string; heading: string; items: FaqItem[] };
   contact: { kicker: string; heading: string; lead: string };
 }

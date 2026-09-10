@@ -3,13 +3,28 @@
     "headline": "Stories Dhaka actually watches."
   },
   "marquee": [
-    { "label": "Television drama" },
-    { "label": "Web series", "highlight": true },
-    { "label": "Eid specials" },
-    { "label": "TVC and brand films" },
-    { "label": "Short films" },
-    { "label": "Documentary" },
-    { "label": "Post production" }
+    {
+      "label": "Television drama"
+    },
+    {
+      "label": "Web series",
+      "highlight": true
+    },
+    {
+      "label": "Eid specials"
+    },
+    {
+      "label": "TVC and brand films"
+    },
+    {
+      "label": "Short films"
+    },
+    {
+      "label": "Documentary"
+    },
+    {
+      "label": "Post production"
+    }
   ],
   "process": {
     "kicker": "PROCESS",
@@ -112,7 +127,7 @@
       },
       {
         "q": "Where can I watch the productions?",
-        "a": "On the DURBIN FILMS, DURBIN DRAMA and DURBIN channels on YouTube. Every production on this site links straight to its video."
+        "a": "On YouTube. The studio publishes through DURBIN FILMS, DURBIN DRAMA and DURBIN, and the wider Durbin group runs nine channels in all, including news, sport and short films. Every production on this site links straight to its video."
       }
     ]
   },
@@ -120,5 +135,10 @@
     "kicker": "GET IN TOUCH",
     "heading": "Got a script, a slate or a brief?",
     "lead": "Send it over. You get back a plan, a schedule and a number, usually within two working days."
+  },
+  "channels": {
+    "kicker": "THE NETWORK",
+    "heading": "Nine channels, one audience",
+    "lead": "The studio publishes through its own channels and those of the wider Durbin group, from drama and short films to news and sport. Counts come straight from YouTube."
   }
 }

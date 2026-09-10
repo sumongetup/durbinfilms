@@ -10,7 +10,7 @@ import { ReadyProvider } from "@/components/providers/ReadyProvider";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { Kicker } from "@/components/ui/Kicker";
 import { Reveal } from "@/components/ui/Reveal";
-import { getFounder, getSite } from "@/lib/content";
+import { getFounder, getSite, resolveFacts } from "@/lib/content";
 import { PAGE_LINKS } from "@/lib/nav";
 import { founderMetadata, personJsonLd } from "@/lib/seo";
 
@@ -40,7 +40,7 @@ export default function FounderPage() {
               </Reveal>
             </div>
             <Reveal className="facts" delay={0.14}>
-              {founder.facts.map((f) => (
+              {resolveFacts(founder.facts).map((f) => (
                 <div className="fact" key={f.label}>
                   <div className="n grad">{f.value}</div>
                   <p>{f.label}</p>

@@ -1,0 +1,103 @@
+{
+  "updated": "2026-09-10",
+  "totals": {
+    "channels": 9,
+    "subscribers": 6147860,
+    "videos": 12196,
+    "subscribersLabel": "6.1M",
+    "videosLabel": "12,196"
+  },
+  "channels": [
+    {
+      "handle": "@DURBINDRAMAOFFICIAL",
+      "label": "DURBIN DRAMA",
+      "kind": "Natok and serials",
+      "url": "https://www.youtube.com/@DURBINDRAMAOFFICIAL",
+      "subscribers": 1380000,
+      "subscribersLabel": "1.38M",
+      "videos": 476,
+      "videosLabel": "476"
+    },
+    {
+      "handle": "@RMSMotivation",
+      "label": "RMS Motivation",
+      "kind": "Motivational stories",
+      "url": "https://www.youtube.com/@RMSMotivation",
+      "subscribers": 1330000,
+      "subscribersLabel": "1.33M",
+      "videos": 2900,
+      "videosLabel": "2.9K"
+    },
+    {
+      "handle": "@DurbinMotivation",
+      "label": "DURBIN Motivation",
+      "kind": "Motivational stories",
+      "url": "https://www.youtube.com/@DurbinMotivation",
+      "subscribers": 1000000,
+      "subscribersLabel": "1M",
+      "videos": 1400,
+      "videosLabel": "1.4K"
+    },
+    {
+      "handle": "@DURBINOfficial",
+      "label": "DURBIN",
+      "kind": "Natok and short films",
+      "url": "https://www.youtube.com/@DURBINOfficial",
+      "subscribers": 865000,
+      "subscribersLabel": "865K",
+      "videos": 85,
+      "videosLabel": "85"
+    },
+    {
+      "handle": "@DurbinShortFilm",
+      "label": "DURBIN Shortfilm",
+      "kind": "Short films",
+      "url": "https://www.youtube.com/@DurbinShortFilm",
+      "subscribers": 688000,
+      "subscribersLabel": "688K",
+      "videos": 1300,
+      "videosLabel": "1.3K"
+    },
+    {
+      "handle": "@DurbinNewsOfficial",
+      "label": "Durbin News Daily",
+      "kind": "News",
+      "url": "https://www.youtube.com/@DurbinNewsOfficial",
+      "subscribers": 560000,
+      "subscribersLabel": "560K",
+      "videos": 3300,
+      "videosLabel": "3.3K"
+    },
+    {
+      "handle": "@durbinfilmsofficial",
+      "label": "DURBIN FILMS",
+      "kind": "Drama and telefilm",
+      "primary": true,
+      "url": "https://www.youtube.com/@durbinfilmsofficial",
+      "subscribers": 253000,
+      "subscribersLabel": "253K",
+      "videos": 74,
+      "videosLabel": "74"
+    },
+    {
+      "handle": "@sportsnews.durbin",
+      "label": "Durbin Sports",
+      "kind": "Sports news",
+      "url": "https://www.youtube.com/@sportsnews.durbin",
+      "subscribers": 64200,
+      "subscribersLabel": "64.2K",
+      "videos": 2600,
+      "videosLabel": "2.6K"
+    },
+    {
+      "handle": "@DurbinNatok",
+      "label": "Durbin Natok",
+      "kind": "Natok",
+      "url": "https://www.youtube.com/@DurbinNatok",
+      "subscribers": 7660,
+      "subscribersLabel": "7.66K",
+      "videos": 61,
+      "videosLabel": "61"
+    }
+  ]
+}

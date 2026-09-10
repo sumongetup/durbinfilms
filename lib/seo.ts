@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getByPlatform, getFounder, getSite, getWorks } from "./content";
+import { getByPlatform, getChannels, getFounder, getSite, getWorks } from "./content";
 import { featuringOf, formatLabel, isPlaceholder, isoDuration, outletOf, playableOf } from "./work";
 import type { Work } from "./types";
 
@@ -152,7 +152,12 @@ type JsonLd = Record<string, unknown>;
 
 function organizationNode(): JsonLd {
   const site = getSite();
-  const sameAs = site.social.map((s) => s.href).filter((h) => h && !h.includes("["));
+  // Every channel in the network counts as the same entity elsewhere on
+  // the web, which is what lets search engines join them up.
+  const sameAs = [
+    ...site.social.map((s) => s.href),
+    ...getChannels().channels.map((c) => c.url),
+  ].filter((h, i, all) => h && !h.includes("[") && all.indexOf(h) === i);
   const data: JsonLd = {
     // Also a LocalBusiness: there is a real studio at a real address in
     // Dhaka, which is what lets it surface for local searches.

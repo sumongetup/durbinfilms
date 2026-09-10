@@ -31,12 +31,12 @@
       "label": "Projects delivered"
     },
     {
-      "value": "2.5M",
-      "label": "YouTube subscribers"
+      "value": "{subscribers}",
+      "label": "Subscribers across {channels} channels"
     },
     {
-      "value": "630+",
-      "label": "Videos on the channels"
+      "value": "{videos}",
+      "label": "Videos published"
     }
   ],
   "timeline": {
