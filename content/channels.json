@@ -1,11 +1,11 @@
 {
   "updated": "2026-09-10",
   "totals": {
-    "channels": 9,
-    "subscribers": 6147860,
-    "videos": 12196,
-    "subscribersLabel": "6.1M",
-    "videosLabel": "12,196"
+    "channels": 6,
+    "subscribers": 5516000,
+    "videos": 6235,
+    "subscribersLabel": "5.5M",
+    "videosLabel": "6,235"
   },
   "channels": [
     {
@@ -59,16 +59,6 @@
       "videosLabel": "1.3K"
     },
     {
-      "handle": "@DurbinNewsOfficial",
-      "label": "Durbin News Daily",
-      "kind": "News",
-      "url": "https://www.youtube.com/@DurbinNewsOfficial",
-      "subscribers": 560000,
-      "subscribersLabel": "560K",
-      "videos": 3300,
-      "videosLabel": "3.3K"
-    },
-    {
       "handle": "@durbinfilmsofficial",
       "label": "DURBIN FILMS",
       "kind": "Drama and telefilm",
@@ -78,26 +68,6 @@
       "subscribersLabel": "253K",
       "videos": 74,
       "videosLabel": "74"
-    },
-    {
-      "handle": "@sportsnews.durbin",
-      "label": "Durbin Sports",
-      "kind": "Sports news",
-      "url": "https://www.youtube.com/@sportsnews.durbin",
-      "subscribers": 64200,
-      "subscribersLabel": "64.2K",
-      "videos": 2600,
-      "videosLabel": "2.6K"
-    },
-    {
-      "handle": "@DurbinNatok",
-      "label": "Durbin Natok",
-      "kind": "Natok",
-      "url": "https://www.youtube.com/@DurbinNatok",
-      "subscribers": 7660,
-      "subscribersLabel": "7.66K",
-      "videos": 61,
-      "videosLabel": "61"
     }
   ]
 }

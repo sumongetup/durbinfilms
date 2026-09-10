@@ -369,7 +369,18 @@
     margin: 28px 0 0; padding: 0; list-style: none;
   }
   .work-grid .poster { flex: none; }
-  .art-blur { filter: blur(22px) saturate(1.25); transform: scale(1.25); opacity: 0.85; }
+  .art-blur { object-fit: cover; filter: blur(22px) saturate(1.25); transform: scale(1.25); opacity: 0.85; }
+  .art-main { object-fit: contain; }
+  .art-cover { object-fit: cover; }
+  /* The artwork is 16:9. On a phone a 2:3 card squeezed it into a narrow band
+     between blurred filler, so the card takes the artwork's own shape and the
+     photo fills it edge to edge. */
+  @media (max-width: 560px) {
+    .rail .poster { flex: 0 0 72vw; }
+    .art { aspect-ratio: 16 / 9; }
+    .art-blur { display: none; }
+    .art-main { object-fit: cover; }
+  }
   .title-bn { margin: 10px 0 0; font-size: clamp(17px, 2vw, 24px); font-weight: 600; color: var(--color-soft); }
 
   /* ---------- horizontal process ---------- */

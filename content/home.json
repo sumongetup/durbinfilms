@@ -127,7 +127,7 @@
       },
       {
         "q": "Where can I watch the productions?",
-        "a": "On YouTube. The studio publishes through DURBIN FILMS, DURBIN DRAMA and DURBIN, and the wider Durbin group runs nine channels in all, including news, sport and short films. Every production on this site links straight to its video."
+        "a": "On YouTube. The studio publishes through DURBIN FILMS, DURBIN DRAMA and DURBIN, alongside the wider Durbin group of channels. Every production on this site links straight to its video."
       }
     ]
   },
@@ -138,7 +138,7 @@
   },
   "channels": {
     "kicker": "THE NETWORK",
-    "heading": "Nine channels, one audience",
-    "lead": "The studio publishes through its own channels and those of the wider Durbin group, from drama and short films to news and sport. Counts come straight from YouTube."
+    "heading": "{channels} channels, one audience",
+    "lead": "The studio publishes through its own channels and those of the wider Durbin group, from drama and telefilm to short films and motivational stories. Counts come straight from YouTube."
   }
 }

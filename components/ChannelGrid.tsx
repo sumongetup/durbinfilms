@@ -16,7 +16,9 @@ export function ChannelGrid({ kicker, heading, lead, data }: { kicker: string; h
     <section className="sec wrap" id="channels" aria-labelledby="channels-heading">
       <Kicker>{kicker}</Kicker>
       <h2 className="svc-h2" id="channels-heading">
-        {heading}
+        {/* {channels} is filled from the live count, so the wording cannot
+            drift when a channel is added or dropped. */}
+        {heading.replace(/\{channels\}/g, String(data.totals.channels))}
       </h2>
       <p className="body mt-4">{lead}</p>
 

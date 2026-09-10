@@ -63,13 +63,13 @@ export function PosterCard({ work, index }: { work: Work; index: number }) {
         <motion.span ref={artRef} className="art" style={{ rotateX, rotateY, y, transformPerspective: 900 }}>
           {thumb ? (
             <>
-              <Image src={work.poster} alt="" fill sizes="246px" className="art-blur object-cover" aria-hidden="true" draggable={false} />
+              <Image src={work.poster} alt="" fill sizes="246px" className="art-blur" aria-hidden="true" draggable={false} />
               <Image
                 src={work.poster}
                 alt=""
                 fill
                 sizes="(max-width: 700px) 50vw, 246px"
-                className="object-contain"
+                className="art-main"
                 draggable={false}
               />
             </>
@@ -79,7 +79,7 @@ export function PosterCard({ work, index }: { work: Work; index: number }) {
               alt=""
               fill
               sizes="(max-width: 700px) 50vw, 246px"
-              className="object-cover"
+              className="art-cover"
               draggable={false}
             />
           )}

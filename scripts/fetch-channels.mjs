@@ -22,9 +22,6 @@ const CHANNELS = [
   { handle: "@RMSMotivation", label: "RMS Motivation", kind: "Motivational stories" },
   { handle: "@DurbinMotivation", label: "DURBIN Motivation", kind: "Motivational stories" },
   { handle: "@DurbinShortFilm", label: "DURBIN Shortfilm", kind: "Short films" },
-  { handle: "@DurbinNatok", label: "Durbin Natok", kind: "Natok" },
-  { handle: "@DurbinNewsOfficial", label: "Durbin News Daily", kind: "News" },
-  { handle: "@sportsnews.durbin", label: "Durbin Sports", kind: "Sports news" },
 ];
 
 /** "1.33M" -> 1330000, "7.66K" -> 7660, "560K" -> 560000. */
