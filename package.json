@@ -13,6 +13,7 @@
     "sync:dry": "node scripts/sync-youtube.mjs --dry",
     "og": "node scripts/make-og.mjs",
     "icon": "node scripts/preview-icon.mjs",
+    "share:check": "node scripts/check-share-tags.mjs",
     "logo": "node scripts/make-logo.mjs",
     "seo": "node scripts/seo-audit.mjs",
     "art": "node scripts/fetch-art.mjs",

@@ -22,7 +22,8 @@ export function defaultMetadata(): Metadata {
   const site = getSite();
   return {
     metadataBase: new URL(siteUrl()),
-    title: { default: site.title, template: `%s — ${site.name}` },
+    // A pipe, not an em dash, to match the home title and the house style.
+    title: { default: site.title, template: `%s | ${site.name}` },
     description: site.description,
     applicationName: site.name,
     keywords: [
@@ -43,7 +44,7 @@ export function defaultMetadata(): Metadata {
       siteName: site.name,
       title: site.title,
       description: site.description,
-      url: "/",
+      url: siteUrl(),
       locale: "en_GB",
       images: [{ url: site.ogImage, width: 1200, height: 630, alt: site.name }],
     },
@@ -51,7 +52,7 @@ export function defaultMetadata(): Metadata {
       card: "summary_large_image",
       title: site.title,
       description: site.description,
-      images: [site.ogImage],
+      images: [{ url: site.ogImage, alt: site.name }],
     },
     alternates: { canonical: "/" },
     robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-video-preview": -1 } },
@@ -123,7 +124,7 @@ export function workMetadata(work: Work): Metadata {
   const description = clampDescription(workDescription(work));
   const year = /^\d{4}$/.test(work.year) ? ` (${work.year})` : "";
   const kind = formatLabel(work);
-  // The layout appends " — Durbin Films" (15 chars), and a search result shows
+  // The layout appends " | Durbin Films" (15 chars), and a search result shows
   // about 60 before truncating, so drop the format, then the year, to fit.
   const budget = 60 - (site.name.length + 3);
   const title = [`${work.title}${year} | ${kind}`, `${work.title}${year}`, work.title].find((t) => t.length <= budget) ?? work.title;
@@ -133,7 +134,7 @@ export function workMetadata(work: Work): Metadata {
     alternates: { canonical: `/work/${work.slug}/` },
     openGraph: {
       type: work.type === "series" ? "video.tv_show" : "video.movie",
-      title: `${work.title}${year} — ${site.name}`,
+      title: `${work.title}${year} | ${site.name}`,
       description,
       url: `/work/${work.slug}/`,
       images: [{ url: absoluteUrl(work.backdrop), width: 1280, height: 720, alt: work.title }],
@@ -141,7 +142,7 @@ export function workMetadata(work: Work): Metadata {
     },
     twitter: {
       card: "summary_large_image",
-      title: `${work.title}${year} — ${site.name}`,
+      title: `${work.title}${year} | ${site.name}`,
       description,
       images: [absoluteUrl(work.backdrop)],
     },

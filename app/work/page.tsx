@@ -22,16 +22,16 @@ export const metadata: Metadata = {
   alternates: { canonical: "/work/" },
   openGraph: {
     type: "website",
-    title: `${TITLE} — Durbin Films`,
+    title: `${TITLE} | Durbin Films`,
     description: DESCRIPTION,
     url: "/work/",
-    images: [{ url: "/images/og/default.jpg", width: 1200, height: 630, alt: "Durbin Films" }],
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Durbin Films" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${TITLE} — Durbin Films`,
+    title: `${TITLE} | Durbin Films`,
     description: DESCRIPTION,
-    images: ["/images/og/default.jpg"],
+    images: [{ url: "/og-image.png", alt: "Durbin Films" }],
   },
 };
 

@@ -1,7 +1,7 @@
 {
   "name": "Durbin Films",
-  "title": "Durbin Films — Bangla natok, web series and brand films from Dhaka",
-  "description": "Durbin Films is a Dhaka production house making Bangla natok, web series, short films, documentary and brand films. Script to final cut in house, since 2021.",
+  "title": "Durbin Films | Bangla Natok, Web Series and Brand Films",
+  "description": "Durbin Films is a Dhaka production house making Bangla natok, web series, short films, documentaries and brand films, from script to final cut under one roof.",
   "url": "https://durbinfilms.com",
   "email": "contact@durbinfilms.com",
   "phone": "+8801916161609",
@@ -31,7 +31,7 @@
       "href": "https://www.youtube.com/@DURBINOfficial"
     }
   ],
-  "ogImage": "/images/og/default.jpg",
+  "ogImage": "/og-image.png",
   "studioImage": "/images/studio/portrait.jpg",
   "googleSiteVerification": "",
   "youtubeChannels": [

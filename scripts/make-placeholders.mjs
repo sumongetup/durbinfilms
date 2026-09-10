@@ -92,7 +92,7 @@ works.forEach((w, i) => {
 jobs.push(make(founder.portrait, { w: SIZE.portrait[0], h: SIZE.portrait[1], label: founder.name, sub: "Portrait · 4:5 · replace me", i: 4 }));
 jobs.push(make(founder.backdrop, { w: SIZE.backdrop[0], h: SIZE.backdrop[1], label: "Founder backdrop", sub: "16:9 · replace me", i: 5 }));
 jobs.push(make(site.studioImage, { w: SIZE.portrait[0], h: SIZE.portrait[1], label: "The studio", sub: "Portrait · 4:5 · replace me", i: 2 }));
-jobs.push(make(site.ogImage, { w: SIZE.og[0], h: SIZE.og[1], label: site.name, sub: "Open Graph · 1200x630 · replace me", i: 0 }));
+// The share images are rendered by scripts/make-og.mjs, not here.
 
 const files = await Promise.all(jobs);
 let bytes = 0;
