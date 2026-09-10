@@ -7,12 +7,8 @@
     </linearGradient>
   </defs>
   <rect width="64" height="64" rx="14" fill="#0D0B14"/>
-  <!-- The play mark from the Durbin Films lockup: a soft disc with a
-       triangle knocked out of it, leaning like the italic wordmark. -->
-  <g transform="rotate(-8 32 30)">
-    <ellipse cx="32" cy="30" rx="17" ry="15.5" fill="url(#g)"/>
-    <path d="M27.5 22.5 L41 30.5 L27.5 37.5 Z" fill="#0D0B14"/>
-  </g>
-  <!-- The swoosh that underlines the wordmark. -->
-  <path d="M8 52c10-6 22-9 34-9 5 0 10 .6 14 1.8-4-3.2-10.4-5.1-17.4-5.1C27 39.7 15.6 44.3 8 52z" fill="url(#g)"/>
+  <!-- One bold letterform, filling most of the tile. Anything finer than
+       this turns to mush at the 16px a browser tab actually renders. -->
+  <path fill="url(#g)" fill-rule="evenodd"
+        d="M14 12h18c13 0 22 8 22 20s-9 20-22 20H14V12zm11 10v20h7c7.5 0 12-3.8 12-10s-4.5-10-12-10h-7z"/>
 </svg>
