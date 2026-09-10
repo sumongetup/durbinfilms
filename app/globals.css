@@ -209,11 +209,6 @@
     .hero .kb-main { object-fit: cover; }
     .hero .kb-blur { display: none; }
   }
-  /* Under 860px a contained 16:9 frame is a thin band, so crop there too. */
-  @media (max-width: 860px) {
-    .hero .kb-main { object-fit: cover; }
-    .hero .kb-blur { display: none; }
-  }
   .hero::after {
     content: ""; position: absolute; inset: 0; pointer-events: none;
     background:
@@ -226,19 +221,34 @@
     background: radial-gradient(circle, rgba(255, 92, 57, 0.2), rgba(139, 92, 255, 0.1) 42%, transparent 66%);
     transform: translate(-50%, -50%); left: 50%; top: 40%; transition: opacity 0.5s; filter: blur(6px);
   }
-  @media (max-width: 700px) {
-    /* The copy covers most of a phone-height hero, so centre the crop on the
-       subject and dim the whole image rather than only the left half. */
-    .hero .kb-main { object-position: 42% 50%; }
-    .hero::after {
-      background:
-        linear-gradient(rgba(7, 6, 11, 0.58), rgba(7, 6, 11, 0.58)),
-        linear-gradient(0deg, var(--color-bg) 6%, rgba(7, 6, 11, 0.7) 30%, rgba(7, 6, 11, 0) 62%),
-        linear-gradient(180deg, rgba(7, 6, 11, 0.6) 0%, rgba(7, 6, 11, 0) 26%);
-    }
-  }
   .hero-in { position: relative; z-index: 4; width: 100%; padding-block: 104px 96px; }
   .hero-copy { max-width: 700px; }
+
+  /* Phone hero. The cover art is the point, so it runs full width across the
+     top at its own 16:9 shape and the copy starts underneath it. Placed after
+     the base rules above, which would otherwise win on source order. */
+  @media (max-width: 860px) {
+    .hero { align-items: flex-start; }
+    /* The desktop backdrop starts 8% above the viewport for the parallax;
+       top-aligned art would be clipped by that. */
+    .hero-bg { inset: 0; }
+    /* Written as `img.kb-main` on purpose: `.hero .kb img` above is more
+       specific than `.kb-main` and would keep the art centred. */
+    .hero .kb img.kb-main { object-fit: contain; object-position: 50% 0; }
+    /* No slow zoom here either, it would push the top of the art off screen. */
+    .hero .kb { transform: none; animation: none; }
+    .hero-in { padding-block: calc(56.25vw + 30px) 72px; }
+    .hero::after {
+      background: linear-gradient(
+        180deg,
+        rgba(7, 6, 11, 0.5) 0%,
+        rgba(7, 6, 11, 0.1) 10%,
+        rgba(7, 6, 11, 0.1) 22%,
+        rgba(7, 6, 11, 0.8) 34%,
+        var(--color-bg) 48%
+      );
+    }
+  }
   .hero h1 { font-size: clamp(40px, 6.8vw, 92px); margin: 16px 0 0; }
   .hero-work h1 { font-size: clamp(36px, 6vw, 80px); }
   .hero-work { min-height: min(88svh, 820px); }
