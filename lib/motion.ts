@@ -6,6 +6,6 @@ export const easeCurtain: [number, number, number, number] = [0.76, 0, 0.24, 1];
 /** IntersectionObserver settings the prototype used for `.rise` reveals. */
 export const revealViewport = { once: true, amount: 0.12, margin: "0px 0px -8% 0px" } as const;
 
-/** When the loader hands over to the page: bar done at 1.6s plus a short hold. */
-export const LOADER_MS = 1750;
+/** When the loader hands over to the page: bar done at ~1.1s plus a short hold. */
+export const LOADER_MS = 1200;
 export const SLIDE_MS = 6500;

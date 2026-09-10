@@ -38,7 +38,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`${sora.variable} ${jakarta.variable}`}>
       <head>
-        <link rel="preconnect" href="https://i.ytimg.com" />
+        {/* Artwork is served from this domain; only the trailer embed is third party. */}
+        <link rel="preconnect" href="https://www.youtube-nocookie.com" />
       </head>
       <body>
         <noscript>

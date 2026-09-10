@@ -258,6 +258,9 @@
     cursor: pointer; position: relative; overflow: hidden;
   }
   .dot b { position: absolute; inset: 0; width: 0; background: var(--grad); border-radius: 4px; display: block; }
+  /* The bar is 4px tall by design, so extend the touch area around it
+     rather than making it visually chunky. */
+  .dot::after { content: ""; position: absolute; inset: -20px -6px; }
   @media (max-width: 700px) { .dot { width: 38px; } }
   .scroll-hint {
     position: absolute; left: 50%; bottom: 26px; transform: translateX(-50%); z-index: 5; color: var(--color-dim);

@@ -154,9 +154,12 @@ function organizationNode(): JsonLd {
   const site = getSite();
   const sameAs = site.social.map((s) => s.href).filter((h) => h && !h.includes("["));
   const data: JsonLd = {
-    "@type": "Organization",
+    // Also a LocalBusiness: there is a real studio at a real address in
+    // Dhaka, which is what lets it surface for local searches.
+    "@type": ["Organization", "LocalBusiness"],
     "@id": ORG_ID(),
     name: site.name,
+    image: absoluteUrl(site.ogImage),
     url: `${siteUrl()}/`,
     logo: { "@type": "ImageObject", url: absoluteUrl(site.ogImage), width: 1200, height: 630 },
     description: site.description,

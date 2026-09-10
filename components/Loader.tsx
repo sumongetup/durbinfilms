@@ -9,20 +9,23 @@ import { LOADER_MS, easeCurtain, easeSoft } from "@/lib/motion";
 
 const SEEN_KEY = "durbin-loader-seen";
 const BAR_DELAY = 0.15;
-const BAR_DURATION = 1.45;
+const BAR_DURATION = 0.95;
 const BAR_EASE: [number, number, number, number] = [0.4, 0, 0.2, 1];
 
 const HIDDEN = "inset(0 100% 0 0)";
 const SHOWN = "inset(0 0% 0 0)";
 
 /**
- * Opening sequence, about 1.75s plus the wipe:
+ * Opening sequence, about 1.2s plus the wipe:
  *
  *  0.00s  soft glow breathes in behind the centre
- *  0.15s  the logo wipes in from the left over 1.1s
- *  0.15s  the progress bar fills over 1.45s while a counter runs 00 to 100
- *  1.75s  the mark lifts and fades, the glow blooms out, and the curtain
+ *  0.10s  the logo wipes in from the left over 0.8s
+ *  0.15s  the progress bar fills over 0.95s while a counter runs 00 to 100
+ *  1.20s  the mark lifts and fades, the glow blooms out, and the curtain
  *         sweeps up with a lit edge
+ *
+ * Kept deliberately short: everything here sits in front of the page, so
+ * each extra tenth is a tenth added to the largest contentful paint.
  *
  * Skipped entirely under prefers-reduced-motion, and on any visit after the
  * first in a session so moving between pages is not gated by it.
@@ -92,9 +95,11 @@ export function Loader() {
             className="loader-mark"
             initial={{ clipPath: HIDDEN, opacity: 0 }}
             animate={{ clipPath: SHOWN, opacity: 1 }}
-            transition={{ clipPath: { duration: 1.1, ease: easeSoft, delay: 0.15 }, opacity: { duration: 0.3, delay: 0.15 } }}
+            transition={{ clipPath: { duration: 0.8, ease: easeSoft, delay: 0.1 }, opacity: { duration: 0.25, delay: 0.1 } }}
           >
-            <Image src="/images/brand/logo.png" alt="" width={1400} height={568} priority className="loader-logo" />
+            {/* 420px wide is ample for a mark that never renders past 340px,
+                and it is the same file the nav already needs. */}
+            <Image src="/images/brand/logo-nav.png" alt="" width={420} height={170} priority className="loader-logo" />
           </motion.div>
 
           <div className="bar-row">
@@ -111,7 +116,7 @@ export function Loader() {
         aria-hidden="true"
         initial={false}
         animate={{ y: ready ? "-100%" : "0%" }}
-        transition={{ duration: 0.9, ease: easeCurtain, delay: ready ? 0.05 : 0 }}
+        transition={{ duration: 0.7, ease: easeCurtain, delay: ready ? 0.04 : 0 }}
         onAnimationComplete={() => {
           if (ready) setGone(true);
         }}

@@ -74,11 +74,12 @@ Rules the pages follow:
 - `titleBn` (optional) is the title in Bangla script, shown under the Latin title on the detail page.
 - `views` (optional) is the public view count as YouTube shows it, e.g. `"41M"`. It appears as a
   chip on the poster, in the details grid, and in the hero line when there is no synopsis yet.
-- `poster` and `backdrop` may be local files or full https URLs. The current entries use each
-  video's own YouTube thumbnail (`https://i.ytimg.com/vi/<id>/maxresdefault.jpg`) for both, with
-  `"posterFit": "thumb"` so the 16:9 image sits whole inside the 2:3 poster over a blurred copy of
-  itself. Drop a real 2:3 poster in `public/images/posters/`, point `poster` at it and remove
-  `posterFit` to switch.
+- `poster` and `backdrop` are local files under `public/images/`. `npm run art` downloads each
+  production's YouTube thumbnail once, converts it to WebP at the size actually displayed and
+  rewrites `works.json` to point at the local copy, which keeps the artwork off the critical path.
+  Entries still using a full https URL are fetched the next time it runs. `"posterFit": "thumb"`
+  sits a 16:9 image whole inside the 2:3 poster frame over a blurred copy of itself; drop a real
+  2:3 poster in and remove that key to switch.
 - `youtubeId` is the trailer. When it is empty but `watchUrl` is a YouTube link, the play button
   says "Watch now" and plays the full video instead. `trailerStart` (seconds) offsets the trailer.
 - The line under a poster is the first non-empty of `channel`, `platform`, `client`, then the year.

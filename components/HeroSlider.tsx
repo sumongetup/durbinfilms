@@ -59,6 +59,10 @@ export function HeroSlider({ slides, headline }: { slides: FeaturedSlide[]; head
     return () => window.clearInterval(t);
   }, [reduce, slides.length, cycle]);
 
+  // True after hydration, so the first paint renders the copy already visible.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   // The other backdrops are only needed at the first crossfade, so let the
   // first one win the bandwidth race for the largest contentful paint.
   const [warm, setWarm] = useState(false);
@@ -112,7 +116,10 @@ export function HeroSlider({ slides, headline }: { slides: FeaturedSlide[]; head
             <motion.p
               key={current.slug}
               className="syn"
-              initial={{ opacity: 0 }}
+              // Fading in from zero would ship opacity:0 in the HTML, which
+              // makes this the last thing to paint and drags LCP with it.
+              // Only the slide changes need the crossfade.
+              initial={mounted ? { opacity: 0 } : false}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0, transition: { duration: 0.2 } }}
               transition={{ duration: 0.5 }}

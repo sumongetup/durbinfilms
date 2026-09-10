@@ -13,7 +13,8 @@
     "sync:dry": "node scripts/sync-youtube.mjs --dry",
     "og": "node scripts/make-og.mjs",
     "logo": "node scripts/make-logo.mjs",
-    "seo": "node scripts/seo-audit.mjs"
+    "seo": "node scripts/seo-audit.mjs",
+    "art": "node scripts/fetch-art.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.23.0",

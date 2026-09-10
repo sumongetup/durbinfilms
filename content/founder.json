@@ -9,16 +9,16 @@
     "Founder, Durbin Films",
     "Editor & Publisher, Durbin News"
   ],
-  "intro": "A producer who has worked online full time since 2014. He founded Durbin Films in October 2021 and Durbin News four months later, and runs both from Dhaka, Bangladesh.",
+  "intro": "Producer and publisher, working online full time since 2014. Founder of Durbin Films and Durbin News, Dhaka, Bangladesh.",
   "portrait": "/images/founder/portrait.jpg",
   "backdrop": "/images/founder/backdrop.jpg",
   "profile": {
     "kicker": "PROFILE",
     "heading": "Ten years of one audience",
     "paragraphs": [
-      "Md Sumon Howlader has worked on the internet full time since 2014, well before a Bengali audience moved to YouTube in the numbers it has now. More than two thousand projects have gone out of his hands since then, most of them short films and documentaries, and that volume taught him the thing a producer cannot be told and has to learn for himself: what people give their attention to, and what they scroll past.",
-      "He founded Durbin Films in October 2021. The studio's work now runs across three YouTube channels with more than two and a half million subscribers between them, and its drama has gone out on television as well as online. He produces across the slate, from picking the story and setting the budget through to final delivery.",
-      "Four months after the studio, he launched Durbin News, which the Press Information Department registered as an online news portal in July 2022. He is its Editor and Publisher. The newsroom and the studio share one office in Dhaka, Bangladesh."
+      "Md Sumon Howlader has worked online full time since 2014, years before a Bengali audience arrived on YouTube and Facebook in the numbers it has today. More than two thousand projects have passed through his hands since then, most of them short films and documentaries. That volume taught him what no one can teach a producer: what people stop for, and what they scroll past.",
+      "He founded Durbin Films in October 2021. The studio now works across three YouTube channels with more than two and a half million subscribers between them, producing television dramas, web series, and commercial work for brands. Its drama has aired on television as well as online. He produces across the full slate, from choosing the story and setting the budget to final delivery.",
+      "Four months after the studio, he launched Durbin News, registered by the Press Information Department as an online news portal in July 2022. He is its Editor and Publisher. Its main Facebook page reaches around 7.6 million followers and more than 500 million views a month, making it one of the most followed news outlets in Bangladesh."
     ]
   },
   "facts": [
@@ -79,7 +79,7 @@
       {
         "tag": "NEWS",
         "name": "Durbin News",
-        "text": "Government registered online news portal (PID no. 147), launched February 2022, with a national readership and daily coverage.",
+        "text": "Government registered online news portal (PID no. 147), launched February 2022. Its main Facebook page reaches around 7.6 million followers and more than 500 million views a month.",
         "role": "Editor & Publisher",
         "href": "https://durbinnews.com/"
       }
