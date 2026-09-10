@@ -255,7 +255,9 @@
   .dots { display: flex; gap: 10px; margin-top: 34px; }
   .dot {
     width: 66px; height: 4px; border-radius: 4px; background: rgba(255, 255, 255, 0.2); border: 0; padding: 0;
-    cursor: pointer; position: relative; overflow: hidden;
+    cursor: pointer; position: relative;
+    /* No overflow:hidden here: it would clip the enlarged touch area below.
+       The inner bar is rounded and never leaves its own box anyway. */
   }
   .dot b { position: absolute; inset: 0; width: 0; background: var(--grad); border-radius: 4px; display: block; }
   /* The bar is 4px tall by design, so extend the touch area around it
