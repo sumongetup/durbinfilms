@@ -19,6 +19,8 @@ export interface Work {
   title: string;
   /** The title in Bangla script, shown under the Latin title where there is room. */
   titleBn?: string;
+  /** Set when the work is read for a page: the title in the other script, shown under the main one. */
+  altTitle?: string;
   type: WorkType;
   year: string;
   channel: string;
@@ -152,6 +154,8 @@ export interface Site {
 export interface NavLink {
   label: string;
   href: string;
+  /** Set on the language switch: the language of the page it opens. */
+  hrefLang?: string;
 }
 
 export interface Channel {

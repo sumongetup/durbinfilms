@@ -15,8 +15,9 @@
   --color-pink: #ff2e7e;
   --color-violet: #8b5cff;
 
-  --font-display: var(--font-sora), system-ui, sans-serif;
-  --font-body: var(--font-jakarta), system-ui, sans-serif;
+  /* Sora and Plus Jakarta Sans have no Bangla glyphs, so Bangla text falls through to Hind Siliguri. */
+  --font-display: var(--font-sora), var(--font-bangla, system-ui), system-ui, sans-serif;
+  --font-body: var(--font-jakarta), var(--font-bangla, system-ui), system-ui, sans-serif;
 
   --ease-soft: cubic-bezier(0.2, 0.8, 0.3, 1);
   --ease-word: cubic-bezier(0.2, 0.85, 0.3, 1);
@@ -660,7 +661,17 @@
   .still img { transition: transform 0.9s var(--ease-soft); }
   .still:hover img { transform: scale(1.06); }
   .creds.credits { margin-top: 30px; }
+  .links .lang-switch { color: var(--color-text); font-weight: 600; }
 }
+
+/* ------------------------------------------------------------------ */
+/* Bangla. Unlayered, so it wins over the component rules above.        */
+/* Tracking breaks up conjuncts, and the vowel signs above and below    */
+/* the line need more leading than the Latin display face.              */
+/* ------------------------------------------------------------------ */
+:lang(bn) { letter-spacing: normal; }
+:lang(bn) h1, :lang(bn) h2, :lang(bn) h3 { line-height: 1.32; }
+:lang(bn) .word { padding-block: 0.04em; }
 
 /* ------------------------------------------------------------------ */
 /* Reduced motion: kill CSS motion outright; Framer respects it via     */

@@ -404,6 +404,7 @@
   {
     "slug": "kobul-bollo-k",
     "title": "Kobul Bollo K?",
+    "titleBn": "কবুল বললো কে?",
     "type": "drama",
     "year": "2022",
     "channel": "",
@@ -691,6 +692,7 @@
   {
     "slug": "college-gang",
     "title": "College Gang",
+    "titleBn": "কলেজ গ্যাং",
     "type": "series",
     "year": "2022",
     "channel": "",
@@ -749,6 +751,7 @@
   {
     "slug": "trust",
     "title": "Trust",
+    "titleBn": "ট্রাস্ট",
     "type": "short",
     "year": "2021",
     "channel": "",
@@ -780,6 +783,7 @@
   {
     "slug": "trust-2",
     "title": "Trust 2",
+    "titleBn": "ট্রাস্ট ২",
     "type": "short",
     "year": "2022",
     "channel": "",
@@ -989,6 +993,7 @@
   {
     "slug": "taka-title-song",
     "title": "Taka Title Song",
+    "titleBn": "টাকা টাইটেল গান",
     "type": "song",
     "year": "2022",
     "channel": "",

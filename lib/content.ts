@@ -3,7 +3,12 @@ import founderJson from "@/content/founder.json";
 import siteJson from "@/content/site.json";
 import homeJson from "@/content/home.json";
 import channelsJson from "@/content/channels.json";
-import type { ChannelData, Fact, FeaturedSlide, Founder, Home, Site, Work, WorkType } from "./types";
+import bnWorksJson from "@/content/bn/works.json";
+import bnFounderJson from "@/content/bn/founder.json";
+import bnSiteJson from "@/content/bn/site.json";
+import bnHomeJson from "@/content/bn/home.json";
+import { countLabel, digits, type Locale } from "./i18n";
+import type { ChannelData, Fact, FeaturedSlide, Founder, HeroCopy, Home, Site, Work, WorkType } from "./types";
 import { toSlide } from "./work";
 
 export {
@@ -27,12 +32,35 @@ const site = siteJson as Site;
 const home = homeJson as Home;
 const channelData = channelsJson as ChannelData;
 
-export function getSite(): Site {
-  return site;
+/** Bangla copy per production, keyed by slug. Anything missing falls back to generated text. */
+const bnWorks = bnWorksJson as Record<string, { synopsis?: string; hero?: HeroCopy }>;
+
+/** Bangla overrides for site.json: the name, the search snippet and the address in Bangla. */
+const bnSite: Site = {
+  ...site,
+  ...(bnSiteJson as Partial<Site>),
+  address: { ...site.address, ...bnSiteJson.address },
+};
+
+/** The Bangla founder page: Bangla text over the English file, so links and images stay in one place. */
+const bnFounder: Founder = {
+  ...founder,
+  ...(bnFounderJson as Omit<Founder, "portrait" | "backdrop" | "contact"> & { contact: Omit<Founder["contact"], "links"> }),
+  contact: { ...founder.contact, ...bnFounderJson.contact },
+};
+
+/** Search keywords for the Bangla pages: the brand's spellings and what people type. */
+export const BN_KEYWORDS: string[] = bnSiteJson.keywords;
+
+/** Every spelling of the studio's name in Bangla, for structured data. */
+export const BN_NAMES: string[] = bnSiteJson.keywords.filter((k) => /ফিল্মস$/.test(k));
+
+export function getSite(locale: Locale = "en"): Site {
+  return locale === "bn" ? bnSite : site;
 }
 
-export function getHome(): Home {
-  return home;
+export function getHome(locale: Locale = "en"): Home {
+  return locale === "bn" ? (bnHomeJson as Home) : home;
 }
 
 /** The studio's own channel first, then the rest of the network by size. */
@@ -44,8 +72,8 @@ export function getChannels(): ChannelData {
   return { ...channelData, channels };
 }
 
-export function getFounder(): Founder {
-  return founder;
+export function getFounder(locale: Locale = "en"): Founder {
+  return locale === "bn" ? bnFounder : founder;
 }
 
 /**
@@ -53,57 +81,64 @@ export function getFounder(): Founder {
  * live channel totals, so `npm run channels` is the only place those numbers
  * are ever edited.
  */
-export function resolveFacts(facts: Fact[]): Fact[] {
+export function resolveFacts(facts: Fact[], locale: Locale = "en"): Fact[] {
   const t = channelData.totals;
   const swap = (text: string) =>
     text
-      .replace(/\{subscribers\}/g, t.subscribersLabel)
-      .replace(/\{videos\}/g, t.videosLabel)
-      .replace(/\{channels\}/g, String(t.channels));
+      .replace(/\{subscribers\}/g, countLabel(locale, t.subscribersLabel, t.subscribers))
+      .replace(/\{videos\}/g, locale === "bn" ? digits("bn", t.videosLabel) : t.videosLabel)
+      .replace(/\{channels\}/g, digits(locale, t.channels));
   return facts.map((f) => ({ value: swap(f.value), label: swap(f.label) }));
 }
 
-export function getWorks(): Work[] {
-  return works;
+/**
+ * A production as a page in one language shows it. In Bangla the Bangla title
+ * leads and the Latin one sits under it; the synopsis and hero copy come from
+ * content/bn/works.json.
+ */
+function localize(work: Work, locale: Locale): Work {
+  if (locale === "en") return work.titleBn ? { ...work, altTitle: work.titleBn } : work;
+  const bn = bnWorks[work.slug] ?? {};
+  return {
+    ...work,
+    title: work.titleBn || work.title,
+    altTitle: work.titleBn ? work.title : undefined,
+    synopsis: bn.synopsis ?? "",
+    hero: bn.hero,
+  };
 }
 
-export function getWork(slug: string): Work | undefined {
-  return works.find((w) => w.slug === slug);
+const localized: Record<Locale, Work[]> = {
+  en: works.map((w) => localize(w, "en")),
+  bn: works.map((w) => localize(w, "bn")),
+};
+
+export function getWorks(locale: Locale = "en"): Work[] {
+  return localized[locale];
+}
+
+export function getWork(slug: string, locale: Locale = "en"): Work | undefined {
+  return localized[locale].find((w) => w.slug === slug);
 }
 
 /** Productions of the given types, in file order. */
-export function getByType(...types: WorkType[]): Work[] {
-  return works.filter((w) => types.includes(w.type));
-}
-
-/** Rail one: television drama and telefilm. */
-export function getDramas(): Work[] {
-  return getByType("drama");
-}
-
-/** Rail two: web series, short films, brand work and documentaries. */
-export function getDigital(): Work[] {
-  return getByType("series", "short", "brand", "documentary");
-}
-
-/** Rail three: songs, title tracks and soundtracks. */
-export function getSongs(): Work[] {
-  return getByType("song");
+export function getByType(types: WorkType[], locale: Locale = "en"): Work[] {
+  return localized[locale].filter((w) => types.includes(w.type));
 }
 
 /** Everything released on one channel or platform, songs excluded, in file order. */
-export function getByPlatform(platform: string): Work[] {
-  return works.filter((w) => w.platform === platform && w.type !== "song");
+export function getByPlatform(platform: string, locale: Locale = "en"): Work[] {
+  return localized[locale].filter((w) => w.platform === platform && w.type !== "song");
 }
 
 /** Home hero slides: entries flagged featured, in file order. */
-export function getFeaturedSlides(): FeaturedSlide[] {
-  return works.filter((w) => w.featured).map(toSlide);
+export function getFeaturedSlides(locale: Locale = "en"): FeaturedSlide[] {
+  return localized[locale].filter((w) => w.featured).map((w) => toSlide(w, locale));
 }
 
 /** Other productions to suggest under a detail page: same type first, then the rest. */
-export function getRelated(work: Work, limit = 8): Work[] {
-  const others = works.filter((w) => w.slug !== work.slug);
+export function getRelated(work: Work, locale: Locale = "en", limit = 8): Work[] {
+  const others = localized[locale].filter((w) => w.slug !== work.slug);
   const same = others.filter((w) => w.type === work.type);
   const rest = others.filter((w) => w.type !== work.type);
   return [...same, ...rest].slice(0, limit);

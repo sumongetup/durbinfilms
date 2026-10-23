@@ -1,11 +1,13 @@
-import type { Metadata, Viewport } from "next";
+import type { Viewport } from "next";
 import type { ReactNode } from "react";
 import { Plus_Jakarta_Sans, Sora } from "next/font/google";
 import "./globals.css";
 import { MotionProvider } from "@/components/providers/MotionProvider";
+import { LocaleProvider } from "@/components/providers/LocaleProvider";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { JsonLd } from "@/components/ui/JsonLd";
-import { defaultMetadata, organizationJsonLd } from "@/lib/seo";
+import { HTML_LANG, UI, type Locale } from "@/lib/i18n";
+import { organizationJsonLd } from "@/lib/seo";
 
 const sora = Sora({
   subsets: ["latin"],
@@ -21,9 +23,8 @@ const jakarta = Plus_Jakarta_Sans({
   display: "swap",
 });
 
-export const metadata: Metadata = defaultMetadata();
-
-export const viewport: Viewport = {
+/** Re-exported as `viewport` by each root layout and the 404 page. */
+export const VIEWPORT: Viewport = {
   themeColor: "#07060b",
   colorScheme: "dark",
   width: "device-width",
@@ -34,9 +35,14 @@ export const viewport: Viewport = {
 const NOSCRIPT_CSS =
   ".word b{transform:none!important}.loader,.curtain{display:none!important}.shot,.frame{clip-path:none!important}";
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+/**
+ * The <html> document shared by both root layouts. Each layout passes its
+ * language and the class of its Bangla font (preloaded only where Bangla is
+ * the page language; elsewhere it loads on the first Bangla glyph).
+ */
+export function SiteRoot({ locale, banglaFont, children }: { locale: Locale; banglaFont: string; children: ReactNode }) {
   return (
-    <html lang="en" className={`${sora.variable} ${jakarta.variable}`}>
+    <html lang={HTML_LANG[locale]} className={`${sora.variable} ${jakarta.variable} ${banglaFont}`}>
       <head>
         {/* Artwork is served from this domain; only the trailer embed is third party. */}
         <link rel="preconnect" href="https://www.youtube-nocookie.com" />
@@ -46,13 +52,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <style>{NOSCRIPT_CSS}</style>
         </noscript>
         <a className="skip" href="#main">
-          Skip to content
+          {UI[locale].skip}
         </a>
-        <MotionProvider>
-          <ScrollProgress />
-          {children}
-        </MotionProvider>
-        <JsonLd data={organizationJsonLd()} />
+        <LocaleProvider locale={locale}>
+          <MotionProvider>
+            <ScrollProgress />
+            {children}
+          </MotionProvider>
+        </LocaleProvider>
+        <JsonLd data={organizationJsonLd(locale)} />
       </body>
     </html>
   );

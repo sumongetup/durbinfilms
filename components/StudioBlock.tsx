@@ -6,7 +6,9 @@ import { motion, useInView } from "framer-motion";
 import { Button } from "./ui/Button";
 import { Kicker } from "./ui/Kicker";
 import { Reveal } from "./ui/Reveal";
+import { useLocale } from "./providers/LocaleProvider";
 import { useReducedMotion } from "@/hooks/useMediaQuery";
+import { UI, localePath } from "@/lib/i18n";
 import { easeCurtain, easeSoft } from "@/lib/motion";
 import type { Home } from "@/lib/types";
 
@@ -23,6 +25,7 @@ const OPEN = "inset(0% 0% 0% 0%)";
  */
 export function StudioBlock({ portrait, studio }: { portrait: string; studio: Home["studio"] }) {
   const reduce = useReducedMotion();
+  const locale = useLocale();
   const wrapRef = useRef<HTMLDivElement>(null);
   const inView = useInView(wrapRef, { once: true, amount: 0.12, margin: "0px 0px -8% 0px" });
   const shown = inView || reduce;
@@ -46,7 +49,7 @@ export function StudioBlock({ portrait, studio }: { portrait: string; studio: Ho
             >
               <Image
                 src={portrait}
-                alt="Md Sumon Howlader, founder of Durbin Films"
+                alt={UI[locale].founder.portraitAlt}
                 fill
                 sizes="(max-width: 860px) 100vw, 40vw"
                 className="object-cover"
@@ -62,7 +65,7 @@ export function StudioBlock({ portrait, studio }: { portrait: string; studio: Ho
             ))}
           </div>
           <p className="sign">{studio.sign}</p>
-          <Button href="/founder/" variant="ghost" className="mt-[18px]">
+          <Button href={localePath(locale, "/founder/")} variant="ghost" className="mt-[18px]">
             {studio.cta}
           </Button>
         </Reveal>

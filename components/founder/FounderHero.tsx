@@ -2,11 +2,13 @@
 
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { useLocale } from "@/components/providers/LocaleProvider";
 import { useReady } from "@/components/providers/ReadyProvider";
 import { Button } from "@/components/ui/Button";
 import { Kicker } from "@/components/ui/Kicker";
 import { SplitWords } from "@/components/ui/SplitWords";
 import { useReducedMotion } from "@/hooks/useMediaQuery";
+import { UI, localePath } from "@/lib/i18n";
 import { easeCurtain, easeSoft } from "@/lib/motion";
 import type { Founder } from "@/lib/types";
 
@@ -20,6 +22,8 @@ const OPEN = "inset(0% 0% 0% 0%)";
  */
 export function FounderHero({ founder }: { founder: Founder }) {
   const reduce = useReducedMotion();
+  const locale = useLocale();
+  const t = UI[locale].founder;
   const { ready } = useReady();
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, (v) => (reduce ? 0 : v * 0.18));
@@ -62,13 +66,13 @@ export function FounderHero({ founder }: { founder: Founder }) {
           </div>
           <p className="intro">{founder.intro}</p>
           <div className="btns">
-            <Button href="#contact">Contact</Button>
-            <Button href="/#dramas" variant="ghost">
-              See the work
+            <Button href="#contact">{t.contact}</Button>
+            <Button href={`${localePath(locale, "/")}#dramas`} variant="ghost">
+              {t.work}
             </Button>
           </div>
           {founder.contact.links && founder.contact.links.length > 0 ? (
-            <ul className="social-row" aria-label={`${founder.name} on social media`}>
+            <ul className="social-row" aria-label={t.social(founder.name)}>
               {founder.contact.links.map((l) => (
                 <li key={l.label}>
                   <a className="chip" href={l.href} target="_blank" rel="noopener noreferrer me">

@@ -1,4 +1,5 @@
-import type { FeaturedSlide, Work, WorkType } from "./types";
+import { UI, countLabel, digits, type Locale } from "./i18n";
+import type { FeaturedSlide, Work } from "./types";
 
 /**
  * Pure helpers over a single Work. No JSON imports here, so client
@@ -16,62 +17,43 @@ export function outletOf(work: Work): string {
 }
 
 /** Label for the outlet column on the detail page. */
-export function outletLabel(work: Work): string {
-  if (work.channel) return "CHANNEL";
-  if (work.platform) return work.type === "short" ? "FESTIVAL" : "PLATFORM";
-  if (work.client) return "CLIENT";
-  return "OUTLET";
+export function outletLabel(work: Work, locale: Locale = "en"): string {
+  const t = UI[locale].work.outlet;
+  if (work.channel) return t.channel;
+  if (work.platform) return work.type === "short" ? t.festival : t.platform;
+  if (work.client) return t.client;
+  return t.outlet;
 }
 
-const KICKER: Record<WorkType, string> = {
-  drama: "FEATURED PRODUCTION",
-  series: "NEW WEB SERIES",
-  brand: "BRAND WORK",
-  short: "SHORT FILM",
-  documentary: "DOCUMENTARY",
-  song: "MUSIC",
-};
-
-export function formatLabel(work: Work): string {
+export function formatLabel(work: Work, locale: Locale = "en"): string {
+  const t = UI[locale].formats;
   switch (work.type) {
     case "drama": {
       const badge = work.badge.toUpperCase();
-      if (badge === "TELEFILM") return "Telefilm";
-      if (badge === "EID SPECIAL") return "Eid special drama";
-      return work.episodes > 1 ? `${work.episodes} episode drama` : "Single episode drama";
+      if (badge === "TELEFILM") return t.telefilm;
+      if (badge === "EID SPECIAL") return t.eid;
+      return work.episodes > 1 ? t.episodes(work.episodes) : t.single;
     }
     case "series":
-      return "Web series";
+      return t.series;
     case "brand":
-      return work.badge.toUpperCase() === "TVC" ? "Television commercial" : "Brand film";
+      return work.badge.toUpperCase() === "TVC" ? t.tvc : t.brand;
     case "short":
-      return "Short film";
+      return t.short;
     case "documentary":
-      return "Documentary";
+      return t.documentary;
     case "song":
-      return work.badge.toUpperCase().includes("OST") ? "Original soundtrack" : "Song";
+      return work.badge.toUpperCase().includes("OST") ? t.ost : t.song;
   }
 }
 
-export function chipOf(work: Work): string {
-  switch (work.type) {
-    case "drama":
-      return "Now streaming";
-    case "series":
-      return `${work.episodes} episodes`;
-    case "brand":
-      return "Campaign";
-    case "short":
-      return "Short film";
-    case "documentary":
-      return "Documentary";
-    case "song":
-      return "Music video";
-  }
+export function chipOf(work: Work, locale: Locale = "en"): string {
+  const t = UI[locale].chips;
+  return work.type === "series" ? t.series(work.episodes) : t[work.type];
 }
 
-export function metaOf(work: Work): string {
-  return [work.year, formatLabel(work), outletOf(work)].filter(Boolean).join(" · ");
+export function metaOf(work: Work, locale: Locale = "en"): string {
+  return [digits(locale, work.year), formatLabel(work, locale), outletOf(work)].filter(Boolean).join(" · ");
 }
 
 /** Names listed under Cast or Featuring in the credits, joined. */
@@ -86,17 +68,18 @@ export function featuringOf(work: Work): string {
  * One factual line for a production that has no written synopsis yet: who is
  * in it and how it has done on YouTube. Nothing here is invented.
  */
-export function autoBlurb(work: Work): string {
+export function autoBlurb(work: Work, locale: Locale = "en"): string {
+  const t = UI[locale].blurb;
   const parts: string[] = [];
   const names = featuringOf(work);
-  if (names) parts.push(`With ${names}.`);
-  if (work.views) parts.push(`${work.views} views on YouTube.`);
+  if (names) parts.push(t.with(names));
+  if (work.views) parts.push(t.views(countLabel(locale, work.views)));
   return parts.join(" ");
 }
 
 /** The synopsis if it has been written, otherwise the factual fallback. */
-export function blurbOf(work: Work): string {
-  return isPlaceholder(work.synopsis) ? autoBlurb(work) : work.synopsis;
+export function blurbOf(work: Work, locale: Locale = "en"): string {
+  return isPlaceholder(work.synopsis) ? autoBlurb(work, locale) : work.synopsis;
 }
 
 /** Extracts a YouTube video ID from a youtu.be or watch URL. */
@@ -118,19 +101,19 @@ export function playableOf(work: Pick<Work, "youtubeId" | "watchUrl">): { id: st
   return full ? { id: full, kind: "full" } : null;
 }
 
-export function playLabel(kind: PlayKind | null | undefined): string {
-  return kind === "full" ? "Watch now" : "Watch trailer";
+export function playLabel(kind: PlayKind | null | undefined, locale: Locale = "en"): string {
+  return kind === "full" ? UI[locale].play.now : UI[locale].play.trailer;
 }
 
-export function toSlide(work: Work): FeaturedSlide {
+export function toSlide(work: Work, locale: Locale = "en"): FeaturedSlide {
   return {
     slug: work.slug,
     title: work.title,
     titleBn: work.titleBn,
-    kicker: work.hero?.kicker ?? KICKER[work.type],
-    chip: work.hero?.chip ?? chipOf(work),
-    meta: work.hero?.meta ?? metaOf(work),
-    blurb: work.hero?.blurb ?? blurbOf(work),
+    kicker: work.hero?.kicker ?? UI[locale].kickers[work.type],
+    chip: work.hero?.chip ?? chipOf(work, locale),
+    meta: work.hero?.meta ?? metaOf(work, locale),
+    blurb: work.hero?.blurb ?? blurbOf(work, locale),
     backdrop: work.backdrop,
     youtubeId: work.youtubeId,
     trailerStart: work.trailerStart,

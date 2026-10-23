@@ -19,10 +19,14 @@ npm run preview    # serves out/ locally
 
 | Route           | Source                         |
 | --------------- | ------------------------------ |
-| `/`             | `app/page.tsx` (DURBIN FILMS dramas only) |
-| `/work/`        | `app/work/page.tsx` (every production, grouped by channel) |
-| `/founder/`     | `app/founder/page.tsx`         |
-| `/work/<slug>/` | `app/work/[slug]/page.tsx`     |
+| `/`             | `app/(en)/page.tsx` (DURBIN FILMS dramas only) |
+| `/work/`        | `app/(en)/work/page.tsx` (every production, grouped by channel) |
+| `/founder/`     | `app/(en)/founder/page.tsx`    |
+| `/work/<slug>/` | `app/(en)/work/[slug]/page.tsx` |
+| `/bn/...`       | `app/(bn)/bn/...`, the same four pages in Bangla |
+
+Each route file is a few lines that render a view from `components/views/` in one language, so
+English and Bangla always share the same layout. See "Bangla site" below.
 
 ## Content lives in three JSON files
 
@@ -149,6 +153,34 @@ Share images are built by `npm run og` (scripts/make-og.mjs) with sharp, no exte
 line of copy is set in Plus Jakarta Sans from `scripts/assets`, the site's body face. Social
 platforms cache previews, so after changing the image use Facebook's Sharing Debugger to scrape
 the page again.
+
+## Bangla site
+
+Every page also exists in Bangla under `/bn/` (`/bn/`, `/bn/work/`, `/bn/founder/`,
+`/bn/work/<slug>/`), so the studio can be found by people searching in Bangla, for example
+দুরবীন ফিল্মস, বাংলা নাটক or a natok's Bangla title. The brand is written দুরবীন ফিল্মস, the same
+way Durbin News writes দুরবীন.
+
+- `content/bn/home.json` and `content/bn/founder.json` hold the Bangla copy, in the same shape as the
+  English files. The founder file only carries text; images and profile links come from
+  `content/founder.json`.
+- `content/bn/site.json` holds the Bangla name, title, description, address and the search keywords.
+  The keywords ending in ফিল্মস are also written into the Organization structured data as
+  `alternateName`, on both languages.
+- `content/bn/works.json` holds a Bangla `synopsis` (and optional `hero`) per production, keyed by
+  slug. A production with no entry gets a generated Bangla line from its cast and views.
+- On Bangla pages the production's `titleBn` is the main title and the Latin title sits under it.
+  Add a `titleBn` to every new production in `works.json`.
+- Interface strings (buttons, labels, credit roles, badges, channel kinds) are in `lib/i18n.ts`.
+  Numbers are shown in Bangla digits there, and view and subscriber counts in লাখ and কোটি.
+
+Each pair of pages links to the other with `hreflang` (English is `x-default`), the sitemap lists
+both with their alternates, and the nav has a বাংলা / English switch. The two languages have their
+own root layouts (`app/(en)/layout.tsx`, `app/(bn)/layout.tsx`) so `<html lang>` is right in the
+static HTML; because of that the 404 page is `app/global-not-found.tsx`. Bangla text is set in Hind
+Siliguri, which only downloads on English pages when a Bangla title is on screen.
+
+When you add a production, add its Bangla synopsis to `content/bn/works.json` as well.
 
 ## Contact details
 
