@@ -77,9 +77,15 @@ export function autoBlurb(work: Work, locale: Locale = "en"): string {
   return parts.join(" ");
 }
 
-/** The synopsis if it has been written, otherwise the factual fallback. */
+/** "Producer: Md Sumon Howlader." in the page's language, or "" when no producer is credited. */
+export function producerLine(work: Work, locale: Locale = "en"): string {
+  return work.producer ? UI[locale].blurb.producer(work.producer) : "";
+}
+
+/** The synopsis if it has been written, otherwise the factual fallback, then who produced it. */
 export function blurbOf(work: Work, locale: Locale = "en"): string {
-  return isPlaceholder(work.synopsis) ? autoBlurb(work, locale) : work.synopsis;
+  const text = isPlaceholder(work.synopsis) ? autoBlurb(work, locale) : work.synopsis;
+  return [text, producerLine(work, locale)].filter(Boolean).join(" ");
 }
 
 /** Extracts a YouTube video ID from a youtu.be or watch URL. */

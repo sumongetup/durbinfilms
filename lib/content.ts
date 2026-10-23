@@ -91,13 +91,24 @@ export function resolveFacts(facts: Fact[], locale: Locale = "en"): Fact[] {
   return facts.map((f) => ({ value: swap(f.value), label: swap(f.label) }));
 }
 
+/** Every spelling of the founder's name, lower-cased, to recognise him in the credits. */
+const founderNames = [founder, bnFounder].flatMap((f) => [f.name, ...(f.alternateNames ?? [])]).map((n) => n.toLowerCase());
+
+/** The credited producer as the page writes it: the founder's own Bangla name on Bangla pages. */
+function producerOf(work: Work, locale: Locale): string | undefined {
+  const name = work.credits?.find((c) => /^producer$/i.test(c.role))?.name;
+  if (!name) return undefined;
+  return founderNames.includes(name.toLowerCase()) ? getFounder(locale).name : name;
+}
+
 /**
  * A production as a page in one language shows it. In Bangla the Bangla title
  * leads and the Latin one sits under it; the synopsis and hero copy come from
  * content/bn/works.json.
  */
 function localize(work: Work, locale: Locale): Work {
-  if (locale === "en") return work.titleBn ? { ...work, altTitle: work.titleBn } : work;
+  const producer = producerOf(work, locale);
+  if (locale === "en") return { ...work, ...(work.titleBn ? { altTitle: work.titleBn } : {}), producer };
   const bn = bnWorks[work.slug] ?? {};
   return {
     ...work,
@@ -105,6 +116,7 @@ function localize(work: Work, locale: Locale): Work {
     altTitle: work.titleBn ? work.title : undefined,
     synopsis: bn.synopsis ?? "",
     hero: bn.hero,
+    producer,
   };
 }
 

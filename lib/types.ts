@@ -21,6 +21,8 @@ export interface Work {
   titleBn?: string;
   /** Set when the work is read for a page: the title in the other script, shown under the main one. */
   altTitle?: string;
+  /** Set when the work is read for a page: the credited producer, in the page's script when it is the founder. */
+  producer?: string;
   type: WorkType;
   year: string;
   channel: string;

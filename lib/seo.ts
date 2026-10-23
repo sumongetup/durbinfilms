@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { BN_KEYWORDS, BN_NAMES, getByPlatform, getChannels, getFounder, getSite, getWorks } from "./content";
 import { HTML_LANG, LOCALES, OG_LOCALE, UI, countLabel, digits, localePath, otherLocale, parseCount, type Locale } from "./i18n";
-import { featuringOf, formatLabel, isPlaceholder, isoDuration, outletOf, playableOf } from "./work";
+import { featuringOf, formatLabel, isPlaceholder, isoDuration, outletOf, playableOf, producerLine } from "./work";
 import type { Work } from "./types";
 
 /** The site URL from site.json, or localhost while it is still a placeholder. */
@@ -164,15 +164,16 @@ export function founderMetadata(locale: Locale = "en"): Metadata {
 
 /**
  * Trims a description to what a search result actually shows. Cuts at the
- * last sentence that fits, or failing that at a word boundary.
+ * last sentence that fits, or failing that at a word boundary. `minSentence`
+ * is how much of `max` a whole sentence must fill to be preferred over a cut.
  */
-export function clampDescription(text: string, max = 158): string {
+export function clampDescription(text: string, max = 158, minSentence = 0.55): string {
   const clean = text.replace(/\s+/g, " ").trim();
   if (clean.length <= max) return clean;
 
   const window = clean.slice(0, max + 1);
   const sentenceEnd = Math.max(window.lastIndexOf(". "), window.lastIndexOf("? "), window.lastIndexOf("! "), window.lastIndexOf("। "));
-  if (sentenceEnd > max * 0.55) return clean.slice(0, sentenceEnd + 1);
+  if (sentenceEnd > max * minSentence) return clean.slice(0, sentenceEnd + 1);
 
   const wordEnd = window.lastIndexOf(" ");
   return `${clean.slice(0, wordEnd > 0 ? wordEnd : max).replace(/[,;:.।\s]+$/, "")}…`;
@@ -216,7 +217,13 @@ export function workMetadata(work: Work, locale: Locale = "en"): Metadata {
   const site = getSite(locale);
   const path = `/work/${work.slug}/`;
   // Bangla vowel signs and conjuncts take extra code units per visible letter, so allow more.
-  const description = clampDescription(workDescription(work, locale), locale === "bn" ? 180 : 158);
+  const max = locale === "bn" ? 180 : 158;
+  // The producer line always survives the trim: the synopsis gives way to it,
+  // ending on a whole sentence even if that leaves it short.
+  const producer = producerLine(work, locale);
+  const description = producer
+    ? `${clampDescription(workDescription(work, locale), max - producer.length - 1, 0.25)} ${producer}`
+    : clampDescription(workDescription(work, locale), max);
   const year = /^\d{4}$/.test(work.year) ? ` (${digits(locale, work.year)})` : "";
   // "Bangla Natok" rather than "Single episode drama": the words people search with.
   const kind = searchKind(work, locale);
@@ -438,7 +445,7 @@ function breadcrumb(items: { name: string; path: string }[]): JsonLd {
 export function productionJsonLd(work: Work, locale: Locale = "en"): JsonLd {
   const site = getSite(locale);
   const url = absoluteUrl(localePath(locale, `/work/${work.slug}/`));
-  const description = workDescription(work, locale);
+  const description = [workDescription(work, locale), producerLine(work, locale)].filter(Boolean).join(" ");
   const type = work.type === "series" ? "TVSeries" : work.type === "song" ? "MusicVideoObject" : "Movie";
   const creative: JsonLd = {
     "@type": type,

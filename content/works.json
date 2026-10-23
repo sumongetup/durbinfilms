@@ -84,6 +84,10 @@
       {
         "role": "Presented by",
         "name": "Prank King"
+      },
+      {
+        "role": "Producer",
+        "name": "Md Sumon Howlader"
       }
     ]
   },
@@ -120,6 +124,10 @@
       {
         "role": "Presented by",
         "name": "Prank King"
+      },
+      {
+        "role": "Producer",
+        "name": "Md Sumon Howlader"
       }
     ]
   },
@@ -156,6 +164,10 @@
       {
         "role": "Presented by",
         "name": "Prank King"
+      },
+      {
+        "role": "Producer",
+        "name": "Md Sumon Howlader"
       }
     ]
   },
@@ -192,6 +204,10 @@
       {
         "role": "Presented by",
         "name": "Prank King"
+      },
+      {
+        "role": "Producer",
+        "name": "Md Sumon Howlader"
       }
     ]
   },
@@ -228,6 +244,10 @@
       {
         "role": "Presented by",
         "name": "Prank King"
+      },
+      {
+        "role": "Producer",
+        "name": "Md Sumon Howlader"
       }
     ]
   },
@@ -264,6 +284,10 @@
       {
         "role": "Presented by",
         "name": "Prank King"
+      },
+      {
+        "role": "Producer",
+        "name": "Md Sumon Howlader"
       }
     ]
   },
@@ -338,6 +362,10 @@
       {
         "role": "Cast",
         "name": "Nirjon Nahuel, Nazia Borsha"
+      },
+      {
+        "role": "Producer",
+        "name": "Md Sumon Howlader"
       }
     ]
   },
@@ -366,6 +394,10 @@
       {
         "role": "Cast",
         "name": "Nirjon Nahuel"
+      },
+      {
+        "role": "Producer",
+        "name": "Md Sumon Howlader"
       }
     ]
   },
@@ -462,6 +494,10 @@
       {
         "role": "Cast",
         "name": "Nirjon Nahuel, Nazia, Nafiz"
+      },
+      {
+        "role": "Producer",
+        "name": "Md Sumon Howlader"
       }
     ]
   },
@@ -494,6 +530,10 @@
       {
         "role": "Also credited",
         "name": "Soykat Sadik"
+      },
+      {
+        "role": "Producer",
+        "name": "Md Sumon Howlader"
       }
     ]
   },
@@ -526,6 +566,10 @@
       {
         "role": "Team",
         "name": "CINEBIRDS"
+      },
+      {
+        "role": "Producer",
+        "name": "Md Sumon Howlader"
       }
     ]
   },
@@ -554,6 +598,10 @@
       {
         "role": "Cast",
         "name": "Nirjon Nahuel, Nazia"
+      },
+      {
+        "role": "Producer",
+        "name": "Md Sumon Howlader"
       }
     ]
   },
@@ -600,7 +648,7 @@
     "client": "",
     "episodes": 1,
     "badge": "DRAMA",
-    "synopsis": "Arosh Khan and Rothshi Siddika lead this 2023 drama, one of the studio's romance titles made for the digital audience rather than the television slot. It has passed 4 million views.",
+    "synopsis": "Arosh Khan and Rothshi Siddika lead this 2023 drama. It is one of the studio's romance titles made for the digital audience rather than the television slot. It has passed 4 million views.",
     "poster": "/images/posters/highway-love.webp",
     "posterFit": "thumb",
     "backdrop": "/images/backdrops/highway-love.webp",
@@ -713,6 +761,10 @@
       {
         "role": "Cast",
         "name": "Alvi, Samanta, Musafire, Susmita"
+      },
+      {
+        "role": "Producer",
+        "name": "Md Sumon Howlader"
       }
     ]
   },
@@ -745,6 +797,10 @@
       {
         "role": "Team",
         "name": "CINEBIRDS"
+      },
+      {
+        "role": "Producer",
+        "name": "Md Sumon Howlader"
       }
     ]
   },
@@ -777,6 +833,10 @@
       {
         "role": "Team",
         "name": "CINEBIRDS"
+      },
+      {
+        "role": "Producer",
+        "name": "Md Sumon Howlader"
       }
     ]
   },
@@ -809,6 +869,10 @@
       {
         "role": "Team",
         "name": "CINEBIRDS"
+      },
+      {
+        "role": "Producer",
+        "name": "Md Sumon Howlader"
       }
     ]
   },
@@ -837,6 +901,10 @@
       {
         "role": "Cast",
         "name": "Nirjon Nahuel"
+      },
+      {
+        "role": "Producer",
+        "name": "Md Sumon Howlader"
       }
     ]
   },
@@ -860,7 +928,12 @@
     "released": "2021-07-23",
     "durationSeconds": 782,
     "featured": false,
-    "credits": []
+    "credits": [
+      {
+        "role": "Producer",
+        "name": "Md Sumon Howlader"
+      }
+    ]
   },
   {
     "slug": "oshohay",
@@ -895,6 +968,10 @@
       {
         "role": "Also credited",
         "name": "Rupak Tiary"
+      },
+      {
+        "role": "Producer",
+        "name": "Md Sumon Howlader"
       }
     ]
   },
@@ -931,6 +1008,10 @@
       {
         "role": "Presented by",
         "name": "Prank King"
+      },
+      {
+        "role": "Producer",
+        "name": "Md Sumon Howlader"
       }
     ]
   },
@@ -945,7 +1026,7 @@
     "client": "",
     "episodes": 1,
     "badge": "RAP SONG",
-    "synopsis": "Khaiya Gechi Dhora, the rap song from the drama Bhalobasia Gelam Fashia, sung by Rasel Rahman with words and tune by Imran Mallik. Shagor Mirza and Riya Chowdhury star, directed by Mannat Munna, and the 2022 video has passed 155 thousand views.",
+    "synopsis": "Khaiya Gechi Dhora is the rap song from the drama Bhalobasia Gelam Fashia. It is sung by Rasel Rahman with words and tune by Imran Mallik. Shagor Mirza and Riya Chowdhury star, directed by Mannat Munna, and the 2022 video has passed 155 thousand views.",
     "poster": "/images/posters/khaiya-gechi-dhora.webp",
     "posterFit": "thumb",
     "backdrop": "/images/backdrops/khaiya-gechi-dhora.webp",

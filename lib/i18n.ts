@@ -228,7 +228,11 @@ const en = {
     documentary: "DOCUMENTARY",
     song: "MUSIC",
   },
-  blurb: { with: (names: string) => `With ${names}.`, views: (v: string) => `${v} views on YouTube.` },
+  blurb: {
+    with: (names: string) => `With ${names}.`,
+    views: (v: string) => `${v} views on YouTube.`,
+    producer: (name: string) => `Producer: ${name}.`,
+  },
   /** Badges as they appear in works.json; anything missing is shown as is. */
   badges: {} as Record<string, string>,
   roles: {} as Record<string, string>,
@@ -399,7 +403,11 @@ const bn: Dictionary = {
     documentary: "ডকুমেন্টারি",
     song: "গান",
   },
-  blurb: { with: (names: string) => `অভিনয়ে ${names}।`, views: (v: string) => `ইউটিউবে দেখা হয়েছে ${v} বার।` },
+  blurb: {
+    with: (names: string) => `অভিনয়ে ${names}।`,
+    views: (v: string) => `ইউটিউবে দেখা হয়েছে ${v} বার।`,
+    producer: (name: string) => `প্রযোজক: ${name}।`,
+  },
   badges: {
     DRAMA: "নাটক",
     "EID SPECIAL": "ঈদের নাটক",
