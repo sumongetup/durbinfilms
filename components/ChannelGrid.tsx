@@ -4,7 +4,7 @@ import { Kicker } from "./ui/Kicker";
 import { Reveal } from "./ui/Reveal";
 import { useLocale } from "./providers/LocaleProvider";
 import { usePointerGlow } from "@/hooks/usePointerGlow";
-import { UI, countLabel, digits, spell } from "@/lib/i18n";
+import { UI, channelName, countLabel, digits, spell } from "@/lib/i18n";
 import type { ChannelData } from "@/lib/types";
 
 /**
@@ -49,7 +49,7 @@ export function ChannelGrid({ kicker, heading, lead, data }: { kicker: string; h
             <a href={c.url} target="_blank" rel="noopener noreferrer">
               <span className="net-kind">{kinds[c.kind] ?? c.kind}</span>
               <h3>
-                {c.label}
+                {channelName(locale, c.label)}
                 {c.primary ? <span className="net-flag">{t.primary}</span> : null}
               </h3>
               <p className="net-stats">

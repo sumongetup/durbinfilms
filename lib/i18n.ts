@@ -237,6 +237,8 @@ const en = {
   badges: {} as Record<string, string>,
   roles: {} as Record<string, string>,
   channelKinds: {} as Record<string, string>,
+  /** YouTube channels and TV channels as the page writes them. */
+  channelNames: {} as Record<string, string>,
 };
 
 export type Dictionary = typeof en;
@@ -447,9 +449,22 @@ const bn: Dictionary = {
     "Short films": "শর্টফিল্ম",
     "Drama and telefilm": "নাটক ও টেলিফিল্ম",
   },
+  channelNames: {
+    "DURBIN FILMS": "দুরবীন ফিল্মস",
+    "DURBIN DRAMA": "দুরবীন ড্রামা",
+    DURBIN: "দুরবীন",
+    "DURBIN Motivation": "দুরবীন মোটিভেশন",
+    "DURBIN Shortfilm": "দুরবীন শর্টফিল্ম",
+    SATV: "এসএ টিভি",
+  },
 };
 
 export const UI: Record<Locale, Dictionary> = { en, bn };
+
+/** A channel or platform name as the page writes it, e.g. "DURBIN DRAMA" -> "দুরবীন ড্রামা". */
+export function channelName(locale: Locale, name: string): string {
+  return UI[locale].channelNames[name] ?? name;
+}
 
 /** A badge from works.json in the visitor's language, e.g. "29 EPISODES" -> "২৯ পর্ব". */
 export function badgeLabel(locale: Locale, badge: string): string {

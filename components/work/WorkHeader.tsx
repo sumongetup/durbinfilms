@@ -36,8 +36,8 @@ export function WorkHeader({ work }: { work: Work }) {
           <h1>
             <SplitWords text={work.title} />
           </h1>
-          {work.altTitle ? (
-            <p className="title-bn" lang={locale === "en" ? "bn" : "en"}>
+          {locale === "en" && work.altTitle ? (
+            <p className="title-bn" lang="bn">
               {work.altTitle}
             </p>
           ) : null}

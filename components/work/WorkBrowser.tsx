@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Kicker } from "@/components/ui/Kicker";
 import { PosterCard } from "@/components/ui/PosterCard";
 import { useUI } from "@/components/providers/LocaleProvider";
-import { digits, type Locale } from "@/lib/i18n";
+import { channelName, digits, type Locale } from "@/lib/i18n";
 import { featuringOf } from "@/lib/work";
 import type { Work, WorkType } from "@/lib/types";
 
@@ -88,7 +88,7 @@ export function WorkBrowser({ works, groups, locale }: { works: Work[]; groups: 
         <div className="filter-row" role="group" aria-label={t.channelGroup}>
           <b>{t.channel}</b>
           {chip(channel === ALL, t.all, () => setChannel(ALL), "all")}
-          {platforms.map((p) => chip(channel === p, p, () => setChannel(p), p))}
+          {platforms.map((p) => chip(channel === p, channelName(locale, p), () => setChannel(p), p))}
         </div>
         <div className="filter-row" role="group" aria-label={t.typeGroup}>
           <b>{t.type}</b>
@@ -130,7 +130,7 @@ export function WorkBrowser({ works, groups, locale }: { works: Work[]; groups: 
             .filter((g) => g.works.length > 0)
             .map((g) => (
               <section key={g.id} className="sec wrap" id={g.id} aria-labelledby={`${g.id}-heading`}>
-                <Kicker>{g.platform}</Kicker>
+                <Kicker>{channelName(locale, g.platform)}</Kicker>
                 <h2 id={`${g.id}-heading`} className="mt-[10px] text-[clamp(24px,3vw,40px)]">
                   {g.heading}
                 </h2>

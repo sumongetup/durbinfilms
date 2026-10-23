@@ -9,7 +9,7 @@ import { useTrailer } from "@/components/TrailerModal";
 import { useLocale } from "@/components/providers/LocaleProvider";
 import { useReducedMotion } from "@/hooks/useMediaQuery";
 import { UI, badgeLabel, countLabel, digits, localePath } from "@/lib/i18n";
-import { isNew, outletOf, playLabel, playableOf } from "@/lib/work";
+import { isNew, outletName, playLabel, playableOf } from "@/lib/work";
 import type { Work } from "@/lib/types";
 
 const SPRING = { stiffness: 260, damping: 24, mass: 0.6 };
@@ -56,7 +56,7 @@ export function PosterCard({ work, index }: { work: Work; index: number }) {
     ty.set(0);
   };
 
-  const outlet = outletOf(work);
+  const outlet = outletName(work, locale);
   const year = digits(locale, work.year);
   const sub = outlet ? `${outlet} · ${year}` : year;
   const badge = badgeLabel(locale, work.badge);

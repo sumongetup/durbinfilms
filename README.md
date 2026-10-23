@@ -169,9 +169,13 @@ way Durbin News writes দুরবীন.
   `alternateName`, on both languages.
 - `content/bn/works.json` holds a Bangla `synopsis` (and optional `hero`) per production, keyed by
   slug. A production with no entry gets a generated Bangla line from its cast and views.
-- On Bangla pages the production's `titleBn` is the main title and the Latin title sits under it.
-  Add a `titleBn` to every new production in `works.json`.
-- Interface strings (buttons, labels, credit roles, badges, channel kinds) are in `lib/i18n.ts`.
+- On Bangla pages the production's `titleBn` is the title; the Latin title is kept in the
+  structured data only. Add a `titleBn` to every new production in `works.json`.
+- `content/bn/names.json` holds the Bangla spelling of every name in the credits (`people`) and of
+  the social link labels (`links`). A name missing from it shows in Latin letters on the Bangla
+  page, so add the cast and crew of each new production there.
+- Interface strings (buttons, labels, credit roles, badges, channel kinds, channel names) are in
+  `lib/i18n.ts`.
   Numbers are shown in Bangla digits there, and view and subscriber counts in লাখ and কোটি.
 
 Each pair of pages links to the other with `hreflang` (English is `x-default`), the sitemap lists

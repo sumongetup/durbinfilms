@@ -15,7 +15,7 @@ import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { ReadyProvider } from "@/components/providers/ReadyProvider";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { getByPlatform, getByType, getChannels, getFeaturedSlides, getHome, getSite, getWorks } from "@/lib/content";
-import { UI, localePath, otherLocale, type Locale } from "@/lib/i18n";
+import { UI, channelName, localePath, otherLocale, type Locale } from "@/lib/i18n";
 import { cta, homeLinks } from "@/lib/nav";
 import { faqJsonLd, homeJsonLd } from "@/lib/seo";
 
@@ -43,10 +43,13 @@ export function HomeView({ locale }: { locale: Locale }) {
             <HeroSlider slides={getFeaturedSlides(locale)} headline={home.hero.headline} />
             <Marquee items={home.marquee} locale={locale} />
             {ownDramas.length > 0 && (
-              <PosterRail id="dramas" kicker={HOME_PLATFORM} heading={t.dramas} works={ownDramas} more={more} />
+              <PosterRail id="dramas" kicker={channelName(locale, HOME_PLATFORM)} heading={t.dramas} works={ownDramas} more={more} />
             )}
             {otherDramas.length > 0 && (
-              <PosterRail id="serials" kicker="DURBIN DRAMA · DURBIN" heading={t.serials} works={otherDramas} more={more} />
+              <PosterRail
+                id="serials"
+                kicker={`${channelName(locale, "DURBIN DRAMA")} · ${channelName(locale, "DURBIN")}`}
+                heading={t.serials} works={otherDramas} more={more} />
             )}
             {shorts.length > 0 && <PosterRail id="shorts" kicker={t.shortsKicker} heading={t.shorts} works={shorts} more={more} />}
             {songs.length > 0 && <PosterRail id="songs" kicker={t.songsKicker} heading={t.songs} works={songs} more={more} />}

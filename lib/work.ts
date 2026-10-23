@@ -1,4 +1,4 @@
-import { UI, countLabel, digits, type Locale } from "./i18n";
+import { UI, channelName, countLabel, digits, type Locale } from "./i18n";
 import type { FeaturedSlide, Work } from "./types";
 
 /**
@@ -14,6 +14,11 @@ export function isPlaceholder(value: string | undefined | null): boolean {
 /** First non-empty of channel, platform, client. */
 export function outletOf(work: Work): string {
   return work.channel || work.platform || work.client || "";
+}
+
+/** The outlet as the page writes it: দুরবীন ড্রামা on Bangla pages. */
+export function outletName(work: Work, locale: Locale = "en"): string {
+  return channelName(locale, outletOf(work));
 }
 
 /** Label for the outlet column on the detail page. */
@@ -53,7 +58,7 @@ export function chipOf(work: Work, locale: Locale = "en"): string {
 }
 
 export function metaOf(work: Work, locale: Locale = "en"): string {
-  return [digits(locale, work.year), formatLabel(work, locale), outletOf(work)].filter(Boolean).join(" · ");
+  return [digits(locale, work.year), formatLabel(work, locale), outletName(work, locale)].filter(Boolean).join(" · ");
 }
 
 /** Names listed under Cast or Featuring in the credits, joined. */

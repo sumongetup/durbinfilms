@@ -12,7 +12,8 @@ import { CreditsList } from "@/components/work/CreditsList";
 import { Gallery } from "@/components/work/Gallery";
 import { TrailerEmbed } from "@/components/work/TrailerEmbed";
 import { WorkHeader } from "@/components/work/WorkHeader";
-import { formatLabel, getFounder, getRelated, getSite, outletLabel, outletOf } from "@/lib/content";
+import { formatLabel, getFounder, getRelated, getSite, outletLabel } from "@/lib/content";
+import { outletName } from "@/lib/work";
 import { UI, countLabel, digits, localePath, otherLocale, type Locale } from "@/lib/i18n";
 import { cta, pageLinks } from "@/lib/nav";
 import { founderNames, productionJsonLd } from "@/lib/seo";
@@ -51,7 +52,7 @@ export function WorkView({ work, locale }: { work: Work; locale: Locale }) {
                 </div>
                 <div>
                   <b>{outletLabel(work, locale)}</b>
-                  {outletOf(work) || "—"}
+                  {outletName(work, locale) || "—"}
                 </div>
                 {work.views ? (
                   <div>

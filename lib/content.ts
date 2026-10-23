@@ -7,6 +7,7 @@ import bnWorksJson from "@/content/bn/works.json";
 import bnFounderJson from "@/content/bn/founder.json";
 import bnSiteJson from "@/content/bn/site.json";
 import bnHomeJson from "@/content/bn/home.json";
+import bnNamesJson from "@/content/bn/names.json";
 import { countLabel, digits, type Locale } from "./i18n";
 import type { ChannelData, Fact, FeaturedSlide, Founder, HeroCopy, Home, Site, Work, WorkType } from "./types";
 import { toSlide } from "./work";
@@ -35,18 +36,25 @@ const channelData = channelsJson as ChannelData;
 /** Bangla copy per production, keyed by slug. Anything missing falls back to generated text. */
 const bnWorks = bnWorksJson as Record<string, { synopsis?: string; hero?: HeroCopy }>;
 
+/** Names in the credits and link labels as Bangla pages write them; anything missing stays as is. */
+const bnPeople = bnNamesJson.people as Record<string, string>;
+const bnLinks = bnNamesJson.links as Record<string, string>;
+const bnLink = <T extends { label: string }>(l: T): T => ({ ...l, label: bnLinks[l.label] ?? l.label });
+
 /** Bangla overrides for site.json: the name, the search snippet and the address in Bangla. */
 const bnSite: Site = {
   ...site,
   ...(bnSiteJson as Partial<Site>),
   address: { ...site.address, ...bnSiteJson.address },
+  social: site.social.map(bnLink),
+  network: bnSiteJson.network.map((n) => ({ ...n, links: n.links?.map(bnLink) })),
 };
 
 /** The Bangla founder page: Bangla text over the English file, so links and images stay in one place. */
 const bnFounder: Founder = {
   ...founder,
   ...(bnFounderJson as Omit<Founder, "portrait" | "backdrop" | "contact"> & { contact: Omit<Founder["contact"], "links"> }),
-  contact: { ...founder.contact, ...bnFounderJson.contact },
+  contact: { ...founder.contact, ...bnFounderJson.contact, links: founder.contact.links?.map(bnLink) },
 };
 
 /** Search keywords for the Bangla pages: the brand's spellings and what people type. */
@@ -117,6 +125,13 @@ function localize(work: Work, locale: Locale): Work {
     synopsis: bn.synopsis ?? "",
     hero: bn.hero,
     producer,
+    credits: work.credits?.map((c) => ({
+      ...c,
+      name: c.name
+        .split(/,\s*/)
+        .map((n) => bnPeople[n] ?? n)
+        .join(", "),
+    })),
   };
 }
 
