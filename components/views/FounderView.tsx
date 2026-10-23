@@ -12,7 +12,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { getFounder, getSite, resolveFacts } from "@/lib/content";
 import { UI, localePath, otherLocale, type Locale } from "@/lib/i18n";
 import { pageLinks } from "@/lib/nav";
-import { personJsonLd } from "@/lib/seo";
+import { founderJsonLd } from "@/lib/seo";
 
 export function FounderView({ locale }: { locale: Locale }) {
   const site = getSite(locale);
@@ -101,7 +101,7 @@ export function FounderView({ locale }: { locale: Locale }) {
         <Footer site={site} locale={locale} />
         <WhatsAppButton site={site} locale={locale} />
       </div>
-      <JsonLd data={personJsonLd(locale)} />
+      <JsonLd data={founderJsonLd(locale)} />
     </ReadyProvider>
   );
 }

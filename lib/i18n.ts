@@ -89,6 +89,7 @@ const en = {
     contact: "CONTACT",
     follow: "FOLLOW",
     since: (year: string) => ` · Since ${year}`,
+    founder: "Founder:",
   },
   contact: {
     kicker: "GET IN TOUCH",
@@ -183,6 +184,20 @@ const en = {
     social: (name: string) => `${name} on social media`,
     portraitAlt: "Md Sumon Howlader, founder of Durbin Films",
     jobTitle: "Founder",
+    knowsAbout: ["Television drama production", "Short film production", "Digital media", "Online journalism"],
+  },
+  /** Format words as people search them, used in production page titles. */
+  searchKinds: {
+    natok: "Bangla Natok",
+    eid: "Eid Natok",
+    telefilm: "Bangla Telefilm",
+    serial: "Bangla Drama Serial",
+    short: "Bangla Short Film",
+    song: "Bangla Song",
+    ost: "Natok Song",
+    tvc: "TVC",
+    brand: "Brand Film",
+    documentary: "Documentary",
   },
   formats: {
     telefilm: "Telefilm",
@@ -246,6 +261,7 @@ const bn: Dictionary = {
     contact: "যোগাযোগ",
     follow: "সঙ্গে থাকুন",
     since: (year: string) => ` · ${digits("bn", year)} সাল থেকে`,
+    founder: "প্রতিষ্ঠাতা:",
   },
   contact: {
     kicker: "যোগাযোগ",
@@ -340,6 +356,19 @@ const bn: Dictionary = {
     social: (name: string) => `সোশ্যাল মিডিয়ায় ${name}`,
     portraitAlt: "দুরবীন ফিল্মসের প্রতিষ্ঠাতা মো. সুমন হাওলাদার",
     jobTitle: "প্রতিষ্ঠাতা",
+    knowsAbout: ["টেলিভিশন নাটক প্রযোজনা", "শর্টফিল্ম প্রযোজনা", "ডিজিটাল মিডিয়া", "অনলাইন সাংবাদিকতা"],
+  },
+  searchKinds: {
+    natok: "বাংলা নাটক",
+    eid: "ঈদের নাটক",
+    telefilm: "টেলিফিল্ম",
+    serial: "ধারাবাহিক নাটক",
+    short: "বাংলা শর্টফিল্ম",
+    song: "বাংলা গান",
+    ost: "নাটকের গান",
+    tvc: "টিভি বিজ্ঞাপন",
+    brand: "বিজ্ঞাপনচিত্র",
+    documentary: "ডকুমেন্টারি",
   },
   formats: {
     telefilm: "টেলিফিল্ম",

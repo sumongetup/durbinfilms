@@ -12,10 +12,10 @@ import { CreditsList } from "@/components/work/CreditsList";
 import { Gallery } from "@/components/work/Gallery";
 import { TrailerEmbed } from "@/components/work/TrailerEmbed";
 import { WorkHeader } from "@/components/work/WorkHeader";
-import { formatLabel, getRelated, getSite, outletLabel, outletOf } from "@/lib/content";
+import { formatLabel, getFounder, getRelated, getSite, outletLabel, outletOf } from "@/lib/content";
 import { UI, countLabel, digits, localePath, otherLocale, type Locale } from "@/lib/i18n";
 import { cta, pageLinks } from "@/lib/nav";
-import { productionJsonLd } from "@/lib/seo";
+import { founderNames, productionJsonLd } from "@/lib/seo";
 import type { Work } from "@/lib/types";
 
 /** One production's page. `work` is already read in `locale` (see getWork). */
@@ -25,6 +25,7 @@ export function WorkView({ work, locale }: { work: Work; locale: Locale }) {
   const credits = work.credits ?? [];
   const gallery = work.gallery ?? [];
   const related = getRelated(work, locale);
+  const founderLink = { names: founderNames(locale), label: getFounder(locale).name, href: localePath(locale, "/founder/") };
 
   return (
     <ReadyProvider>
@@ -75,7 +76,7 @@ export function WorkView({ work, locale }: { work: Work; locale: Locale }) {
               <section className="sec wrap" aria-labelledby="credits-heading">
                 <Kicker>{t.creditsKicker}</Kicker>
                 <h2 id="credits-heading">{t.credits}</h2>
-                <CreditsList credits={credits} locale={locale} />
+                <CreditsList credits={credits} locale={locale} link={founderLink} />
               </section>
             )}
 

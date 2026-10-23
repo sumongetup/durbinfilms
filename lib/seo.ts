@@ -18,6 +18,41 @@ export function absoluteUrl(path: string): string {
 
 const ORG_ID = () => `${siteUrl()}/#organization`;
 const SITE_ID = (locale: Locale) => `${siteUrl()}${localePath(locale, "/")}#website`;
+const PERSON_ID = () => `${siteUrl()}/founder/#person`;
+const NEWS_ID = () => `${siteUrl()}/#durbin-news`;
+
+/**
+ * Every way the founder's name is written, in both scripts, the page
+ * language's own form first: মো. সুমন হাওলাদার, মোঃ সুমন হাওলাদার,
+ * Md Sumon Howlader and so on. People search all of them.
+ */
+export function founderNames(locale: Locale = "en"): string[] {
+  const here = getFounder(locale);
+  const there = getFounder(otherLocale(locale));
+  return [here.name, ...(here.alternateNames ?? []), there.name, ...(there.alternateNames ?? [])].filter(
+    (n, i, all) => all.indexOf(n) === i,
+  );
+}
+
+/** Format words as people type them into a search box: "Bangla Natok", "ঈদের নাটক". */
+function searchKind(work: Work, locale: Locale): string {
+  const t = UI[locale].searchKinds;
+  const badge = work.badge.toUpperCase();
+  switch (work.type) {
+    case "drama":
+      return badge === "EID SPECIAL" ? t.eid : badge === "TELEFILM" ? t.telefilm : t.natok;
+    case "series":
+      return t.serial;
+    case "short":
+      return t.short;
+    case "song":
+      return badge.includes("OST") ? t.ost : t.song;
+    case "brand":
+      return badge === "TVC" ? t.tvc : t.brand;
+    case "documentary":
+      return t.documentary;
+  }
+}
 
 /**
  * Canonical plus hreflang for one page. `path` is the English path; the
@@ -104,9 +139,11 @@ export function workIndexMetadata(locale: Locale = "en"): Metadata {
 export function founderMetadata(locale: Locale = "en"): Metadata {
   const founder = getFounder(locale);
   const description = clampDescription(founder.seo.description, locale === "bn" ? 180 : 158);
+  const ventures = founder.ventures.items.map((v) => v.name);
   return {
     title: { absolute: founder.seo.title },
     description,
+    keywords: [...founderNames(locale), ...ventures],
     alternates: alternatesFor("/founder/", locale),
     openGraph: {
       type: "profile",
@@ -181,7 +218,8 @@ export function workMetadata(work: Work, locale: Locale = "en"): Metadata {
   // Bangla vowel signs and conjuncts take extra code units per visible letter, so allow more.
   const description = clampDescription(workDescription(work, locale), locale === "bn" ? 180 : 158);
   const year = /^\d{4}$/.test(work.year) ? ` (${digits(locale, work.year)})` : "";
-  const kind = formatLabel(work, locale);
+  // "Bangla Natok" rather than "Single episode drama": the words people search with.
+  const kind = searchKind(work, locale);
   // The layout appends " | Durbin Films" (15 chars), and a search result shows
   // about 60 before truncating, so drop the format, then the year, to fit.
   const budget = 60 - (site.name.length + 3);
@@ -237,7 +275,13 @@ function organizationNode(): JsonLd {
       ...(site.address.postalCode ? { postalCode: site.address.postalCode } : {}),
       ...(isPlaceholder(site.address.street) ? {} : { streetAddress: site.address.street }),
     },
-    founder: { "@type": "Person", "@id": `${siteUrl()}/founder/#person`, name: getFounder().name, url: absoluteUrl("/founder/") },
+    founder: {
+      "@type": "Person",
+      "@id": PERSON_ID(),
+      name: getFounder().name,
+      alternateName: founderNames("en").slice(1),
+      url: absoluteUrl("/founder/"),
+    },
   };
   if (!isPlaceholder(site.email)) data.email = site.email;
   if (!isPlaceholder(site.phone)) data.telephone = site.phone;
@@ -306,26 +350,72 @@ export function homeJsonLd(locale: Locale = "en"): JsonLd {
   };
 }
 
-export function personJsonLd(locale: Locale = "en"): JsonLd {
+/**
+ * The founder page as Google's ProfilePage: the page, the person it is about
+ * (with every spelling of the name), Durbin News as the other organisation
+ * he founded, and the breadcrumb trail.
+ */
+export function founderJsonLd(locale: Locale = "en"): JsonLd {
   const founder = getFounder(locale);
   const site = getSite();
+  const page = absoluteUrl(localePath(locale, "/founder/"));
   const sameAs = [...(founder.contact.links ?? []).map((l) => l.href), ...site.social.map((s) => s.href)].filter(
-    (h) => h && !h.includes("["),
+    (h, i, all) => h && !h.includes("[") && all.indexOf(h) === i,
   );
-  return {
-    "@context": "https://schema.org",
+  const news = getSite("en").network?.find((n) => /durbinnews/.test(n.href));
+  const newsBn = getSite("bn").network?.find((n) => /durbinnews/.test(n.href));
+
+  const person: JsonLd = {
     "@type": "Person",
-    "@id": `${siteUrl()}/founder/#person`,
+    "@id": PERSON_ID(),
     name: founder.name,
-    alternateName: getFounder(otherLocale(locale)).name,
+    alternateName: founderNames(locale).slice(1),
     jobTitle: UI[locale].founder.jobTitle,
     description: founder.seo.description,
-    image: absoluteUrl(founder.portrait),
-    url: absoluteUrl(localePath(locale, "/founder/")),
-    worksFor: { "@id": ORG_ID() },
+    image: { "@type": "ImageObject", url: absoluteUrl(founder.portrait), width: 1200, height: 1500, caption: founder.name },
+    url: page,
+    mainEntityOfPage: { "@id": `${page}#page` },
+    worksFor: [{ "@id": ORG_ID() }, ...(news ? [{ "@id": NEWS_ID() }] : [])],
+    knowsAbout: UI[locale].founder.knowsAbout,
+    nationality: { "@type": "Country", name: "Bangladesh" },
     address: { "@type": "PostalAddress", addressLocality: "Dhaka", addressCountry: "BD" },
     ...(sameAs.length ? { sameAs } : {}),
   };
+
+  const graph: JsonLd[] = [
+    {
+      "@type": "ProfilePage",
+      "@id": `${page}#page`,
+      url: page,
+      name: founder.seo.title,
+      inLanguage: HTML_LANG[locale],
+      isPartOf: { "@id": SITE_ID(locale) },
+      dateModified: new Date().toISOString(),
+      mainEntity: { "@id": PERSON_ID() },
+      breadcrumb: { "@id": `${page}#breadcrumb` },
+    },
+    person,
+  ];
+  if (news) {
+    graph.push({
+      "@type": "NewsMediaOrganization",
+      "@id": NEWS_ID(),
+      name: news.label,
+      ...(newsBn ? { alternateName: newsBn.label } : {}),
+      url: news.href,
+      founder: { "@id": PERSON_ID() },
+      ...(news.links?.length ? { sameAs: news.links.map((l) => l.href) } : {}),
+    });
+  }
+  graph.push({
+    ...breadcrumb([
+      { name: getSite(locale).name, path: localePath(locale, "/") },
+      { name: founder.name, path: localePath(locale, "/founder/") },
+    ]),
+    "@id": `${page}#breadcrumb`,
+  });
+
+  return { "@context": "https://schema.org", "@graph": graph };
 }
 
 function breadcrumb(items: { name: string; path: string }[]): JsonLd {
@@ -367,6 +457,10 @@ export function productionJsonLd(work: Work, locale: Locale = "en"): JsonLd {
   if (!isPlaceholder(outlet)) creative.publisher = { "@type": "Organization", name: outlet };
   const director = work.credits?.find((c) => /direct/i.test(c.role));
   if (director && !isPlaceholder(director.name)) creative.director = { "@type": "Person", name: director.name };
+  // When the studio's founder produced it, point at his profile rather than a bare name.
+  const producer = work.credits?.find((c) => /^producer$/i.test(c.role));
+  const names = founderNames(locale).map((n) => n.toLowerCase());
+  if (producer && names.includes(producer.name.toLowerCase())) creative.producer = { "@id": PERSON_ID() };
   const actors = featuringOf(work);
   if (actors) creative.actor = actors.split(", ").map((name) => ({ "@type": "Person", name }));
   if (work.durationSeconds) creative.duration = isoDuration(work.durationSeconds);

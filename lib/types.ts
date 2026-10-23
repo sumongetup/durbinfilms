@@ -93,6 +93,8 @@ export interface Credential {
 export interface Founder {
   seo: { title: string; description: string };
   name: string;
+  /** Other ways people write the name, e.g. "মোঃ সুমন হাওলাদার". Used in search keywords and structured data. */
+  alternateNames?: string[];
   kicker: string;
   roles: string[];
   intro: string;

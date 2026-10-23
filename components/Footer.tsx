@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "./ui/Logo";
+import { getFounder } from "@/lib/content";
 import { whatsappUrl } from "@/lib/contact";
 import { UI, digits, localePath, type Locale } from "@/lib/i18n";
 import { footerExtraLinks, pageLinks } from "@/lib/nav";
@@ -39,6 +40,9 @@ export function Footer({ site, locale }: { site: Site; locale: Locale }) {
             <Logo height={46} />
           </Link>
           <p>{t.footer.tagline}</p>
+          <p className="foot-network">
+            {t.footer.founder} <Link href={localePath(locale, "/founder/")}>{getFounder(locale).name}</Link>
+          </p>
           <p className="foot-addr">
             {site.address.street}
             <br />
