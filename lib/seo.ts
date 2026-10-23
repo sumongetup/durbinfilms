@@ -23,7 +23,7 @@ const NEWS_ID = () => `${siteUrl()}/#durbin-news`;
 
 /**
  * Every way the founder's name is written, in both scripts, the page
- * language's own form first: মো. সুমন হাওলাদার, মোঃ সুমন হাওলাদার,
+ * language's own form first: মোঃ সুমন হাওলাদার, মো. সুমন হাওলাদার,
  * Md Sumon Howlader and so on. People search all of them.
  */
 export function founderNames(locale: Locale = "en"): string[] {
