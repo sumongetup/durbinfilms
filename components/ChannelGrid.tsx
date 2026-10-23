@@ -2,16 +2,10 @@
 
 import { Kicker } from "./ui/Kicker";
 import { Reveal } from "./ui/Reveal";
+import { useLocale } from "./providers/LocaleProvider";
 import { usePointerGlow } from "@/hooks/usePointerGlow";
+import { UI, countLabel, digits, spell } from "@/lib/i18n";
 import type { ChannelData } from "@/lib/types";
-
-const WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"];
-
-/** "Five channels" reads better in a headline than "5 channels". */
-function spell(n: number): string {
-  const word = WORDS[n];
-  return word ? word[0].toUpperCase() + word.slice(1) : String(n);
-}
 
 /**
  * The whole Durbin network, one card per YouTube channel, with the counts
@@ -19,29 +13,33 @@ function spell(n: number): string {
  */
 export function ChannelGrid({ kicker, heading, lead, data }: { kicker: string; heading: string; lead: string; data: ChannelData }) {
   const glow = usePointerGlow<HTMLDivElement>();
+  const locale = useLocale();
+  const t = UI[locale].channels;
+  const kinds = UI[locale].channelKinds;
 
   return (
     <section className="sec wrap" id="channels" aria-labelledby="channels-heading">
       <Kicker>{kicker}</Kicker>
       <h2 className="svc-h2" id="channels-heading">
         {/* {channels} is filled from the live count, so the wording cannot
-            drift when a channel is added or dropped. */}
-        {heading.replace(/\{channels\}/g, spell(data.totals.channels))}
+            drift when a channel is added or dropped. "Five channels" reads
+            better in a headline than "5 channels". */}
+        {heading.replace(/\{channels\}/g, spell(locale, data.totals.channels))}
       </h2>
       <p className="body mt-4">{lead}</p>
 
       <dl className="net-totals">
         <div>
-          <dt>Channels</dt>
-          <dd className="grad">{data.totals.channels}</dd>
+          <dt>{t.channels}</dt>
+          <dd className="grad">{digits(locale, data.totals.channels)}</dd>
         </div>
         <div>
-          <dt>Subscribers</dt>
-          <dd className="grad">{data.totals.subscribersLabel}</dd>
+          <dt>{t.subscribers}</dt>
+          <dd className="grad">{countLabel(locale, data.totals.subscribersLabel, data.totals.subscribers)}</dd>
         </div>
         <div>
-          <dt>Videos published</dt>
-          <dd className="grad">{data.totals.videosLabel}</dd>
+          <dt>{t.videos}</dt>
+          <dd className="grad">{digits(locale, data.totals.videosLabel)}</dd>
         </div>
       </dl>
 
@@ -49,15 +47,15 @@ export function ChannelGrid({ kicker, heading, lead, data }: { kicker: string; h
         {data.channels.map((c, i) => (
           <Reveal as="li" key={c.handle} className="net-card" delay={(i % 6) * 0.06} onPointerMove={glow}>
             <a href={c.url} target="_blank" rel="noopener noreferrer">
-              <span className="net-kind">{c.kind}</span>
+              <span className="net-kind">{kinds[c.kind] ?? c.kind}</span>
               <h3>
                 {c.label}
-                {c.primary ? <span className="net-flag">This studio</span> : null}
+                {c.primary ? <span className="net-flag">{t.primary}</span> : null}
               </h3>
               <p className="net-stats">
-                <strong>{c.subscribersLabel}</strong> subscribers
+                <strong>{countLabel(locale, c.subscribersLabel, c.subscribers)}</strong> {t.subs}
                 <span aria-hidden="true"> · </span>
-                {c.videosLabel} videos
+                {countLabel(locale, c.videosLabel, c.videos)} {t.vids}
               </p>
               <span className="net-handle">{c.handle}</span>
             </a>

@@ -2,6 +2,7 @@ import { Button } from "./ui/Button";
 import { Kicker } from "./ui/Kicker";
 import { Reveal } from "./ui/Reveal";
 import { whatsappUrl } from "@/lib/contact";
+import { UI, type Locale } from "@/lib/i18n";
 import type { Site, SocialLink } from "@/lib/types";
 
 function SocialList({ site, labels }: { site: Site; labels: string[] }) {
@@ -27,6 +28,7 @@ const phoneText = (site: Site) => site.phoneDisplay || site.phone;
 
 interface HomeProps {
   site: Site;
+  locale: Locale;
   variant?: "home";
   /** Copy for the gradient CTA box; falls back to the studio's default lines. */
   copy?: { kicker: string; heading: string; lead: string };
@@ -34,6 +36,7 @@ interface HomeProps {
 
 interface FounderProps {
   site: Site;
+  locale: Locale;
   variant: "founder";
   kicker: string;
   heading: string;
@@ -51,6 +54,7 @@ interface FounderProps {
  */
 export function ContactBlock(props: HomeProps | FounderProps) {
   const { site } = props;
+  const t = UI[props.locale].contact;
 
   if (props.variant === "founder") {
     return (
@@ -60,19 +64,19 @@ export function ContactBlock(props: HomeProps | FounderProps) {
         <p className="body mt-4">{props.lead}</p>
         <div className="info">
           <div>
-            <b>EMAIL</b>
+            <b>{t.email}</b>
             <a href={`mailto:${site.email}`}>{site.email}</a>
           </div>
           <div>
-            <b>PHONE</b>
+            <b>{t.phone}</b>
             <a href={`tel:${site.phone}`}>{phoneText(site)}</a>
           </div>
           <div>
-            <b>STUDIO</b>
+            <b>{t.studio}</b>
             {site.address.street}, {cityLine(site)}
           </div>
           <div>
-            <b>SOCIAL</b>
+            <b>{t.social}</b>
             {props.links && props.links.length > 0 ? (
               <span className="info-links">
                 {props.links.map((l) => (
@@ -91,12 +95,8 @@ export function ContactBlock(props: HomeProps | FounderProps) {
   }
 
   const followLabels = site.social.filter((s) => s.href && !s.href.includes("[")).map((s) => s.label);
-  const wa = whatsappUrl(site);
-  const copy = props.copy ?? {
-    kicker: "GET IN TOUCH",
-    heading: "Got a script, a slate or a brief?",
-    lead: "Send it over. You get back a plan, a schedule and a number, usually within two working days.",
-  };
+  const wa = whatsappUrl(site, props.locale);
+  const copy = props.copy ?? t;
 
   return (
     <section className="sec wrap" id="contact" aria-labelledby="contact-heading">
@@ -105,33 +105,33 @@ export function ContactBlock(props: HomeProps | FounderProps) {
         <h2 id="contact-heading">{copy.heading}</h2>
         <p>{copy.lead}</p>
         <div className="btns">
-          <Button href={`mailto:${site.email}`}>Email the studio</Button>
+          <Button href={`mailto:${site.email}`}>{t.emailButton}</Button>
           {wa ? (
             <Button href={wa} variant="ghost" target="_blank" rel="noopener noreferrer">
-              WhatsApp
+              {UI[props.locale].whatsapp.label}
             </Button>
           ) : null}
           <Button href={`tel:${site.phone}`} variant="ghost">
-            Call {phoneText(site)}
+            {t.call(phoneText(site))}
           </Button>
         </div>
         <div className="info">
           <div>
-            <b>STUDIO</b>
+            <b>{t.studio}</b>
             {site.address.street}
             <br />
             {cityLine(site)}, {site.address.country}
           </div>
           <div>
-            <b>EMAIL</b>
+            <b>{t.email}</b>
             <a href={`mailto:${site.email}`}>{site.email}</a>
           </div>
           <div>
-            <b>PHONE</b>
+            <b>{t.phone}</b>
             <a href={`tel:${site.phone}`}>{phoneText(site)}</a>
           </div>
           <div>
-            <b>FOLLOW</b>
+            <b>{t.follow}</b>
             <SocialList site={site} labels={followLabels.length ? followLabels : ["Facebook", "YouTube"]} />
           </div>
         </div>

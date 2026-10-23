@@ -15,20 +15,22 @@ import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { ReadyProvider } from "@/components/providers/ReadyProvider";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { getByPlatform, getByType, getChannels, getFeaturedSlides, getHome, getSite, getWorks } from "@/lib/content";
-import { CTA, HOME_LINKS } from "@/lib/nav";
+import { UI, localePath, otherLocale, type Locale } from "@/lib/i18n";
+import { cta, homeLinks } from "@/lib/nav";
 import { faqJsonLd, homeJsonLd } from "@/lib/seo";
 
 /** The studio's own channel leads the page; everything else follows by kind. */
 const HOME_PLATFORM = "DURBIN FILMS";
-const MORE = { label: "All work", href: "/work/" };
 
-export default function HomePage() {
-  const site = getSite();
-  const home = getHome();
-  const ownDramas = getByPlatform(HOME_PLATFORM).filter((w) => w.type === "drama");
-  const otherDramas = getWorks().filter((w) => (w.type === "drama" && w.platform !== HOME_PLATFORM) || w.type === "series");
-  const shorts = getByType("short", "documentary");
-  const songs = getByType("song");
+export function HomeView({ locale }: { locale: Locale }) {
+  const site = getSite(locale);
+  const home = getHome(locale);
+  const t = UI[locale].rails;
+  const more = { label: t.more, href: localePath(locale, "/work/") };
+  const ownDramas = getByPlatform(HOME_PLATFORM, locale).filter((w) => w.type === "drama");
+  const otherDramas = getWorks(locale).filter((w) => (w.type === "drama" && w.platform !== HOME_PLATFORM) || w.type === "series");
+  const shorts = getByType(["short", "documentary"], locale);
+  const songs = getByType(["song"], locale);
   const channels = getChannels();
 
   return (
@@ -36,18 +38,18 @@ export default function HomePage() {
       <TrailerProvider>
         <div className="page" data-page="home">
           <Loader />
-          <Nav links={HOME_LINKS} cta={CTA} />
+          <Nav links={homeLinks(locale)} cta={cta(locale)} switchHref={localePath(otherLocale(locale), "/")} />
           <main id="main">
-            <HeroSlider slides={getFeaturedSlides()} headline={home.hero.headline} />
-            <Marquee items={home.marquee} />
+            <HeroSlider slides={getFeaturedSlides(locale)} headline={home.hero.headline} />
+            <Marquee items={home.marquee} locale={locale} />
             {ownDramas.length > 0 && (
-              <PosterRail id="dramas" kicker={HOME_PLATFORM} heading="Dramas and telefilms" works={ownDramas} more={MORE} />
+              <PosterRail id="dramas" kicker={HOME_PLATFORM} heading={t.dramas} works={ownDramas} more={more} />
             )}
             {otherDramas.length > 0 && (
-              <PosterRail id="serials" kicker="DURBIN DRAMA · DURBIN" heading="Natoks and serials" works={otherDramas} more={MORE} />
+              <PosterRail id="serials" kicker="DURBIN DRAMA · DURBIN" heading={t.serials} works={otherDramas} more={more} />
             )}
-            {shorts.length > 0 && <PosterRail id="shorts" kicker="DIGITAL" heading="Short films" works={shorts} more={MORE} />}
-            {songs.length > 0 && <PosterRail id="songs" kicker="MUSIC" heading="Songs and title tracks" works={songs} more={MORE} />}
+            {shorts.length > 0 && <PosterRail id="shorts" kicker={t.shortsKicker} heading={t.shorts} works={shorts} more={more} />}
+            {songs.length > 0 && <PosterRail id="songs" kicker={t.songsKicker} heading={t.songs} works={songs} more={more} />}
             <ChannelGrid
               kicker={home.channels.kicker}
               heading={home.channels.heading}
@@ -63,13 +65,13 @@ export default function HomePage() {
             />
             <StudioBlock portrait={site.studioImage} studio={home.studio} />
             <FaqSection kicker={home.faq.kicker} heading={home.faq.heading} items={home.faq.items} />
-            <ContactBlock site={site} copy={home.contact} />
+            <ContactBlock site={site} locale={locale} copy={home.contact} />
           </main>
-          <Footer site={site} />
-          <WhatsAppButton site={site} />
+          <Footer site={site} locale={locale} />
+          <WhatsAppButton site={site} locale={locale} />
         </div>
-        <JsonLd data={homeJsonLd()} />
-        <JsonLd data={faqJsonLd(home.faq.items)} />
+        <JsonLd data={homeJsonLd(locale)} />
+        <JsonLd data={faqJsonLd(home.faq.items, locale)} />
       </TrailerProvider>
     </ReadyProvider>
   );

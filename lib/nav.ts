@@ -1,25 +1,38 @@
+import { UI, localePath, type Locale } from "./i18n";
 import type { NavLink } from "./types";
 
 /** Nav for the home page, where the section anchors are on the same page. */
-export const HOME_LINKS: NavLink[] = [
-  { label: "Dramas", href: "#dramas" },
-  { label: "Serials", href: "#serials" },
-  { label: "Shorts", href: "#shorts" },
-  { label: "Songs", href: "#songs" },
-  { label: "Services", href: "#services" },
-  { label: "Founder", href: "/founder/" },
-];
+export function homeLinks(locale: Locale): NavLink[] {
+  const t = UI[locale].nav;
+  return [
+    { label: t.dramas, href: "#dramas" },
+    { label: t.serials, href: "#serials" },
+    { label: t.shorts, href: "#shorts" },
+    { label: t.songs, href: "#songs" },
+    { label: t.services, href: "#services" },
+    { label: t.founder, href: localePath(locale, "/founder/") },
+  ];
+}
 
 /** Nav for every other page: the same items, pointing back at the home sections. */
-export const PAGE_LINKS: NavLink[] = HOME_LINKS.map((l) => (l.href.startsWith("#") ? { ...l, href: `/${l.href}` } : l));
+export function pageLinks(locale: Locale): NavLink[] {
+  const home = localePath(locale, "/");
+  return homeLinks(locale).map((l) => (l.href.startsWith("#") ? { ...l, href: `${home}${l.href}` } : l));
+}
 
 /** Footer-only extras. */
-export const FOOTER_EXTRA_LINKS: NavLink[] = [
-  { label: "All work", href: "/work/" },
-  { label: "Process", href: "/#process" },
-  { label: "Network", href: "/#channels" },
-  { label: "Questions", href: "/#faq" },
-  { label: "Contact", href: "/#contact" },
-];
+export function footerExtraLinks(locale: Locale): NavLink[] {
+  const t = UI[locale].footerNav;
+  const home = localePath(locale, "/");
+  return [
+    { label: t.all, href: localePath(locale, "/work/") },
+    { label: t.process, href: `${home}#process` },
+    { label: t.network, href: `${home}#channels` },
+    { label: t.questions, href: `${home}#faq` },
+    { label: t.contact, href: `${home}#contact` },
+  ];
+}
 
-export const CTA: NavLink = { label: "Start a project", href: "#contact" };
+export function cta(locale: Locale): NavLink {
+  return { label: UI[locale].cta, href: "#contact" };
+}

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { useUI } from "@/components/providers/LocaleProvider";
 import { playableOf, trailerEmbedUrl } from "@/lib/work";
 import type { Work } from "@/lib/types";
 
@@ -12,17 +13,18 @@ import type { Work } from "@/lib/types";
  */
 export function TrailerEmbed({ work }: { work: Work }) {
   const [playing, setPlaying] = useState(false);
+  const t = useUI().trailer;
   const play = playableOf(work);
 
   if (!play) {
     return (
       <div className="embed">
-        <p className="embed-note m-0">Trailer coming soon.</p>
+        <p className="embed-note m-0">{t.soon}</p>
       </div>
     );
   }
 
-  const label = play.kind === "trailer" ? `Play the trailer for ${work.title}` : `Play ${work.title}`;
+  const label = play.kind === "trailer" ? t.playTrailer(work.title) : t.playFull(work.title);
 
   return (
     <>
@@ -30,7 +32,7 @@ export function TrailerEmbed({ work }: { work: Work }) {
         {playing ? (
           <iframe
             src={trailerEmbedUrl(play.id, play.kind === "trailer" ? work.trailerStart : undefined)}
-            title={play.kind === "trailer" ? `${work.title} trailer` : work.title}
+            title={play.kind === "trailer" ? t.frameTitle(work.title) : work.title}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
           />
@@ -46,7 +48,7 @@ export function TrailerEmbed({ work }: { work: Work }) {
       {work.watchUrl ? (
         <p className="embed-more">
           <a href={work.watchUrl} target="_blank" rel="noopener noreferrer">
-            {play.kind === "trailer" ? "Watch the full drama on YouTube" : "Open on YouTube"}
+            {play.kind === "trailer" ? t.fullOnYoutube : t.openYoutube}
           </a>
         </p>
       ) : null}

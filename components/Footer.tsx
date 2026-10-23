@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { Logo } from "./ui/Logo";
 import { whatsappUrl } from "@/lib/contact";
-import { FOOTER_EXTRA_LINKS, PAGE_LINKS } from "@/lib/nav";
+import { UI, digits, localePath, type Locale } from "@/lib/i18n";
+import { footerExtraLinks, pageLinks } from "@/lib/nav";
 import type { Site } from "@/lib/types";
 
 function Icon({ name }: { name: "facebook" | "youtube" | "whatsapp" }) {
@@ -24,19 +25,20 @@ function Icon({ name }: { name: "facebook" | "youtube" | "whatsapp" }) {
  * Four-column footer: brand and address, site links, contact, social.
  * Year is stamped at build time; the site is static, so rebuild to roll it.
  */
-export function Footer({ site }: { site: Site }) {
+export function Footer({ site, locale }: { site: Site; locale: Locale }) {
+  const t = UI[locale];
   const year = new Date().getFullYear();
-  const wa = whatsappUrl(site);
+  const wa = whatsappUrl(site, locale);
   const socials = site.social.filter((s) => s.href && !s.href.includes("["));
 
   return (
     <footer className="site-foot wrap">
       <div className="foot-grid">
         <div className="foot-brand">
-          <Link className="logo" href="/" aria-label="Durbin Films, home">
+          <Link className="logo" href={localePath(locale, "/")} aria-label={t.homeAria}>
             <Logo height={46} />
           </Link>
-          <p>Television drama, web series and brand films. Script to final cut, in house.</p>
+          <p>{t.footer.tagline}</p>
           <p className="foot-addr">
             {site.address.street}
             <br />
@@ -44,7 +46,7 @@ export function Footer({ site }: { site: Site }) {
           </p>
           {site.network && site.network.length > 0 ? (
             <p className="foot-network">
-              Also from the group:{" "}
+              {t.footer.group}{" "}
               {site.network.map((n, i) => (
                 <span key={n.href}>
                   {i > 0 ? ", " : null}
@@ -66,10 +68,10 @@ export function Footer({ site }: { site: Site }) {
           ) : null}
         </div>
 
-        <nav aria-label="Footer">
-          <b>EXPLORE</b>
+        <nav aria-label={t.menu.footer}>
+          <b>{t.footer.explore}</b>
           <ul className="foot-links">
-            {[...PAGE_LINKS, ...FOOTER_EXTRA_LINKS].map((l) => (
+            {[...pageLinks(locale), ...footerExtraLinks(locale)].map((l) => (
               <li key={l.href}>
                 <Link href={l.href}>{l.label}</Link>
               </li>
@@ -78,7 +80,7 @@ export function Footer({ site }: { site: Site }) {
         </nav>
 
         <div>
-          <b>CONTACT</b>
+          <b>{t.footer.contact}</b>
           <ul>
             <li>
               <a href={`mailto:${site.email}`}>{site.email}</a>
@@ -89,7 +91,7 @@ export function Footer({ site }: { site: Site }) {
             {wa ? (
               <li>
                 <a href={wa} target="_blank" rel="noopener noreferrer">
-                  WhatsApp the studio
+                  {t.whatsapp.studio}
                 </a>
               </li>
             ) : null}
@@ -97,12 +99,12 @@ export function Footer({ site }: { site: Site }) {
         </div>
 
         <div>
-          <b>FOLLOW</b>
+          <b>{t.footer.follow}</b>
           <ul className="foot-social">
             {socials.map((s) => (
               <li key={s.label}>
                 <a href={s.href} target="_blank" rel="noopener noreferrer">
-                  <Icon name={/facebook/i.test(s.label) ? "facebook" : "youtube"} />
+                  <Icon name={/facebook\.com/i.test(s.href) ? "facebook" : "youtube"} />
                   <span>{s.label}</span>
                 </a>
               </li>
@@ -111,7 +113,7 @@ export function Footer({ site }: { site: Site }) {
               <li>
                 <a href={wa} target="_blank" rel="noopener noreferrer">
                   <Icon name="whatsapp" />
-                  <span>WhatsApp</span>
+                  <span>{t.whatsapp.label}</span>
                 </a>
               </li>
             ) : null}
@@ -122,10 +124,10 @@ export function Footer({ site }: { site: Site }) {
       <div className="foot">
         <span>
           {site.name} · {site.address.city}, {site.address.country}
-          {site.founded ? ` · Since ${site.founded.slice(0, 4)}` : ""}
+          {site.founded ? t.footer.since(site.founded.slice(0, 4)) : ""}
         </span>
         <span className="r">
-          © {year} {site.name}
+          © {digits(locale, year)} {site.name}
         </span>
       </div>
     </footer>

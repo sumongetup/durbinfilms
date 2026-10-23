@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { ContactBlock } from "@/components/ContactBlock";
 import { Footer } from "@/components/Footer";
 import { Nav } from "@/components/Nav";
@@ -11,19 +10,22 @@ import { JsonLd } from "@/components/ui/JsonLd";
 import { Kicker } from "@/components/ui/Kicker";
 import { Reveal } from "@/components/ui/Reveal";
 import { getFounder, getSite, resolveFacts } from "@/lib/content";
-import { PAGE_LINKS } from "@/lib/nav";
-import { founderMetadata, personJsonLd } from "@/lib/seo";
+import { UI, localePath, otherLocale, type Locale } from "@/lib/i18n";
+import { pageLinks } from "@/lib/nav";
+import { personJsonLd } from "@/lib/seo";
 
-export const metadata: Metadata = founderMetadata();
-
-export default function FounderPage() {
-  const site = getSite();
-  const founder = getFounder();
+export function FounderView({ locale }: { locale: Locale }) {
+  const site = getSite(locale);
+  const founder = getFounder(locale);
 
   return (
     <ReadyProvider>
       <div className="page" data-page="founder">
-        <Nav links={PAGE_LINKS} cta={{ label: "Get in touch", href: "#contact" }} />
+        <Nav
+          links={pageLinks(locale)}
+          cta={{ label: UI[locale].getInTouch, href: "#contact" }}
+          switchHref={localePath(otherLocale(locale), "/founder/")}
+        />
         <main id="main">
           <FounderHero founder={founder} />
 
@@ -40,7 +42,7 @@ export default function FounderPage() {
               </Reveal>
             </div>
             <Reveal className="facts" delay={0.14}>
-              {resolveFacts(founder.facts).map((f) => (
+              {resolveFacts(founder.facts, locale).map((f) => (
                 <div className="fact" key={f.label}>
                   <div className="n grad">{f.value}</div>
                   <p>{f.label}</p>
@@ -88,6 +90,7 @@ export default function FounderPage() {
 
           <ContactBlock
             site={site}
+            locale={locale}
             variant="founder"
             kicker={founder.contact.kicker}
             heading={founder.contact.heading}
@@ -95,10 +98,10 @@ export default function FounderPage() {
             links={founder.contact.links}
           />
         </main>
-        <Footer site={site} />
-        <WhatsAppButton site={site} />
+        <Footer site={site} locale={locale} />
+        <WhatsAppButton site={site} locale={locale} />
       </div>
-      <JsonLd data={personJsonLd()} />
+      <JsonLd data={personJsonLd(locale)} />
     </ReadyProvider>
   );
 }

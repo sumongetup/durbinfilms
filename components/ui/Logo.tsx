@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useUI } from "@/components/providers/LocaleProvider";
 
 /** Intrinsic size of public/images/brand/logo-nav.png, aspect 2.466. */
 const W = 420;
@@ -9,10 +12,11 @@ const H = 170;
  * `npm run logo`. Height is set by the caller; width follows the aspect.
  */
 export function Logo({ height = 42, priority = false, className = "" }: { height?: number; priority?: boolean; className?: string }) {
+  const t = useUI();
   return (
     <Image
       src="/images/brand/logo-nav.png"
-      alt="Durbin Films"
+      alt={t.logoAlt}
       width={W}
       height={H}
       priority={priority}

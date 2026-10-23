@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { getByPlatform, getChannels, getFounder, getSite, getWorks } from "./content";
+import { BN_KEYWORDS, BN_NAMES, getByPlatform, getChannels, getFounder, getSite, getWorks } from "./content";
+import { HTML_LANG, LOCALES, OG_LOCALE, UI, countLabel, digits, localePath, otherLocale, parseCount, type Locale } from "./i18n";
 import { featuringOf, formatLabel, isPlaceholder, isoDuration, outletOf, playableOf } from "./work";
 import type { Work } from "./types";
 
@@ -16,26 +17,42 @@ export function absoluteUrl(path: string): string {
 }
 
 const ORG_ID = () => `${siteUrl()}/#organization`;
-const SITE_ID = () => `${siteUrl()}/#website`;
+const SITE_ID = (locale: Locale) => `${siteUrl()}${localePath(locale, "/")}#website`;
 
-export function defaultMetadata(): Metadata {
-  const site = getSite();
+/**
+ * Canonical plus hreflang for one page. `path` is the English path; the
+ * Bangla copy lives at the same path under /bn/. English is the x-default.
+ */
+export function alternatesFor(path: string, locale: Locale): NonNullable<Metadata["alternates"]> {
+  const languages: Record<string, string> = Object.fromEntries(LOCALES.map((l) => [HTML_LANG[l], localePath(l, path)]));
+  return { canonical: localePath(locale, path), languages: { ...languages, "x-default": path } };
+}
+
+/** Open Graph locale for the page and the one it is also available in. */
+function ogLocale(locale: Locale) {
+  return { locale: OG_LOCALE[locale], alternateLocale: [OG_LOCALE[otherLocale(locale)]] };
+}
+
+const EN_KEYWORDS = [
+  "Durbin Films",
+  "Bangla natok",
+  "Bangladeshi drama production house",
+  "television drama Dhaka",
+  "web series Bangladesh",
+  "Eid natok",
+  "brand film production Dhaka",
+  "TVC production Bangladesh",
+];
+
+export function defaultMetadata(locale: Locale = "en"): Metadata {
+  const site = getSite(locale);
   return {
     metadataBase: new URL(siteUrl()),
     // A pipe, not an em dash, to match the home title and the house style.
     title: { default: site.title, template: `%s | ${site.name}` },
     description: site.description,
     applicationName: site.name,
-    keywords: [
-      "Durbin Films",
-      "Bangla natok",
-      "Bangladeshi drama production house",
-      "television drama Dhaka",
-      "web series Bangladesh",
-      "Eid natok",
-      "brand film production Dhaka",
-      "TVC production Bangladesh",
-    ],
+    keywords: locale === "bn" ? BN_KEYWORDS : EN_KEYWORDS,
     authors: [{ name: site.name, url: siteUrl() }],
     creator: site.name,
     publisher: site.name,
@@ -44,8 +61,8 @@ export function defaultMetadata(): Metadata {
       siteName: site.name,
       title: site.title,
       description: site.description,
-      url: siteUrl(),
-      locale: "en_GB",
+      url: localePath(locale, "/") === "/" ? siteUrl() : localePath(locale, "/"),
+      ...ogLocale(locale),
       images: [{ url: site.ogImage, width: 1200, height: 630, alt: site.name }],
     },
     twitter: {
@@ -54,24 +71,49 @@ export function defaultMetadata(): Metadata {
       description: site.description,
       images: [{ url: site.ogImage, alt: site.name }],
     },
-    alternates: { canonical: "/" },
+    alternates: alternatesFor("/", locale),
     robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-video-preview": -1 } },
     ...(site.googleSiteVerification ? { verification: { google: site.googleSiteVerification } } : {}),
   };
 }
 
-export function founderMetadata(): Metadata {
-  const founder = getFounder();
+export function workIndexMetadata(locale: Locale = "en"): Metadata {
+  const site = getSite(locale);
+  const t = UI[locale].workIndex;
+  return {
+    title: t.title,
+    description: t.description,
+    alternates: alternatesFor("/work/", locale),
+    openGraph: {
+      type: "website",
+      title: `${t.title} | ${site.name}`,
+      description: t.description,
+      url: localePath(locale, "/work/"),
+      ...ogLocale(locale),
+      images: [{ url: "/og-image.png", width: 1200, height: 630, alt: site.name }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${t.title} | ${site.name}`,
+      description: t.description,
+      images: [{ url: "/og-image.png", alt: site.name }],
+    },
+  };
+}
+
+export function founderMetadata(locale: Locale = "en"): Metadata {
+  const founder = getFounder(locale);
   const description = clampDescription(founder.seo.description);
   return {
     title: { absolute: founder.seo.title },
     description,
-    alternates: { canonical: "/founder/" },
+    alternates: alternatesFor("/founder/", locale),
     openGraph: {
       type: "profile",
       title: founder.seo.title,
       description,
-      url: "/founder/",
+      url: localePath(locale, "/founder/"),
+      ...ogLocale(locale),
       images: [{ url: founder.portrait, width: 1200, height: 1500, alt: founder.name }],
     },
     twitter: {
@@ -92,24 +134,38 @@ export function clampDescription(text: string, max = 158): string {
   if (clean.length <= max) return clean;
 
   const window = clean.slice(0, max + 1);
-  const sentenceEnd = Math.max(window.lastIndexOf(". "), window.lastIndexOf("? "), window.lastIndexOf("! "));
+  const sentenceEnd = Math.max(window.lastIndexOf(". "), window.lastIndexOf("? "), window.lastIndexOf("! "), window.lastIndexOf("। "));
   if (sentenceEnd > max * 0.55) return clean.slice(0, sentenceEnd + 1);
 
   const wordEnd = window.lastIndexOf(" ");
-  return `${clean.slice(0, wordEnd > 0 ? wordEnd : max).replace(/[,;:.\s]+$/, "")}…`;
+  return `${clean.slice(0, wordEnd > 0 ? wordEnd : max).replace(/[,;:.।\s]+$/, "")}…`;
 }
 
 /** One factual sentence for search snippets when no synopsis has been written. */
-export function workDescription(work: Work): string {
+export function workDescription(work: Work, locale: Locale = "en"): string {
   if (!isPlaceholder(work.synopsis)) return work.synopsis;
-  const site = getSite();
+  const site = getSite(locale);
   const outlet = outletOf(work);
   const cast = featuringOf(work);
   const play = playableOf(work);
-  const kind = formatLabel(work);
+  const kind = formatLabel(work, locale);
+  const year = /^\d{4}$/.test(work.year) ? work.year : "";
+
+  if (locale === "bn") {
+    const parts = [
+      `${work.title} ${site.name}-এর ${year ? `${digits("bn", year)} সালের ` : ""}${kind}` +
+        (outlet && !isPlaceholder(outlet) ? `, প্রচারিত ${outlet}-এ` : "") +
+        (cast ? `, অভিনয়ে ${cast}` : "") +
+        "।",
+    ];
+    if (work.views) parts.push(`ইউটিউবে ${countLabel("bn", work.views)} ভিউ।`);
+    if (play) parts.push(play.kind === "trailer" ? "ট্রেলার দেখুন, জানুন শিল্পী ও কলাকুশলীদের কথা।" : "পুরো ভিডিও দেখুন, জানুন শিল্পী ও কলাকুশলীদের কথা।");
+    return parts.join(" ");
+  }
+
   const kindText = /^Eid/.test(kind) ? kind : kind.charAt(0).toLowerCase() + kind.slice(1);
   const parts = [
-    `${work.title} is a ${/^\d{4}$/.test(work.year) ? `${work.year} ` : ""}${kindText} from ${site.name}` +
+    `${work.title} is a ${year ? `${year} ` : ""}${kindText} from ${site.name}` +
       (outlet && !isPlaceholder(outlet) ? `, released on ${outlet}` : "") +
       (cast ? `, starring ${cast}` : "") +
       ".",
@@ -119,11 +175,12 @@ export function workDescription(work: Work): string {
   return parts.join(" ");
 }
 
-export function workMetadata(work: Work): Metadata {
-  const site = getSite();
-  const description = clampDescription(workDescription(work));
-  const year = /^\d{4}$/.test(work.year) ? ` (${work.year})` : "";
-  const kind = formatLabel(work);
+export function workMetadata(work: Work, locale: Locale = "en"): Metadata {
+  const site = getSite(locale);
+  const path = `/work/${work.slug}/`;
+  const description = clampDescription(workDescription(work, locale));
+  const year = /^\d{4}$/.test(work.year) ? ` (${digits(locale, work.year)})` : "";
+  const kind = formatLabel(work, locale);
   // The layout appends " | Durbin Films" (15 chars), and a search result shows
   // about 60 before truncating, so drop the format, then the year, to fit.
   const budget = 60 - (site.name.length + 3);
@@ -131,12 +188,13 @@ export function workMetadata(work: Work): Metadata {
   return {
     title,
     description,
-    alternates: { canonical: `/work/${work.slug}/` },
+    alternates: alternatesFor(path, locale),
     openGraph: {
       type: work.type === "series" ? "video.tv_show" : "video.movie",
       title: `${work.title}${year} | ${site.name}`,
       description,
-      url: `/work/${work.slug}/`,
+      url: localePath(locale, path),
+      ...ogLocale(locale),
       images: [{ url: absoluteUrl(work.backdrop), width: 1280, height: 720, alt: work.title }],
       ...(work.released ? { releaseDate: work.released } : {}),
     },
@@ -165,6 +223,8 @@ function organizationNode(): JsonLd {
     "@type": ["Organization", "LocalBusiness"],
     "@id": ORG_ID(),
     name: site.name,
+    // The Bangla spellings people search for, so a query in Bangla finds the same studio.
+    alternateName: BN_NAMES,
     image: absoluteUrl(site.ogImage),
     url: `${siteUrl()}/`,
     logo: { "@type": "ImageObject", url: absoluteUrl(site.ogImage), width: 1200, height: 630 },
@@ -187,23 +247,25 @@ function organizationNode(): JsonLd {
 }
 
 /** Organization plus WebSite (with site search) for the root layout. */
-export function organizationJsonLd(): JsonLd {
-  const site = getSite();
+export function organizationJsonLd(locale: Locale = "en"): JsonLd {
+  const site = getSite(locale);
+  const other = getSite(otherLocale(locale));
   return {
     "@context": "https://schema.org",
     "@graph": [
       organizationNode(),
       {
         "@type": "WebSite",
-        "@id": SITE_ID(),
-        url: `${siteUrl()}/`,
+        "@id": SITE_ID(locale),
+        url: absoluteUrl(localePath(locale, "/")),
         name: site.name,
+        alternateName: other.name,
         description: site.description,
         publisher: { "@id": ORG_ID() },
-        inLanguage: "en",
+        inLanguage: HTML_LANG[locale],
         potentialAction: {
           "@type": "SearchAction",
-          target: { "@type": "EntryPoint", urlTemplate: `${siteUrl()}/work/?q={search_term_string}` },
+          target: { "@type": "EntryPoint", urlTemplate: `${absoluteUrl(localePath(locale, "/work/"))}?q={search_term_string}` },
           "query-input": "required name=search_term_string",
         },
       },
@@ -212,10 +274,11 @@ export function organizationJsonLd(): JsonLd {
 }
 
 /** FAQPage for the home page questions, so Google can show them as rich results. */
-export function faqJsonLd(items: { q: string; a: string }[]): JsonLd {
+export function faqJsonLd(items: { q: string; a: string }[], locale: Locale = "en"): JsonLd {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
+    inLanguage: HTML_LANG[locale],
     mainEntity: items.map((it) => ({
       "@type": "Question",
       name: it.q,
@@ -225,25 +288,25 @@ export function faqJsonLd(items: { q: string; a: string }[]): JsonLd {
 }
 
 /** ItemList of the studio's own dramas, for the home page. */
-export function homeJsonLd(): JsonLd {
-  const dramas = getByPlatform("DURBIN FILMS").filter((w) => w.type === "drama");
+export function homeJsonLd(locale: Locale = "en"): JsonLd {
+  const dramas = getByPlatform("DURBIN FILMS", locale).filter((w) => w.type === "drama");
   return {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "Dramas and telefilms by Durbin Films",
+    name: UI[locale].workIndex.homeList,
     itemListOrder: "https://schema.org/ItemListOrderDescending",
     numberOfItems: dramas.length,
     itemListElement: dramas.map((w, i) => ({
       "@type": "ListItem",
       position: i + 1,
       name: w.title,
-      url: absoluteUrl(`/work/${w.slug}/`),
+      url: absoluteUrl(localePath(locale, `/work/${w.slug}/`)),
     })),
   };
 }
 
-export function personJsonLd(): JsonLd {
-  const founder = getFounder();
+export function personJsonLd(locale: Locale = "en"): JsonLd {
+  const founder = getFounder(locale);
   const site = getSite();
   const sameAs = [...(founder.contact.links ?? []).map((l) => l.href), ...site.social.map((s) => s.href)].filter(
     (h) => h && !h.includes("["),
@@ -253,10 +316,11 @@ export function personJsonLd(): JsonLd {
     "@type": "Person",
     "@id": `${siteUrl()}/founder/#person`,
     name: founder.name,
-    jobTitle: "Founder",
+    alternateName: getFounder(otherLocale(locale)).name,
+    jobTitle: UI[locale].founder.jobTitle,
     description: founder.seo.description,
     image: absoluteUrl(founder.portrait),
-    url: absoluteUrl("/founder/"),
+    url: absoluteUrl(localePath(locale, "/founder/")),
     worksFor: { "@id": ORG_ID() },
     address: { "@type": "PostalAddress", addressLocality: "Dhaka", addressCountry: "BD" },
     ...(sameAs.length ? { sameAs } : {}),
@@ -280,16 +344,16 @@ function breadcrumb(items: { name: string; path: string }[]): JsonLd {
  * a VideoObject for the trailer or full video so Google can show a video
  * result, and the breadcrumb trail.
  */
-export function productionJsonLd(work: Work): JsonLd {
-  const site = getSite();
-  const url = absoluteUrl(`/work/${work.slug}/`);
-  const description = workDescription(work);
+export function productionJsonLd(work: Work, locale: Locale = "en"): JsonLd {
+  const site = getSite(locale);
+  const url = absoluteUrl(localePath(locale, `/work/${work.slug}/`));
+  const description = workDescription(work, locale);
   const type = work.type === "series" ? "TVSeries" : work.type === "song" ? "MusicVideoObject" : "Movie";
   const creative: JsonLd = {
     "@type": type,
     "@id": `${url}#work`,
     name: work.title,
-    ...(work.titleBn ? { alternateName: work.titleBn } : {}),
+    ...(work.altTitle ? { alternateName: work.altTitle } : {}),
     url,
     image: absoluteUrl(work.backdrop),
     description,
@@ -313,7 +377,7 @@ export function productionJsonLd(work: Work): JsonLd {
     const video: JsonLd = {
       "@type": "VideoObject",
       "@id": `${url}#video`,
-      name: play.kind === "trailer" ? `${work.title} trailer` : work.title,
+      name: play.kind === "trailer" ? UI[locale].trailer.frameTitle(work.title) : work.title,
       description,
       thumbnailUrl: [absoluteUrl(work.backdrop)],
       uploadDate: work.released,
@@ -325,7 +389,7 @@ export function productionJsonLd(work: Work): JsonLd {
     };
     if (play.kind === "full" && work.durationSeconds) video.duration = isoDuration(work.durationSeconds);
     if (work.views && play.kind === "full") {
-      const n = parseViews(work.views);
+      const n = parseCount(work.views);
       if (n) video.interactionStatistic = { "@type": "InteractionCounter", interactionType: { "@type": "WatchAction" }, userInteractionCount: n };
     }
     creative.trailer = play.kind === "trailer" ? { "@id": `${url}#video` } : undefined;
@@ -333,39 +397,46 @@ export function productionJsonLd(work: Work): JsonLd {
     graph.push(video);
   }
 
-  graph.push(breadcrumb([{ name: site.name, path: "/" }, { name: "All work", path: "/work/" }, { name: work.title, path: `/work/${work.slug}/` }]));
+  graph.push(
+    breadcrumb([
+      { name: site.name, path: localePath(locale, "/") },
+      { name: UI[locale].footerNav.all, path: localePath(locale, "/work/") },
+      { name: work.title, path: localePath(locale, `/work/${work.slug}/`) },
+    ]),
+  );
 
   return { "@context": "https://schema.org", "@graph": graph };
 }
 
-/** "41M" -> 41000000, "9.6M" -> 9600000, "773K" -> 773000. */
-function parseViews(v: string): number | null {
-  const m = v.trim().match(/^([\d.]+)\s*([KMB])?$/i);
-  if (!m) return null;
-  const n = parseFloat(m[1]);
-  const mult = { K: 1e3, M: 1e6, B: 1e9 }[(m[2] || "").toUpperCase()] ?? 1;
-  return Math.round(n * mult);
-}
-
-export function allWorkJsonLd(): JsonLd {
-  const site = getSite();
-  const works = getWorks();
+export function allWorkJsonLd(locale: Locale = "en"): JsonLd {
+  const site = getSite(locale);
+  const works = getWorks(locale);
+  const page = absoluteUrl(localePath(locale, "/work/"));
   return {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "CollectionPage",
-        "@id": `${siteUrl()}/work/#page`,
-        name: `All work by ${site.name}`,
-        url: absoluteUrl("/work/"),
-        isPartOf: { "@id": SITE_ID() },
+        "@id": `${page}#page`,
+        name: UI[locale].workIndex.collection(site.name),
+        url: page,
+        inLanguage: HTML_LANG[locale],
+        isPartOf: { "@id": SITE_ID(locale) },
         mainEntity: {
           "@type": "ItemList",
           numberOfItems: works.length,
-          itemListElement: works.map((w, i) => ({ "@type": "ListItem", position: i + 1, name: w.title, url: absoluteUrl(`/work/${w.slug}/`) })),
+          itemListElement: works.map((w, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: w.title,
+            url: absoluteUrl(localePath(locale, `/work/${w.slug}/`)),
+          })),
         },
       },
-      breadcrumb([{ name: site.name, path: "/" }, { name: "All work", path: "/work/" }]),
+      breadcrumb([
+        { name: site.name, path: localePath(locale, "/") },
+        { name: UI[locale].footerNav.all, path: localePath(locale, "/work/") },
+      ]),
     ],
   };
 }

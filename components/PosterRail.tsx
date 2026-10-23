@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRef, useState, type MouseEvent, type PointerEvent } from "react";
 import { Kicker } from "./ui/Kicker";
 import { PosterCard } from "./ui/PosterCard";
+import { useUI } from "./providers/LocaleProvider";
 import { useReducedMotion } from "@/hooks/useMediaQuery";
 import type { Work } from "@/lib/types";
 
@@ -23,6 +24,7 @@ interface Props {
 
 export function PosterRail({ id, kicker, heading, works, more }: Props) {
   const reduce = useReducedMotion();
+  const t = useUI().rails;
   const railRef = useRef<HTMLUListElement>(null);
   const drag = useRef({ down: false, startX: 0, startLeft: 0, moved: 0 });
   const [dragging, setDragging] = useState(false);
@@ -70,10 +72,10 @@ export function PosterRail({ id, kicker, heading, works, more }: Props) {
           </span>
         ) : null}
         <div className={`arrows${more ? " ml-0" : ""}`}>
-          <button type="button" className="arrow" aria-label={`Scroll ${heading} left`} onClick={() => page(-1)}>
+          <button type="button" className="arrow" aria-label={t.left(heading)} onClick={() => page(-1)}>
             <span aria-hidden="true">‹</span>
           </button>
-          <button type="button" className="arrow" aria-label={`Scroll ${heading} right`} onClick={() => page(1)}>
+          <button type="button" className="arrow" aria-label={t.right(heading)} onClick={() => page(1)}>
             <span aria-hidden="true">›</span>
           </button>
         </div>

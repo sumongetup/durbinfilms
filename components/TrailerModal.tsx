@@ -11,6 +11,7 @@ import {
   type ReactNode,
 } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useUI } from "./providers/LocaleProvider";
 import { easeWord } from "@/lib/motion";
 import { trailerEmbedUrl } from "@/lib/work";
 
@@ -78,6 +79,7 @@ export function TrailerModal({ trailer, onClose }: { trailer: Trailer | null; on
   const boxRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const isOpen = trailer !== null;
+  const t = useUI().trailer;
 
   useEffect(() => {
     if (!isOpen) return;
@@ -135,24 +137,24 @@ export function TrailerModal({ trailer, onClose }: { trailer: Trailer | null; on
               {trailer.youtubeId ? (
                 <iframe
                   src={trailerEmbedUrl(trailer.youtubeId, trailer.start)}
-                  title={`${trailer.title} trailer`}
+                  title={t.frameTitle(trailer.title)}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
                 />
               ) : (
-                <p className="m-0">Trailer coming soon.</p>
+                <p className="m-0">{t.soon}</p>
               )}
             </div>
             <div className="modal-foot">
-              <h3 id="trailer-title">{trailer.kind === "full" ? trailer.title : `${trailer.title} — trailer`}</h3>
+              <h3 id="trailer-title">{trailer.kind === "full" ? trailer.title : t.heading(trailer.title)}</h3>
               <div className="modal-actions">
                 {trailer.watchUrl ? (
                   <a className="btn btn-primary" href={trailer.watchUrl} target="_blank" rel="noopener noreferrer">
-                    {trailer.kind === "full" ? "Open on YouTube" : "Watch the full drama"}
+                    {trailer.kind === "full" ? t.openYoutube : t.fullDrama}
                   </a>
                 ) : null}
                 <button ref={closeRef} type="button" className="btn btn-ghost" onClick={onClose}>
-                  Close
+                  {t.close}
                 </button>
               </div>
             </div>

@@ -7,8 +7,10 @@ import { Button } from "./ui/Button";
 import { Kicker } from "./ui/Kicker";
 import { SplitWords } from "./ui/SplitWords";
 import { useTrailer } from "./TrailerModal";
+import { useLocale } from "./providers/LocaleProvider";
 import { useFinePointer, useReducedMotion } from "@/hooks/useMediaQuery";
 import { SLIDE_MS } from "@/lib/motion";
+import { UI } from "@/lib/i18n";
 import { playLabel, playableOf } from "@/lib/work";
 import type { FeaturedSlide } from "@/lib/types";
 
@@ -23,6 +25,8 @@ export function HeroSlider({ slides, headline }: { slides: FeaturedSlide[]; head
   const reduce = useReducedMotion();
   const fine = useFinePointer();
   const { open } = useTrailer();
+  const locale = useLocale();
+  const t = UI[locale].hero;
   const heroRef = useRef<HTMLElement>(null);
 
   const [idx, setIdx] = useState(0);
@@ -81,7 +85,7 @@ export function HeroSlider({ slides, headline }: { slides: FeaturedSlide[]; head
       onPointerMove={onMove}
       onPointerLeave={onLeave}
       aria-roledescription="carousel"
-      aria-label="Featured productions"
+      aria-label={t.aria}
     >
       <motion.div className="hero-bg" style={{ y }} aria-hidden="true">
         {slides.map((s, i) => (
@@ -140,11 +144,11 @@ export function HeroSlider({ slides, headline }: { slides: FeaturedSlide[]; head
                   })
                 }
               >
-                <span aria-hidden="true">▶</span> {playLabel(play.kind)}
+                <span aria-hidden="true">▶</span> {playLabel(play.kind, locale)}
               </Button>
             ) : null}
             <Button href="#dramas" variant="ghost">
-              Browse the work
+              {t.browse}
             </Button>
           </div>
           <div className="dots">
@@ -153,7 +157,7 @@ export function HeroSlider({ slides, headline }: { slides: FeaturedSlide[]; head
                 key={s.slug}
                 type="button"
                 className={`dot${i === idx ? " on" : ""}`}
-                aria-label={`Featured ${i + 1}: ${s.title}`}
+                aria-label={t.dot(i + 1, s.title)}
                 aria-current={i === idx ? "true" : undefined}
                 onClick={() => go(i)}
               >
@@ -170,7 +174,7 @@ export function HeroSlider({ slides, headline }: { slides: FeaturedSlide[]; head
       </div>
 
       <span className="scroll-hint" aria-hidden="true">
-        SCROLL
+        {t.scroll}
         <i />
       </span>
     </section>

@@ -6,7 +6,9 @@ import { useRef, type PointerEvent } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { Reveal } from "./Reveal";
 import { useTrailer } from "@/components/TrailerModal";
+import { useLocale } from "@/components/providers/LocaleProvider";
 import { useReducedMotion } from "@/hooks/useMediaQuery";
+import { UI, badgeLabel, countLabel, digits, localePath } from "@/lib/i18n";
 import { isNew, outletOf, playLabel, playableOf } from "@/lib/work";
 import type { Work } from "@/lib/types";
 
@@ -24,6 +26,8 @@ const SPRING = { stiffness: 260, damping: 24, mass: 0.6 };
 export function PosterCard({ work, index }: { work: Work; index: number }) {
   const reduce = useReducedMotion();
   const { open } = useTrailer();
+  const locale = useLocale();
+  const t = UI[locale].poster;
   const artRef = useRef<HTMLSpanElement>(null);
 
   const rx = useMotionValue(0);
@@ -53,7 +57,9 @@ export function PosterCard({ work, index }: { work: Work; index: number }) {
   };
 
   const outlet = outletOf(work);
-  const sub = outlet ? `${outlet} · ${work.year}` : work.year;
+  const year = digits(locale, work.year);
+  const sub = outlet ? `${outlet} · ${year}` : year;
+  const badge = badgeLabel(locale, work.badge);
   const play = playableOf(work);
   const thumb = work.posterFit === "thumb";
 
@@ -84,14 +90,14 @@ export function PosterCard({ work, index }: { work: Work; index: number }) {
             />
           )}
           <span className="glow" aria-hidden="true" />
-          <span className="ep">{isNew(work) ? `NEW · ${work.badge}` : work.badge}</span>
-          {work.views ? <span className="ep views-chip">{work.views} views</span> : null}
+          <span className="ep">{isNew(work) ? `${t.isNew} · ${badge}` : badge}</span>
+          {work.views ? <span className="ep views-chip">{t.views(countLabel(locale, work.views))}</span> : null}
         </motion.span>
         {play ? (
           <button
             type="button"
             className="play"
-            aria-label={`${playLabel(play.kind)}: ${work.title}`}
+            aria-label={`${playLabel(play.kind, locale)}: ${work.title}`}
             onClick={() =>
               open({
                 title: work.title,
@@ -108,7 +114,7 @@ export function PosterCard({ work, index }: { work: Work; index: number }) {
       </div>
       <h3>{work.title}</h3>
       <p>{sub}</p>
-      <Link href={`/work/${work.slug}/`} className="cover" aria-label={`${work.title}, ${sub}`} draggable={false} />
+      <Link href={localePath(locale, `/work/${work.slug}/`)} className="cover" aria-label={`${work.title}, ${sub}`} draggable={false} />
     </Reveal>
   );
 }

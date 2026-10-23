@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useUI } from "./providers/LocaleProvider";
 import type { NavLink } from "@/lib/types";
 
 /**
@@ -10,6 +11,7 @@ import type { NavLink } from "@/lib/types";
  * Body scroll is locked while open and focus moves to the first link.
  */
 export function MobileSheet({ open, onClose, links }: { open: boolean; onClose: () => void; links: NavLink[] }) {
+  const t = useUI();
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -29,7 +31,7 @@ export function MobileSheet({ open, onClose, links }: { open: boolean; onClose: 
           ref={ref}
           id="mobile-sheet"
           className="sheet"
-          aria-label="Menu"
+          aria-label={t.menu.sheet}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -42,7 +44,7 @@ export function MobileSheet({ open, onClose, links }: { open: boolean; onClose: 
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, delay: i * 0.06 }}
             >
-              <Link href={l.href} onClick={onClose}>
+              <Link href={l.href} onClick={onClose} hrefLang={l.hrefLang} lang={l.hrefLang}>
                 {l.label}
               </Link>
             </motion.div>
