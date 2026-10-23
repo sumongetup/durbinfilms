@@ -103,7 +103,7 @@ export function workIndexMetadata(locale: Locale = "en"): Metadata {
 
 export function founderMetadata(locale: Locale = "en"): Metadata {
   const founder = getFounder(locale);
-  const description = clampDescription(founder.seo.description);
+  const description = clampDescription(founder.seo.description, locale === "bn" ? 180 : 158);
   return {
     title: { absolute: founder.seo.title },
     description,
@@ -153,13 +153,13 @@ export function workDescription(work: Work, locale: Locale = "en"): string {
 
   if (locale === "bn") {
     const parts = [
-      `${work.title} ${site.name}-এর ${year ? `${digits("bn", year)} সালের ` : ""}${kind}` +
-        (outlet && !isPlaceholder(outlet) ? `, প্রচারিত ${outlet}-এ` : "") +
-        (cast ? `, অভিনয়ে ${cast}` : "") +
+      `${work.title}, ${site.name}-এর ${year ? `${digits("bn", year)} সালের ` : ""}${kind}` +
+        (outlet && !isPlaceholder(outlet) ? `, প্রকাশিত হয়েছে ${outlet}-এ` : "") +
         "।",
     ];
-    if (work.views) parts.push(`ইউটিউবে ${countLabel("bn", work.views)} ভিউ।`);
-    if (play) parts.push(play.kind === "trailer" ? "ট্রেলার দেখুন, জানুন শিল্পী ও কলাকুশলীদের কথা।" : "পুরো ভিডিও দেখুন, জানুন শিল্পী ও কলাকুশলীদের কথা।");
+    if (cast) parts.push(`অভিনয় করেছেন ${cast}।`);
+    if (work.views) parts.push(`ইউটিউবে দেখা হয়েছে ${countLabel("bn", work.views)} বার।`);
+    if (play) parts.push(play.kind === "trailer" ? "এখানে ট্রেলার দেখুন, জানুন শিল্পী ও কলাকুশলীদের কথা।" : "এখানে পুরো ভিডিও দেখুন, জানুন শিল্পী ও কলাকুশলীদের কথা।");
     return parts.join(" ");
   }
 
@@ -178,7 +178,8 @@ export function workDescription(work: Work, locale: Locale = "en"): string {
 export function workMetadata(work: Work, locale: Locale = "en"): Metadata {
   const site = getSite(locale);
   const path = `/work/${work.slug}/`;
-  const description = clampDescription(workDescription(work, locale));
+  // Bangla vowel signs and conjuncts take extra code units per visible letter, so allow more.
+  const description = clampDescription(workDescription(work, locale), locale === "bn" ? 180 : 158);
   const year = /^\d{4}$/.test(work.year) ? ` (${digits(locale, work.year)})` : "";
   const kind = formatLabel(work, locale);
   // The layout appends " | Durbin Films" (15 chars), and a search result shows
