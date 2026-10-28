@@ -189,7 +189,7 @@ When you add a production, add its Bangla synopsis to `content/bn/works.json` as
 ## Contact details
 
 `content/site.json` holds the studio address, email, phone, social links, and the founding
-(`founded`, 10 October 2021) and registration (`registered`, 1 July 2022) dates. `phone` is the
+(`founded`) and registration (`registered`) dates, both 1 July 2022. `phone` is the
 dialable number used in `tel:` links; `phoneDisplay` is what visitors see. Every entry in `social`
 with a link is shown in the home page FOLLOW list; the founder page shows his own
 profiles from `founder.json` under `contact.links`.

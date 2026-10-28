@@ -1,7 +1,7 @@
 {
   "seo": {
     "title": "Md Sumon Howlader | Durbin Films and Durbin News",
-    "description": "Md Sumon Howlader founded Durbin Films in 2021 and is the Editor and Publisher of Durbin News, the PID registered portal. A Dhaka producer building for a Bengali audience online since 2014."
+    "description": "Md Sumon Howlader founded Durbin Films in 2022 and is the Editor and Publisher of Durbin News, the PID registered portal. A Dhaka producer building for a Bengali audience online since 2014."
   },
   "name": "Md Sumon Howlader",
   "alternateNames": [
@@ -14,7 +14,7 @@
     "Founder, Durbin Films",
     "Editor & Publisher, Durbin News"
   ],
-  "intro": "Producer working online full time since 2014. He founded Durbin Films in October 2021 and runs it from Dhaka, Bangladesh, producing television dramas, web series, short films, documentaries, and brand work.",
+  "intro": "Producer working online full time since 2014. He founded Durbin Films in July 2022 and runs it from Dhaka, Bangladesh, producing television dramas, web series, short films, documentaries, and brand work.",
   "portrait": "/images/founder/portrait.jpg",
   "backdrop": "/images/founder/backdrop.jpg",
   "profile": {
@@ -22,8 +22,8 @@
     "heading": "Ten years of one audience",
     "paragraphs": [
       "Md Sumon Howlader has worked online full time since 2014, years before a Bengali audience arrived on YouTube and Facebook in the numbers it has today. More than two thousand projects have passed through his hands since then, most of them short films and documentaries. That volume taught him what no one can teach a producer: what people stop for, and what they scroll past.",
-      "He founded Durbin Films in October 2021. The studio now runs its own YouTube channels with more than two and a half million subscribers between them, producing television dramas, web series, short films, documentaries, and brand work. Its drama has aired on television as well as online. He produces across the full slate, from choosing the story and setting the budget to final delivery.",
-      "Four months after the studio, he launched Durbin News, registered by the Press Information Department as an online news portal in July 2022. He is its Editor and Publisher. Its main Facebook page reaches around 7.6 million followers and more than 500 million views a month, making it one of the most followed news outlets in Bangladesh."
+      "He founded Durbin Films on 1 July 2022. The studio now runs its own YouTube channels with more than two and a half million subscribers between them, producing television dramas, web series, short films, documentaries, and brand work. Its drama has aired on television as well as online. He produces across the full slate, from choosing the story and setting the budget to final delivery.",
+      "Earlier that year, in February 2022, he launched Durbin News, registered by the Press Information Department as an online news portal in July 2022. He is its Editor and Publisher. Its main Facebook page reaches around 7.6 million followers and more than 500 million views a month, making it one of the most followed news outlets in Bangladesh."
     ]
   },
   "facts": [
@@ -54,19 +54,19 @@
         "text": "Began as a freelancer building digital projects, which became the base for everything after."
       },
       {
-        "year": "10 October 2021",
-        "title": "Durbin Films founded",
-        "text": "Started the studio and moved into production: television drama, web series, commercials and brand films, produced end to end."
-      },
-      {
         "year": "16 February 2022",
         "title": "Durbin News founded",
         "text": "Launched the portal and built it into a government registered online news outlet with a national readership and a set of Durbin branded pages."
       },
       {
-        "year": "July 2022",
-        "title": "Both ventures registered",
-        "text": "Durbin Films became a registered company on 1 July 2022. On 31 July 2022 Durbin News received its Press Information Department registration as online news portal no. 147."
+        "year": "1 July 2022",
+        "title": "Durbin Films founded",
+        "text": "Started the studio as a registered company and moved into production: television drama, web series, commercials and brand films, produced end to end."
+      },
+      {
+        "year": "31 July 2022",
+        "title": "Durbin News registered",
+        "text": "The Press Information Department registered Durbin News as online news portal no. 147."
       }
     ]
   },
@@ -77,7 +77,7 @@
       {
         "tag": "PRODUCTION",
         "name": "Durbin Films",
-        "text": "A Dhaka production house making television drama, web series, short films and brand work end to end. Founded October 2021.",
+        "text": "A Dhaka production house making television drama, web series, short films and brand work end to end. Founded July 2022.",
         "role": "Founder",
         "href": "/"
       },
@@ -104,7 +104,7 @@
       },
       {
         "label": "Studio",
-        "value": "Durbin Films, founded 10 October 2021 and registered on 1 July 2022"
+        "value": "Durbin Films, founded and registered as a company on 1 July 2022"
       },
       {
         "label": "Based in",
