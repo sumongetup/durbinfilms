@@ -56,12 +56,17 @@
       {
         "year": "25 October 2019",
         "title": "Durbin Multimedia Ltd. founded",
-        "text": "Founded Durbin Multimedia Ltd. and led it until September 2021."
+        "text": "Founded Durbin Multimedia Ltd. and led it as its founder."
+      },
+      {
+        "year": "15 September 2021",
+        "title": "Left Durbin Multimedia Ltd.",
+        "text": "Stepped away from Durbin Multimedia Ltd. after nearly two years."
       },
       {
         "year": "10 October 2021",
-        "title": "Chairman, Durbin Inspiring Ltd",
-        "text": "Became chairman of Durbin Inspiring Ltd, a role he held until 31 January 2026."
+        "title": "Durbin Inspiring Ltd founded",
+        "text": "Founded Durbin Inspiring Ltd and served as its chairman."
       },
       {
         "year": "16 February 2022",
@@ -77,6 +82,11 @@
         "year": "31 July 2022",
         "title": "Durbin News registered",
         "text": "The Press Information Department registered Durbin News as online news portal no. 147."
+      },
+      {
+        "year": "31 January 2026",
+        "title": "Left Durbin Inspiring Ltd",
+        "text": "Stepped down as chairman of Durbin Inspiring Ltd after four years."
       }
     ]
   },
@@ -103,7 +113,7 @@
       {
         "tag": "COMPANY",
         "name": "Durbin Inspiring Ltd",
-        "text": "A Durbin group company, which he chaired from its start in October 2021 until January 2026.",
+        "text": "A Durbin group company he founded in October 2021 and chaired until he left in January 2026.",
         "role": "Chairman",
         "period": "Oct 2021 – Jan 2026",
         "href": ""
@@ -111,7 +121,7 @@
       {
         "tag": "COMPANY",
         "name": "Durbin Multimedia Ltd.",
-        "text": "The company he founded in October 2019 and led until September 2021, before Durbin News and Durbin Films.",
+        "text": "The company he founded in October 2019 and led until he left in September 2021, before Durbin News and Durbin Films.",
         "role": "Founder",
         "period": "Oct 2019 – Sep 2021",
         "href": ""
