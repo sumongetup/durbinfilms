@@ -198,13 +198,18 @@ profiles from `founder.json` under `contact.links`.
 
 The site is hosted on Vercel, in the `durbinfilms` project of the "Md Sumon's projects" team.
 The repository sits on a GitHub account that team is not linked to, so Vercel's own Git
-integration does not see pushes. Instead `.github/workflows/deploy.yml` runs on every push to
-`main` (and from the Actions tab, "Run workflow") and calls `vercel deploy --prod`; Vercel then
-builds and publishes the site. It needs one repository secret, `VERCEL_TOKEN`, created at
-vercel.com/account/settings/tokens with access to that team.
+integration does not see pushes: **pushing to `main` does not deploy**. Deploy by hand from this
+folder after the change is committed:
 
-To deploy by hand instead: `npx vercel login` with the account that owns the team, then
-`npx vercel deploy --prod --scope md-sumons-projects-19c52dc5` from this folder.
+```bash
+npx vercel login
+npx vercel deploy --prod --scope md-sumons-projects-19c52dc5
+```
+
+Log in with the account that owns "Md Sumon's projects" (`npx vercel whoami` should print
+`sumongetup-8041`), not one that only sees other teams. Vercel builds the upload and points
+durbinfilms.com at it. The first deploy from a fresh clone asks to link the folder to the
+`durbinfilms` project; that writes `.vercel/` and `.env.local`, which git ignores.
 
 Vercel settings (its Next.js preset detects these automatically):
 
