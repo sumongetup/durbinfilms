@@ -196,8 +196,15 @@ profiles from `founder.json` under `contact.links`.
 
 ## Deploying
 
-The site is hosted on Vercel, connected to this repository. Every push to `main` triggers a build
-and deploy; pull requests get their own preview URL.
+The site is hosted on Vercel, in the `durbinfilms` project of the "Md Sumon's projects" team.
+The repository sits on a GitHub account that team is not linked to, so Vercel's own Git
+integration does not see pushes. Instead `.github/workflows/deploy.yml` runs on every push to
+`main` (and from the Actions tab, "Run workflow") and calls `vercel deploy --prod`; Vercel then
+builds and publishes the site. It needs one repository secret, `VERCEL_TOKEN`, created at
+vercel.com/account/settings/tokens with access to that team.
+
+To deploy by hand instead: `npx vercel login` with the account that owns the team, then
+`npx vercel deploy --prod --scope md-sumons-projects-19c52dc5` from this folder.
 
 Vercel settings (its Next.js preset detects these automatically):
 

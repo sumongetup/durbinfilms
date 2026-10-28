@@ -1,0 +1,44 @@
+# Deploys main to the durbinfilms project on Vercel ("Md Sumon's projects").
+#
+# The repository lives on a GitHub account the Vercel team is not linked to,
+# so Vercel's own Git integration cannot see pushes. This does the same job:
+# every push to main runs `vercel deploy --prod`, and Vercel builds it.
+#
+# Needs one repository secret, VERCEL_TOKEN: a token created at
+# https://vercel.com/account/settings/tokens with access to Md Sumon's projects.
+name: Deploy to Vercel
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# One production deploy at a time; a newer push waits rather than racing.
+concurrency:
+  group: vercel-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      # Not secrets: they name the team and project, the token is what grants access.
+      VERCEL_ORG_ID: team_92tb9axndCuV4OXzGKDlWVuf
+      VERCEL_PROJECT_ID: prj_ua24X2zrANXmDqCmV4pd1ys2r7fG
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Check the token is set
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "::error::Add a VERCEL_TOKEN repository secret (Settings > Secrets and variables > Actions)."
+            exit 1
+          fi
+
+      - name: Deploy to production
+        run: npx --yes vercel@65.5.0 deploy --prod --yes --token="$VERCEL_TOKEN"
