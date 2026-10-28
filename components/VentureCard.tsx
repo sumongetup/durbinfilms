@@ -5,7 +5,7 @@ import { Reveal } from "./ui/Reveal";
 import { usePointerGlow } from "@/hooks/usePointerGlow";
 import type { Venture } from "@/lib/types";
 
-/** One of the founder's ventures: tag, name, blurb and his role, with hover glow. */
+/** One of the founder's ventures: tag, name, blurb, his role and when, with hover glow. */
 export function VentureCard({ venture, index }: { venture: Venture; index: number }) {
   const glow = usePointerGlow<HTMLDivElement>();
   const linked = venture.href && !venture.href.includes("[");
@@ -14,7 +14,10 @@ export function VentureCard({ venture, index }: { venture: Venture; index: numbe
       <span className="tag">{venture.tag}</span>
       <h3>{linked ? <Link href={venture.href}>{venture.name}</Link> : venture.name}</h3>
       <p>{venture.text}</p>
-      <span className="go">{venture.role}</span>
+      <span className="go">
+        {venture.role}
+        {venture.period ? ` · ${venture.period}` : null}
+      </span>
     </Reveal>
   );
 }

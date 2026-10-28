@@ -54,6 +54,16 @@
         "text": "Began as a freelancer building digital projects, which became the base for everything after."
       },
       {
+        "year": "25 October 2019",
+        "title": "Durbin Multimedia Ltd. founded",
+        "text": "Founded Durbin Multimedia Ltd. and led it until September 2021."
+      },
+      {
+        "year": "10 October 2021",
+        "title": "Chairman, Durbin Inspiring Ltd",
+        "text": "Became chairman of Durbin Inspiring Ltd, a role he held until 31 January 2026."
+      },
+      {
         "year": "16 February 2022",
         "title": "Durbin News founded",
         "text": "Launched the portal and built it into a government registered online news outlet with a national readership and a set of Durbin branded pages."
@@ -72,21 +82,39 @@
   },
   "ventures": {
     "kicker": "VENTURES",
-    "heading": "What he runs",
+    "heading": "Companies he has founded and led",
     "items": [
       {
         "tag": "PRODUCTION",
         "name": "Durbin Films",
         "text": "A Dhaka production house making television drama, web series, short films and brand work end to end. Founded July 2022.",
-        "role": "Founder",
-        "href": "/"
+        "role": "Founder & Producer",
+        "href": "/",
+        "period": "Jul 2022 – present"
       },
       {
         "tag": "NEWS",
         "name": "Durbin News",
         "text": "Government registered online news portal (PID no. 147), launched February 2022. Its main Facebook page reaches around 7.6 million followers and more than 500 million views a month.",
         "role": "Editor & Publisher",
-        "href": "https://durbinnews.com/"
+        "href": "https://durbinnews.com/",
+        "period": "Feb 2022 – present"
+      },
+      {
+        "tag": "COMPANY",
+        "name": "Durbin Inspiring Ltd",
+        "text": "A Durbin group company, which he chaired from its start in October 2021 until January 2026.",
+        "role": "Chairman",
+        "period": "Oct 2021 – Jan 2026",
+        "href": ""
+      },
+      {
+        "tag": "COMPANY",
+        "name": "Durbin Multimedia Ltd.",
+        "text": "The company he founded in October 2019 and led until September 2021, before Durbin News and Durbin Films.",
+        "role": "Founder",
+        "period": "Oct 2019 – Sep 2021",
+        "href": ""
       }
     ]
   },

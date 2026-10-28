@@ -84,6 +84,8 @@ export interface Venture {
   name: string;
   text: string;
   role: string;
+  /** When he held the role, e.g. "Jul 2022 – present". */
+  period?: string;
   href: string;
 }
 
